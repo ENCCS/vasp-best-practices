@@ -1,4 +1,4 @@
-LESSON NAME
+VASP best practices workshop: hands-on
 ===========
 
 Intro
@@ -22,6 +22,7 @@ Intro
    :maxdepth: 1
    :caption: The lesson
 
+   fcc_Si
 
 .. toctree::
    :maxdepth: 1
