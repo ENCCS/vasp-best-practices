@@ -10,6 +10,19 @@
 * Load and use modules for VASP, gnuplot, python, ASE
 * bash shell scripts
 
+`````{callout} System-specific instructions
+Select instructions for the system you are using:
+ ````{tabs}
+  ```{group-tab} Tetralith
+Instructions for use on the NAISS cluster Tetralith (NSC)
+  ```
+
+  ```{group-tab} MeluXina
+Instructions for use on the EuroHPC cluster MeluXina 
+  ```
+ ````
+`````
+
 First, copy the example folder which contains the input files INCAR, POSCAR, KPOINTS and some useful scripts 
 
     cp -r /software/sse/manual/vasp/training/ws2023/fcc_Si .
@@ -116,21 +129,32 @@ A first static calculation for Si with the lattice constant 3.9 Å. Create a new
     mv INCAR POSCAR KPOINTS POTCAR run.sh scf0
     cp -r scf0 scf1
     cd scf0
-    
-Submit the job script "run.sh" to the job queue with
 
-    sbatch run.sh
-    
-The job script looks like below
+ ````{tabs}
+  ```{group-tab} Tetralith
+  Submit the job script "run.sh" to the job queue with
 
-    #!/bin/bash
-    #SBATCH -A snic2022-22-17
-    #SBATCH -t 0:30:00
-    #SBATCH -n 4 
-    #SBATCH -J vaspjob
+      sbatch run.sh
 
-    module load VASP/6.3.0.20012022-omp-nsc1-intel-2018a-eb
-    mpprun vasp_std
+  The job script looks like below
+
+      #!/bin/bash
+      #SBATCH -A snic2022-22-17
+      #SBATCH -t 0:30:00
+      #SBATCH -n 4 
+      #SBATCH -J vaspjob
+
+      module load VASP/6.3.0.20012022-omp-nsc1-intel-2018a-eb
+      mpprun vasp_std
+
+  ```
+  ```{group-tab} MeluXina
+  Run the job interactively in the Jupyter-notebook terminal with
+
+      srun -n 8 vasp_std
+
+  ```
+ ````
 
 and it should finish quite quickly. Check the status of the job with
 
@@ -179,8 +203,8 @@ In this part we will calculate the total energies of fcc Si between 3.5 and 4.3 
     mkdir -p $i
     cd $i
     cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
-    cp /software/sse/manual/vasp/training/ws2022/fcc_Si/INCAR .
-    cp /software/sse/manual/vasp/training/ws2022/fcc_Si/KPOINTS .
+    cp /software/sse/manual/vasp/training/ws2023/fcc_Si/INCAR .
+    cp /software/sse/manual/vasp/training/ws2023/fcc_Si/KPOINTS .
     cat >POSCAR <<!
     fcc:
        $i
@@ -314,9 +338,9 @@ A second static calculation, now using the obtained equilibrium volume. Go to th
 
 and insert the lattice parameter **a** obtained in **2.** by editing POSCAR, e.g. with
 
-    gedit POSCAR
+    vi POSCAR
 
-or use your favourite text editor (`nano`, `vi`, etc.). Finally, submit the job
+or use your favourite text editor (`nano`, `gedit`, etc.). Finally, submit the job
 
     sbatch run.sh
 

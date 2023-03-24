@@ -1,4 +1,4 @@
-VASP best practices workshop: hands-on
+VASP best practices workshop
 ===========
 
 Intro
@@ -20,9 +20,25 @@ Intro
 
 .. toctree::
    :maxdepth: 1
-   :caption: The lesson
+   :caption: Start here first
+
+   tetralith
+   meluxina
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Hands-on examples
 
    fcc_Si
+   fcc_Si_DOS
+   fcc_Si_bandstructure
+   cd_Si
+   cd_Si_vol_relax
+   cd_Si_relax
+   fcc_Ni
+   fcc_Ni_rev
+   bandgap_Si
+   Ni100_surface
 
 .. toctree::
    :maxdepth: 1
