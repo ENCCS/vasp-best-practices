@@ -21,13 +21,25 @@ Note that bandstructure calculations **should** be done in two steps (compare wi
 (2) a non-self consistent calculation, using the charge density (CHGCAR) from the first, with k-points selected from an interesting path in the Brillouin zone.
 
 First, copy the example folder which contains some of the VASP input files and useful scripts 
+ ````{tabs}
+  ```{group-tab} Tetralith
+      cp -r /software/sse/manual/vasp/training/ws2023/fcc_Si_band .
+      cd fcc_Si_band
 
-    cp -r /software/sse/manual/vasp/training/ws2023/fcc_Si_band .
-    cd fcc_Si_band
+  also copy the latest POTCAR file for Si
 
-and copy the latest POTCAR file for Si
+      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
 
-    cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+  ```
+  ```{group-tab} MeluXina
+      cp -r /project/home/p200051/vasp_ws2023/examples/fcc_Si_band .
+      cd fcc_Si_band
+
+  also copy the latest POTCAR file for Si
+
+      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
+  ```
+ ````
 
 ### Input files
 
@@ -95,13 +107,26 @@ when the job has finished, check slurm-JOBID.out
 
     cat slurm*.out
 
-Plot the bandstructure using p4vasp
 
-    p4v &
+ ````{tabs}
+  ```{group-tab} Tetralith
+  Plot the bandstructure using p4vasp
 
-and select: Electronic > DOS+bands > Show > Bands. As in the case of DOS, it's possible to save the data by selecting Graph > Export, to e.g. raw data or an XmGrace file (.agr). Compare with the figure shown in the [VASP wiki example](https://www.vasp.at/wiki/index.php/Fcc_Si_bandstructure).
-    
+      p4v &
+
+  and select: Electronic > DOS+bands > Show > Bands. As in the case of DOS, it's possible to save the data by selecting Graph > Export, to e.g. raw data or an XmGrace file (.agr).
+  ```
+  ```{group-tab} MeluXina
+  Plot the bandstructure using py4vasp via the Jupyter-notebook
+
+      import py4vasp
+      mycalc = py4vasp.Calculation.from_path("/path/to/your/calculation/folder/here")
+      mycalc.band.plot()
+  ```
+ ````
+Compare with the figure shown in the [VASP wiki example](https://www.vasp.at/wiki/index.php/Fcc_Si_bandstructure).
+
 ### Extra tasks
 
 * Have a look at the paths in the Brillouin zone for fcc by using the [Bilbao crystallographic server](https://www.cryst.ehu.es/), select: Space-group symmetry > KVEC > enter "225" for space group > Brillouin zone
-
+* Tetralith: test to plot bandstructure also using py4vasp

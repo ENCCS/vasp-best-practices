@@ -18,13 +18,24 @@ Instructions for use on the EuroHPC cluster MeluXina
 `````
 
 First, copy the example folder which contains some of the VASP input files and useful scripts
+ ````{tabs}
+  ```{group-tab} Tetralith
+      cp -r /software/sse/manual/vasp/training/ws2023/bandgap_Si .
+      cd bandgap_Si
 
-    cp -r /software/sse/manual/vasp/training/ws2023/bandgap_Si .
-    cd bandgap_Si
+  and copy the latest POTCAR file for Si
 
-and copy the latest POTCAR file for Si
+      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+  ```
+  ```{group-tab} MeluXina
+      cp -r /project/home/p200051/vasp_ws2023/examples/bandgap_Si .
+      cd bandgap_Si
 
-    cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+  and copy the latest POTCAR file for Si
+
+      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
+  ```
+ ````
 
 ### Input files
 
@@ -82,9 +93,13 @@ KPOINTS
 
 ### Calculations
 
-First, run the regular PBE calculation which will be used as a start for the DFT+HF methods
+First, run the regular PBE calculation which will be used as a start for the DFT+HF methods by submitting the job (Tetralith)
 
     sbatch run.sh
+
+or run interactively (MeluXina)
+
+    srun --hint=nomultithread -n 8 vasp_std
     
 when it's finished, cycle through the different DFT+HF methods, don't forget to copy `WAVECAR`
 
@@ -101,11 +116,7 @@ edit INCAR such that the method of interest is uncommented, e.g.
 
 * Note the use of [ALGO](https://www.vasp.at/wiki/index.php/ALGO)=Damped or D, for the DFT+HF methods, different from the default ALGO=Normal.
 
-and run the job
-
-    sbatch run.sh
-    
-after it has finished, inspect the output
+and run the job as before. After it has finished, inspect the output
 
     cat slurm*out
     cat OSZICAR

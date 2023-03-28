@@ -18,13 +18,24 @@ Instructions for use on the EuroHPC cluster MeluXina
 `````
 
 First, copy the example folder which contains some of the VASP input files
+ ````{tabs}
+  ```{group-tab} Tetralith
+      cp -r /software/sse/manual/vasp/training/ws2023/fcc_Ni_rev .
+      cd fcc_Ni_rev
 
-    cp -r /software/sse/manual/vasp/training/ws2023/fcc_Ni_rev .
-    cd fcc_Ni_rev
+  and copy the latest POTCAR file for Ni
 
-and copy the latest POTCAR file for Ni
+      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Ni/POTCAR .
+  ```
+  ```{group-tab} MeluXina
+      cp -r /project/home/p200051/vasp_ws2023/examples/fcc_Ni_rev .
+      cd fcc_Ni_rev
 
-    cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Ni/POTCAR .
+  and copy the latest POTCAR file for Ni
+
+      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Ni/POTCAR .
+  ```
+ ````
 
 ### Input files
 
@@ -79,9 +90,13 @@ First create a new folder "col", copy the files and go there
     cp INCAR POSCAR POTCAR KPOINTS run.sh col
     cd col
 
-since INCAR is already prepared for a collinear calculation, it's just to submit the job
+since INCAR is already prepared for a collinear calculation, it's just to submit the job (Tetralith)
 
     sbatch run.sh
+
+or run it interactively (MeluXina)
+
+    srun --hint=nomultithread -n 8 vasp_std
 
 and it should finish quite quickly. Check the magnetic moment, e.g. by
 
@@ -111,7 +126,7 @@ and press `G` (that is `shift` `g`) to go to the end (quit with `q`). It looks l
 
 * What happens if one instead sets an initial magnetic moment of `MAGMOM = 0.0` or `MAGMOM = 2.0`?
 * What can be said about the importance of setting appropriate initial magnetic moments?
-* Check the spin-polarized DOS using p4vasp
+* Check the spin-polarized DOS using p4vasp or py4vasp
 * Any interesting messages in slurm-JOBID.out?
 
 ### 2. Non-collinear calculation
@@ -131,15 +146,26 @@ and insert two lines
     LNONCOLLINEAR = .TRUE.
     MAGMOM        = 0.0 0.0 1.0    
 
-The default is [LNONCOLLINEAR](https://www.vasp.at/wiki/index.php/LNONCOLLINEAR)=.FALSE. To run non-collinear calculations, the VASP binary must also be changed to `vasp_ncl`, otherwise the job will crash. Edit the job script "run.sh" so that the last lines look like
+The default is [LNONCOLLINEAR](https://www.vasp.at/wiki/index.php/LNONCOLLINEAR)=.FALSE. To run non-collinear calculations, the VASP binary must also be changed to `vasp_ncl`, otherwise the job will crash.
 
-    #mpprun vasp_std
-    mpprun vasp_ncl
+First, copy the example folder which contains some of the VASP input files
+ ````{tabs}
+  ```{group-tab} Tetralith
+  Edit the job script "run.sh" so that the last lines look like
 
-Run the calculation
+      #mpprun vasp_std
+      mpprun vasp_ncl
 
-    sbatch run.sh
+  Run the calculation
 
+      sbatch run.sh
+  ```
+  ```{group-tab} MeluXina
+  Run the calculation interactively with
+
+      srun --hint=nomultithread -n 8 vasp_ncl
+  ```
+ ````
 and check the magnetic moment in the same way as for **1.** when it finishes. For OSZICAR it might look like
 
     DAV:  10    -0.546407531955E+01    0.67997E-03   -0.80644E-05  7064   0.195E-01    0.291E-02
@@ -171,5 +197,4 @@ and at the end of OUTCAR
         1       -0.008  -0.027   0.637   0.602
 
 * What happens by changing the direction of the initial magnetic moment, e.g. setting `MAGMOM = 1.0 0.0 0.0` or `MAGMOM = 0.0 1.0 0.0`?
-
 

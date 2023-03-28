@@ -18,13 +18,24 @@ Instructions for use on the EuroHPC cluster MeluXina
 `````
 
 First, copy the example folder which contains some of the VASP input files
+ ````{tabs}
+  ```{group-tab} Tetralith
+      cp -r /software/sse/manual/vasp/training/ws2023/fcc_Ni .
+      cd fcc_Ni
 
-    cp -r /software/sse/manual/vasp/training/ws2023/fcc_Ni .
-    cd fcc_Ni
+  and copy the latest POTCAR file for Ni
 
-and copy the latest POTCAR file for Ni
+      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Ni/POTCAR .
+  ```
+  ```{group-tab} MeluXina
+      cp -r /project/home/p200051/vasp_ws2023/examples/fcc_Ni .
+      cd fcc_Ni
 
-    cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Ni/POTCAR .
+  and copy the latest POTCAR file for Ni
+
+      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Ni/POTCAR .
+  ```
+ ````
 
 Perform the calculations below in the same way as was done for the [cd Si example](../cd_Si).
 
@@ -76,16 +87,22 @@ KPOINTS
  
 ### 1. Volume relaxation
 
-Similar as for the [cd Si](../cd_Si) example, check the total energy over a range of volumes, by using the tailored job script "run-vol.sh"
+Similar as for the [cd Si](../cd_Si) example, check the total energy over a range of volumes, by using the tailored job script "run-vol.sh". Submit the job (Tetralith)
 
     sbatch run-vol.sh
+
+or run it interactively (MeluxIna)
+
+    ./run-vol.sh
 
 after it finishes, check the total energy vs lattice constant e.g. using gnuplot
 
     gnuplot 
     
-and at the prompt type 
+and at the prompt type (the first two lines for creating an image, needed at MeluXina) 
 
+    set term png
+    set output "SUMMARY.dia.png" 
     plot "SUMMARY.dia" using ($1):($4) w lp
 
 is the equilibrium lattice parameter close to *a* = 3.5 Å?
@@ -116,11 +133,15 @@ As in the previous example for [cd Si](../cd_Si) we compute DOS in a single step
 
 notice the change to [ISMEAR](https://www.vasp.at/wiki/index.php/ISMEAR)=-5, the tetrahedron method with Blöchl corrections, suitable for DOS and total energies.
 
-Finally, submit the job
+Finally, submit the job (Tetralith)
 
     sbatch run.sh
 
-To check the result after finish, use `p4vasp` as in the previous examples.
+or run it interactively (MeluXina)
+
+    srun --hint=nomultithread -n 8 vasp_std
+
+To check the result after finish, use `p4vasp` or `py4vasp` as in the previous examples.
 
 * Does the DOS show the spin split?
 
@@ -151,7 +172,7 @@ the file KPOINTS.band, which was copied to KPOINTS, looks like
       0.37500  0.7500   0.37500    1
       0.00000  0.00000  0.00000    1
 
-As in previous bandstructure examples, e.g. [cd Si](../cd_Si), we need a suitable `CHGCAR` file. First check that INCAR is correct, edit the file using e.g. `gedit` such that
+As in previous bandstructure examples, e.g. [cd Si](../cd_Si), we need a suitable `CHGCAR` file. First check that INCAR is correct, edit the file using e.g. `vi` such that
 
     ICHARG=11
 
@@ -159,9 +180,13 @@ i.e. that CHGCAR is read. Copy CHGCAR from the previous DOS calculation
 
     cp ../dos/CHGCAR .
 
-thereafter submit the job
+thereafter submit the job (Tetralith)
 
     sbatch run.sh
+
+or run it interactively (MeluXina)
+
+    srun --hint=nomultithread -n 8 vasp_std
     
-To check the results after finish, use `p4vasp`. Compare with the [result on the VASP wiki](https://www.vasp.at/wiki/index.php/Fcc_Ni).
+To check the results after finish, use `p4vasp` or `py4vasp`. Compare with the [result on the VASP wiki](https://www.vasp.at/wiki/index.php/Fcc_Ni).
 

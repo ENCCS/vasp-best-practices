@@ -6,8 +6,8 @@
 
 * An introductory example for working with VASP
 * In general, examples are chosen for fast calculation
-* Use different job scripts and submit to the Slurm job scheduler
-* Load and use modules for VASP, gnuplot, python, ASE
+* Use different job scripts, submit to the Slurm job scheduler (Tetralith) or run interactively (MeluXina)
+* Use VASP, gnuplot, python, ASE
 * bash shell scripts
 
 `````{callout} System-specific instructions
@@ -24,13 +24,25 @@ Instructions for use on the EuroHPC cluster MeluXina
 `````
 
 First, copy the example folder which contains the input files INCAR, POSCAR, KPOINTS and some useful scripts 
+ ````{tabs}
+  ```{group-tab} Tetralith
+      cp -r /software/sse/manual/vasp/training/ws2023/fcc_Si .
+      cd fcc_Si
 
-    cp -r /software/sse/manual/vasp/training/ws2023/fcc_Si .
-    cd fcc_Si
+  also copy the latest POTCAR (PBE GGA) file for Si
 
-also copy the latest POTCAR (PBE GGA) file for Si
+      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
 
-    cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+  ```
+  ```{group-tab} MeluXina
+      cp -r /project/home/p200051/vasp_ws2023/examples/fcc_Si .
+      cd fcc_Si
+
+  also copy the latest POTCAR (PBE GGA) file for Si
+
+      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
+  ```
+ ````
 
 ### Input files
 
@@ -151,12 +163,19 @@ A first static calculation for Si with the lattice constant 3.9 Å. Create a new
   ```{group-tab} MeluXina
   Run the job interactively in the Jupyter-notebook terminal with
 
-      srun -n 8 vasp_std
+      srun --hint=nomultithread -n 8 vasp_std
 
+  This works if the settings were applied previously, see [starting section](../meluxina)
+
+      source /project/home/p200051/vasp_ws2023/setup.sh
+
+  which set the path to VASP binaries and loads the corresponding modules it was built with, check e.g. with "cat"
+
+      cat /project/home/p200051/vasp_ws2023/setup.sh
   ```
  ````
 
-and it should finish quite quickly. Check the status of the job with
+The job should finish quite quickly. Check the status of the job (if submitted to the queue) with
 
     squeue -u USERNAME
 
@@ -168,9 +187,10 @@ it might already have finished, in that case it'll not be shown. Among the outpu
 
 in which `JOBID` is a string of numbers. Note that
 
-* Some warning messages will only show in `slurm-JOBID.out`, the `standard output` for the run
+* Some warning messages will only show in the standard output of the job, `slurm-JOBID.out` if submitted to the queue.
+**Therefore, also carefully check the output when running interactively.**
 
-You can quickly check the iteration steps and convergence with "cat"
+You can quickly check the iteration steps and convergence with "cat", in a different terminal if it's still running interactively
 
     cat OSZICAR
     
@@ -191,43 +211,76 @@ Go back to the main folder "fcc_Si" with
 
 In this part we will calculate the total energies of fcc Si between 3.5 and 4.3 Å. To do this a bit quicker, a special job script "run-vol.sh" is prepared (bash shell script):
 
-    #!/bin/bash
-    #SBATCH -A snic2022-22-17  
-    #SBATCH -t 0:30:00
-    #SBATCH -n 4 
-    #SBATCH -J vaspjob
+ ````{tabs}
+  ```{group-tab} Tetralith
+      #!/bin/bash
+      #SBATCH -A snic2022-22-17
+      #SBATCH -t 0:30:00
+      #SBATCH -n 4
+      #SBATCH -J vaspjob
 
-    module load VASP/6.3.0.20012022-omp-nsc1-intel-2018a-eb
+      module load VASP/6.3.0.20012022-omp-nsc1-intel-2018a-eb
 
-    for i in  3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2 4.3 ; do
-    mkdir -p $i
-    cd $i
-    cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
-    cp /software/sse/manual/vasp/training/ws2023/fcc_Si/INCAR .
-    cp /software/sse/manual/vasp/training/ws2023/fcc_Si/KPOINTS .
-    cat >POSCAR <<!
-    fcc:
-       $i
-     0.5 0.5 0.0
-     0.0 0.5 0.5
-     0.5 0.0 0.5
-    Si
-       1
-    cartesian
-    0 0 0
-    !
-    mpprun vasp_std
-    E=`awk '/F=/ {print $0}' OSZICAR` ; echo $i $E  >>../SUMMARY.fcc
-    cd ..
-    done
+      for i in  3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2 4.3 ; do
+      mkdir -p $i
+      cd $i
+      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+      cp /software/sse/manual/vasp/training/ws2023/fcc_Si/INCAR .
+      cp /software/sse/manual/vasp/training/ws2023/fcc_Si/KPOINTS .
+      cat >POSCAR <<EOF
+      fcc:
+         $i
+       0.5 0.5 0.0
+       0.0 0.5 0.5
+       0.5 0.0 0.5
+      Si
+         1
+      cartesian
+      0 0 0
+      EOF
+      mpprun vasp_std
+      E=`awk '/F=/ {print $0}' OSZICAR` ; echo $i $E  >>../SUMMARY.fcc
+      cd ..
+      done
+  ```
+  ```{group-tab} MeluXina
+      #!/bin/bash
 
-In brief, the above job script creates a new folder with the same name as the lattice constant, copying POTCAR, INCAR and KPOINTS, while creating a new POSCAR file. It also collects the total energies from all OSZICAR files into a new file "SUMMARY.fcc".
+      for i in  3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2 4.3 ; do
+      mkdir -p $i
+      cd $i
+      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
+      cp /project/home/p200051/vasp_ws2023/examples/fcc_Si/INCAR .
+      cp /project/home/p200051/vasp_ws2023/examples/fcc_Si/KPOINTS .
+      cat >POSCAR <<EOF
+      fcc:
+         $i
+       0.5 0.5 0.0
+       0.0 0.5 0.5
+       0.5 0.0 0.5
+      Si
+         1
+      cartesian
+      0 0 0
+      EOF
+      srun --hint=nomultithread -n 8 vasp_std
+      E=`awk '/F=/ {print $0}' OSZICAR` ; echo $i $E  >>../SUMMARY.fcc
+      cd ..
+      done
+  ```
+ ````
 
-Now, submit the job script "run-vol.sh" to the queue
+In brief, the above script creates a new folder with the same name as the lattice constant, copying POTCAR, INCAR and KPOINTS, while creating a new POSCAR file. It also collects the total energies from all OSZICAR files into a new file "SUMMARY.fcc".
+
+Now, submit the job script "run-vol.sh" to the queue (Tetralith), or run it as an interactive job (MeluXina)
 
     sbatch run-vol.sh
 
-After a successful run, there should now be folders 3.5 - 4.3 with the different calculations and a file SUMMARY.fcc:
+respectively
+
+    ./run-vol.sh
+
+After a successful run, there should now be folders 3.5 - 4.3 with the different calculations and a file SUMMARY.fcc which can be checked e.g. with "less" or "cat"
 
     3.5 1 F= -.44256909E+01 E0= -.44234194E+01 d E =-.454310E-02
     3.6 1 F= -.46614931E+01 E0= -.46600638E+01 d E =-.285864E-02
@@ -241,24 +294,61 @@ After a successful run, there should now be folders 3.5 - 4.3 with the different
 
 You can make a quick plot of the total energy as a function of the lattice constant, e.g. by using gnuplot. First, load the module
 
-    module load gnuplot/5.2.2-nsc1
-
+ ````{tabs}
+  ```{group-tab} Tetralith
+      module load gnuplot/5.2.2-nsc1
+  ```
+  ```{group-tab} MeluXina
+      module load gnuplot/5.4.4-GCCcore-11.3.0 
+  ```
+ ````
 and start it with
 
     gnuplot
 
 thereafter, at the "gnuplot>" prompt type
 
-    plot "SUMMARY.fcc" using ($1):($4) w lp
+ ````{tabs}
+  ```{group-tab} Tetralith
+      plot "SUMMARY.fcc" using ($1):($4) w lp
+  ```
+  ```{group-tab} MeluXina
+      set term png 
+      set output "SUMMARY.fcc.png"
+      plot "SUMMARY.fcc" using ($1):($4) w lp
+
+  Thereafter, open the output file `SUMMARY.fcc.png` in Jupyter-notebook.
+  ```
+ ````
 
 From the plot we can see that the equilibrium lattice constant is around 3.9 Å.
 
-To find a more exact value, we can use an equation of state method. For example, a popular method is Birch-Murnaghan. To quickly check, you can try a python script which uses functions from the Atomic Simulation Environment (ASE) collection of tools based on Python3. First, we need to load ASE and a suitable Python3 module:
+To find a more exact value, we can use an equation of state method. For example, a popular method is Birch-Murnaghan. To quickly check, you can try a python script which uses functions from the Atomic Simulation Environment (ASE) collection of tools based on Python3. 
 
-    module load ASE/3.19.0-nsc1
-    module load Python/3.6.3-anaconda-5.0.1-nsc1
+ ````{tabs}
+  ```{group-tab} Tetralith
+  First, we need to load ASE and a suitable Python3 module, 
 
-as input a file with volume (Å^3) and total energy (eV) is needed. To save some time, there is a script which can be used, so run:
+      module load ASE/3.19.0-nsc1
+      module load Python/3.6.3-anaconda-5.0.1-nsc1
+
+  ```
+  ```{group-tab} MeluXina
+  Using py4vasp, ASE is already included as a dependency and therefore directly available. However, since the terminal was used for running VASP interactively, meaning that a different set of modules were loaded with `source /project/home/p200051/vasp_ws2023/setup.sh`), it will not work immediately in the same terminal. 
+
+   * The fastest way to fix this is to open up a new terminal in Jupyter-notebook for just running ASE in the terminal.
+
+   * Alternatively, load the correct dependecies to use the Python 
+
+         module load Python/3.10.4-GCCcore-11.3.0
+
+     after finishing with ASE, to continue to run VASP interactively, again apply
+
+         source /project/home/p200051/vasp_ws2023/setup.sh
+  ```
+ ````
+
+As input a file with volume (Å^3) and total energy (eV) is needed. To save some time, there is a script which can be used, so run:
 
     ./get-vol-etot.sh
     
@@ -300,7 +390,7 @@ and produces the file "vol_etot.dat". We will use a small python script "eqos.py
     print ("B: %2.6f GPa" % (B/GPa))
     print ()   
 
-run it to calculate the equilibrium volume using an equation of state:
+run it to calculate the equilibrium volume using an equation of state
 
     python eqos.py
 
@@ -340,9 +430,13 @@ and insert the lattice parameter **a** obtained in **2.** by editing POSCAR, e.g
 
     vi POSCAR
 
-or use your favourite text editor (`nano`, `gedit`, etc.). Finally, submit the job
+or use your favourite text editor (`emacs`, `nano`, `gedit`, ...). Finally, submit the job (Tetralith)
 
     sbatch run.sh
+
+or run it interactively (MeluXina)
+
+    srun --hint=nomultithread -n 8 vasp_std
 
 and compare the total energy with previous results. For example, try
 

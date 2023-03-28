@@ -16,14 +16,27 @@ Instructions for use on the EuroHPC cluster MeluXina
   ```
  ````
 `````
+
 First, copy the example folder which contains some of the VASP input files
+ ````{tabs}
+  ```{group-tab} Tetralith
+      cp -r /software/sse/manual/vasp/training/ws2023/Ni100_surf .
+      cd Ni100_surf
 
-    cp -r /software/sse/manual/vasp/training/ws2023/Ni100_surf .
-    cd Ni100_surf
+  and copy the latest POTCAR file for Ni
 
-and copy the latest POTCAR file for Ni
+      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Ni/POTCAR .
 
-    cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Ni/POTCAR .
+  ```
+  ```{group-tab} MeluXina
+      cp -r /project/home/p200051/vasp_ws2023/examples/Ni100_surf .
+      cd Ni100_surf
+
+  and copy the latest POTCAR file for Ni
+
+      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Ni/POTCAR .
+  ```
+ ````
 
 ### Input files
 
@@ -111,15 +124,19 @@ So, for relaxation `F=False` and `T=True`, so one sees that the two atoms at z=1
 * For surface relaxations it's typical to fix the bulk-like atoms in the bottom and let the ones close to the surface be able to relax
 * Alternatively, a symmetric supercell can be constructed with inner bulk-like layers
 
-Run the calculation with
+Submit the calculation to the queue (Tetralith)
 
     sbatch run.sh
+
+or run interactively (MeluXina)
+
+    srun --hint=nomultithread -n 8 vasp_std
     
 and observe the relaxation e.g. with
 
     cat OSZICAR
     
-After the calculation is finished, compare the forces in OUTCAR between the first and the last step.
+After the calculation is finished, compare the forces in OUTCAR between the first and the last step (e.g. using `less`).
 
 First step:
 
@@ -163,10 +180,10 @@ Check the obtained relaxed structure in `CONTCAR`:
       0.5000000000000000  0.5000000000000000  0.3002099841022341   T   T   T
      -0.0000000000000000  0.0000000000000000  0.3955072458335201   T   T   T
 
-* Check the convergence using p4vasp
+* Check the convergence using p4vasp or py4vasp
 * Compare surface energies following the example in the [VASP wiki](https://www.vasp.at/wiki/index.php/Ni_100_surface_relaxation)
 * What is the inward relaxation of the surface layers (compare VASP wiki)
-* Visualize the relaxation of the structure using p4vasp (follow VASP wiki figures)
+* Visualize the relaxation of the structure using p4vasp or py4vasp (follow VASP wiki figures)
 
 ### 2. Surface DOS
 
@@ -196,9 +213,13 @@ Also note that we use a new INCAR (from INCAR.dos) which looks like
 * [ALGO](https://www.vasp.at/wiki/index.php/ALGO)=Normal, the default electron minimization algorithm
 * [LORBIT](https://www.vasp.at/wiki/index.php/LORBIT)=11, lm and site decomposed DOS
 
-Run the calculation with
+Run the calculation with (Tetralith)
 
     sbatch run.sh
+
+or run interactively (MeluXina)
+
+    srun --hint=nomultithread -n 8 vasp_std
 
 After it finishes, at the end of OUTCAR, check the information on local charge and magnetization
 
@@ -230,7 +251,7 @@ After it finishes, at the end of OUTCAR, check the information on local charge a
 
 * By setting [LORBIT](https://www.vasp.at/wiki/index.php/LORBIT)=1 and changing [RWIGS](https://www.vasp.at/wiki/index.php/RWIGS), it's possible to control the total number of electrons within the sphere
 * What can be said about the magnetic moments for the different layers?
-* Test to plot DOS using p4vasp, see figures at the end of the [VASP wiki example](https://www.vasp.at/wiki/index.php/Ni_100_surface_DOS)
+* Test to plot DOS using p4vasp/py4vasp, see figures at the end of the [VASP wiki example](https://www.vasp.at/wiki/index.php/Ni_100_surface_DOS)
 
 ### 3. Surface bandstructure
 
@@ -288,11 +309,16 @@ This time KPOINTS for the bandstructure looks like
 * 13 k-points along the line Gamma - X - M - Gamma
 * Reciprocal coordinates
 * Each point has weight 1
-      
-Submit the job
+
+Submit the job (Tetralith)
 
     sbatch run.sh
 
-and wait for it to finish. Investigate the bandstructure using p4vasp, compare with the [VASP wiki example](https://www.vasp.at/wiki/index.php/Ni_100_surface_bandstructure).
+or run interactively (MeluXina)
 
+    srun --hint=nomultithread -n 8 vasp_std
+      
+and wait for it to finish. 
+
+Investigate the bandstructure, compare with the [VASP wiki example](https://www.vasp.at/wiki/index.php/Ni_100_surface_bandstructure).
 

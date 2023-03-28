@@ -24,6 +24,7 @@ Intro
 
    tetralith
    meluxina
+   tools
 
 .. toctree::
    :maxdepth: 1

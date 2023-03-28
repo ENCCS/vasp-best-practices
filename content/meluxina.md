@@ -69,7 +69,7 @@ when opening up a new terminal, the same steps need to be applied again for runn
 
 Now, a VASP job can be run directly
 
-    srun -n 8 vasp_std
+    srun --hint=nomultithread -n 8 vasp_std
 
 For this workshop, the approach of running interactively using a terminal via jupyter-notebook is recommended.
 This allows to run several terminals (if needed) and py4vasp simultaneously.
@@ -77,11 +77,9 @@ This allows to run several terminals (if needed) and py4vasp simultaneously.
 For the common use case of running longer production jobs, one would instead typically submit jobscripts to the queue. 
 
 ### Run VASP - alternative
-It might be enough to shutdown the process and restart it in the browser. Note that it might take some time for the python kernel to finish (if the circle next to its name is filled, it's processing).
+In case it fails or is too difficult to get jupyter-notebook working, it is still possible to run the VASP examples directly in the interactive job on the work node, or by submitting jobs to the queue system. A jobscript template is provided with all the examples
 
-In case it fails or is too difficult to get jupyter-notebook working, it is still possible to run the VASP examples directly in the interactive job on the work node, or by submitting jobs to the queue system. An example jobscript can be copied
-
-    cp /project/home/p200051/vasp_ws2023/run.sh .
+    run.sh
 
 check it (using e.g. vi) and change if needed, thereafter submit it to the queue
 

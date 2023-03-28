@@ -25,13 +25,24 @@ Instructions for use on the EuroHPC cluster MeluXina
 `````
 
 First, copy the example folder which contains the VASP input files
+ ````{tabs}
+  ```{group-tab} Tetralith
+      cp -r /software/sse/manual/vasp/training/ws2023/cd_Si_vol_relax .
+      cd cd_Si_vol_relax
 
-    cp -r /software/sse/manual/vasp/training/ws2023/cd_Si_vol_relax .
-    cd cd_Si_vol_relax
+  and copy the latest POTCAR file for Si
 
-and copy the latest POTCAR file for Si:
+      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+  ```
+  ```{group-tab} MeluXina
+      cp -r /project/home/p200051/vasp_ws2023/examples/cd_Si_vol_relax .
+      cd cd_Si_vol_relax
 
-    cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+  and copy the latest POTCAR file for Si
+
+      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
+  ```
+ ````
 
 ### Input files
 
@@ -77,13 +88,19 @@ KPOINTS
 
 ### Calculation
 
-Start the volume relaxation calculation by
+Start the volume relaxation calculation by submitting the job (Tetralith)
 
     sbatch run.sh
+
+or running interactively (MeluXina)
+
+    srun --hint=nomultithread -n 8 vasp_std
 
 Monitor how the structural relaxation progresses with
 
     cat OSZICAR
+
+or observing the output on the terminal (MeluXina).
 
 Check the relaxed final structure
 
@@ -93,11 +110,24 @@ Check the relaxed final structure
 
 * Note that one doesn't use the total energy or DOS from a structural relaxation. For that, CONTCAR should be copied to POSCAR for a separate caclulation with no structural relaxation.
 
-Check the convergence of the total energy and forces using p4vasp
+ ````{tabs}
+  ```{group-tab} Tetralith
+  Check the convergence of the total energy and forces using p4vasp
 
-    p4v &
+      p4v &
 
-by selecting Convergence > Energy or > Forces.
+  by selecting Convergence > Energy or > Forces.
+
+  ```
+  ```{group-tab} MeluXina
+  Check the convergence of the total energy using py4vasp
+
+      import py4vasp
+      mycalc = py4vasp.Calculation.from_path("/path/to/your/calculation/folder/here")
+      mycalc.energy[:].plot()
+
+  ```
+ ````
 
 ### Extra tasks
 

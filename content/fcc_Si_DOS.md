@@ -25,13 +25,25 @@ Note that
 * DOS is only meaningful for static (no structural relaxation) calculations
  
 First, copy the example folder which contains some of the VASP input files and useful scripts 
+ ````{tabs}
+  ```{group-tab} Tetralith
+      cp -r /software/sse/manual/vasp/training/ws2023/fcc_Si_DOS .
+      cd fcc_Si_DOS
 
-    cp -r /software/sse/manual/vasp/training/ws2023/fcc_Si_DOS .
-    cd fcc_Si_DOS
+  also copy the latest POTCAR file for Si
 
-and copy the latest POTCAR file for Si
+      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
 
-    cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+  ```
+  ```{group-tab} MeluXina
+      cp -r /project/home/p200051/vasp_ws2023/examples/fcc_Si_DOS .
+      cd fcc_Si_DOS
+
+  also copy the latest POTCAR file for Si
+
+      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
+  ```
+ ````
 
 ### Input files
 
@@ -105,9 +117,9 @@ Now, copy the charge density file CHGCAR from a calculation in the [previous exa
 
     cp ../../fcc_Si/3.9/CHGCAR .
 
-Now, edit INCAR (with e.g. `gedit`or use your favourite editor)
+Now, edit INCAR (with e.g. `vi`or use your favourite editor)
 
-    gedit INCAR
+    vi INCAR
 
 such that it looks like
 
@@ -130,51 +142,93 @@ and wait for it to finish. Any interesting messages in `slurm-JOBID.out`?
 
 To quickly check the resulting DOS, you can use the small script "plotdos.sh" provided with the example, it looks like
 
-    #!/bin/bash
+ ````{tabs}
+  ```{group-tab} Tetralith
+      #!/bin/bash
 
-    awk 'BEGIN{i=1} /dos>/,\
-                    /\/dos>/ \
-                     {a[i]=$2 ; b[i]=$3 ; i=i+1} \
-         END{for (j=12;j<i-5;j++) print a[j],b[j]}' vasprun.xml > dos.dat
+      awk 'BEGIN{i=1} /dos>/,\
+                      /\/dos>/ \
+                       {a[i]=$2 ; b[i]=$3 ; i=i+1} \
+           END{for (j=12;j<i-5;j++) print a[j],b[j]}' vasprun.xml > dos.dat
 
-    ef=`awk '/efermi/ {print $3}' vasprun.xml`
+      ef=`awk '/efermi/ {print $3}' vasprun.xml`
 
-    cat >plotfile <<!
-    # set term postscript enhanced eps colour lw 2 "Helvetica" 20
-    # set output "optics.eps"
-    plot "dos.dat" using (\$1-$ef):(\$2) w lp
-    !
+      cat >plotfile <<EOF
+      # set term postscript enhanced eps colour lw 2 "Helvetica" 20
+      # set output "optics.eps"
+      plot "dos.dat" using (\$1-$ef):(\$2) w lp
+      EOF
 
-    gnuplot -persist plotfile
+      gnuplot -persist plotfile
+  ```
+  ```{group-tab} MeluXina
+      #!/bin/bash
 
-    # rm dos.dat plotfile 
+      awk 'BEGIN{i=1} /dos>/,\
+                      /\/dos>/ \
+                       {a[i]=$2 ; b[i]=$3 ; i=i+1} \
+           END{for (j=12;j<i-5;j++) print a[j],b[j]}' vasprun.xml > dos.dat
+
+      ef=`awk '/efermi/ {print $3}' vasprun.xml`
+
+      cat >plotfile <<EOF
+      set term png
+      set output "optics.png"
+      plot "dos.dat" using (\$1-$ef):(\$2) w lp
+      EOF
+
+      gnuplot plotfile
+  ```
+ ````
 
 run it with
 
     ./plotdos.sh
 
-it produces the two files "dos.dat" and "plotfile", it also automatically starts gnuplot.
+it produces the two files "dos.dat" and "plotfile", it also automatically starts gnuplot (Tetralith) or produces an image (MeluXina).
 
-For more advanced functionalities and lots of different options, one can instead use `p4vasp`
+For more advanced functionalities and lots of different options, one can instead use `p4vasp` (Tetralith) or `py4vasp` (MeluXina, Tetralith)
 
-     module load p4vasp/0.3.30-nsc1
-     p4v &
+ ````{tabs}
+  ```{group-tab} Tetralith
+  Here, an example is made on how to use p4vasp 
 
-this will open the GUI of p4vasp in your ThinLinc session. If you started p4vasp outside the folder, you'll need to load the `vasprun.xml`output file by selecting File > Load system > step to correct folder and select `vasprun.xml` > press "Ok".
+      module load p4vasp/0.3.30-nsc1
+      p4v &
 
-To check the DOS, in the upper menu select "Electronic" and click "DOS + bands".
+  this will open the GUI of p4vasp in your ThinLinc session. If you started p4vasp outside the folder, you'll need to load the `vasprun.xml`output file by selecting File > Load system > step to correct folder and select `vasprun.xml` > press "Ok".
 
-When the DOS window is shown, you can e.g. select to export the DOS data by clicking "Graph" in the menu bar, selecting the raw data (.dat) option. It's also possible to directly export for use with `XmGrace`(.agr).
+  To check the DOS, in the upper menu select "Electronic" and click "DOS + bands".
+
+  When the DOS window is shown, you can e.g. select to export the DOS data by clicking "Graph" in the menu bar, selecting the raw data (.dat) option. It's also possible to directly export for use with `XmGrace`(.agr).
+  ```
+  ```{group-tab} MeluXina
+  Here, an example is made on how to use py4vasp. Assuming that the jupyter-notebook is running, from the launcher, select `New` and under `Notebook` select `py4vasp`. At the prompt `In [ ]` you can add commands
+
+      import py4vasp
+      mycalc = py4vasp.Calculation.from_path("/path/to/your/calculation/folder/here")
+      mycalc.dos.plot()
+
+  To start calculate, press the `Run` button. It might take some time for it to finish, an asterisk will be shown at the prompt `[*]` and the circle after "py4vasp" in the upper right corner will be filled. When finished, hopefully a DOS plot will be seen and a new empty prompt `[ ]` appears further below.
+
+  The DOS plot figure can e.g. be zoomed, downloaded etc. see buttons in the upper right corner of the figure.
+
+  The plot can be updated by changing the commands and press `Run` again.
+
+  ```
+ ````
 
 ### Extra tasks
 
-* Compare DOS for s, p and d states using p4vasp. Select "Electronic" > "Local DOS + bands control"
+* Compare DOS for s, p and d states using p4vasp (select "Electronic" > "Local DOS + bands control") or by using py4vasp, e.g.:
+
+      import py4vasp
+      mycalc = py4vasp.Calculation.from_path("/path/to/your/calculation/folder/here")
+      mycalc.dos.plot("s,p,d")
+
 * Anything interesting about the fcc Si system considering the DOS?
-
-Test to export DOS as a file "dos.agr" and open using XmGrace
-    
-    module load grace/5.1.25-nsc1-intel-2018a-eb
-    xmgrace dos.agr &
-
 * Compare total DOS for using a denser k-mesh (KPOINTS), ENCUT = 1.5 x ENMAX (`grep ENMAX POTCAR`) and PREC=Accurate (INCAR), any difference?
-
+* Tetralith: Test to export DOS as a file "dos.agr" and open using XmGrace
+    
+      module load grace/5.1.25-nsc1-intel-2018a-eb
+      xmgrace dos.agr &

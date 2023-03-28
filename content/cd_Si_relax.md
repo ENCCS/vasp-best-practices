@@ -18,13 +18,24 @@ Instructions for use on the EuroHPC cluster MeluXina
 `````
 
 First, copy the example folder which contains some of the VASP input files and useful scripts 
+ ````{tabs}
+  ```{group-tab} Tetralith
+      cp -r /software/sse/manual/vasp/training/ws2023/cd_Si_relax .
+      cd cd_Si_relax
 
-    cp -r /software/sse/manual/vasp/training/ws2023/cd_Si_relax .
-    cd cd_Si_relax
+  and copy the latest POTCAR file for Si
 
-and copy the latest POTCAR file for Si:
+      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+  ```
+  ```{group-tab} MeluXina
+      cp -r /project/home/p200051/vasp_ws2023/examples/cd_Si_relax .
+      cd cd_Si_relax
 
-    cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+  and copy the latest POTCAR file for Si
+
+      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
+  ```
+ ````
 
 ### Input files
 
@@ -72,9 +83,13 @@ KPOINTS
  
 ### Calculation
 
-The input files are ready for the atom relaxation, so the job can be started directly
+The input files are ready for the atom relaxation, so the job can be directly submitted (Tetralith)
 
     sbatch run.sh
+
+or running interactively (MeluXina)
+
+    srun --hint=nomultithread -n 8 vasp_std
 
 Check the progress of the relaxation by e.g.
 
