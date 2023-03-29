@@ -1,22 +1,24 @@
 VASP best practices workshop
 ===========
 
-Intro
+In this `NSC <https://www.nsc.liu.se/>`__ `NAISS <https://www.naiss.se/>`__-`ENCCS <https://enccs.se/>`__ VASP best practices workshop, online 4-5th April 2023, we will consider how to run the `Vienna Ab-initio Simulation Package (VASP) <https://www.vasp.at/>`__ efficiently on supercomputers. The workshop is mostly suitable for beginners and intermediate users at different stages and the focus will be on best practices for running VASP calculations. The hands-on part will be done at the `Tetralith <https://www.nsc.liu.se/systems/tetralith/>`__ (NAISS) or `Meluxina <https://docs.lxp.lu/system/overview/>`__ (EuroHPC) clusters. Parts of the seminars (to be made available for download) can also be of interest for advanced users.
 
+For the exact schedule and further information, check the `NSC <https://www.nsc.liu.se/support/Events/VASP_workshop_2023/>`__ and `ENCCS <https://enccs.se/events/vasp-best-practices-workshop/>`__ workshop pages, respectively.
 
+Zoom link and workshop document for writing questions & answers are sent out to participants by email.
 
 .. prereq::
 
-   prerequisites
+   - Basic experience with using the command line in a Linux/Unix environment
+   - Useful but not necessary: basic knowledge of electronic structure theory and/or DFT
 
 
 
-.. csv-table::
-   :widths: auto
-   :delim: ;
+.. toctree::
+   :maxdepth: 1
+   :caption: Presentations
 
-   20 min ; :doc:`filename`
-
+   presentations
 
 .. toctree::
    :maxdepth: 1
@@ -42,13 +44,6 @@ Intro
    Ni100_surface
    more
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Reference
-
-   quick-reference
-   guide
-
 
 
 .. _learner-personas:
@@ -56,22 +51,14 @@ Intro
 Who is the course for?
 ----------------------
 
-
+This workshop is mostly suitable for beginners and intermediate users at different stages and the focus will be on best practices for running VASP calculations.
 
 
 
 About the course
 ----------------
 
-
-
-
-
-
-See also
---------
-
-
+For further details, see the respective `NSC <https://www.nsc.liu.se/support/Events/VASP_workshop_2023/>`__ and `ENCCS <https://enccs.se/events/vasp-best-practices-workshop/>`__ workshop pages. Note that in the future, the materials might be moved to the `NSC past events page <https://www.nsc.liu.se/support/past-events/>`__.
 
 
 
