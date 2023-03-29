@@ -1,18 +1,91 @@
 ## Useful tools
 
-Some of the tools are also described in the examples. For an easy overview, a description is collected on this page. There are many more tools which can be used, some are mentioned in seminar part 4 (Utilities & Summary).
+Some of the tools are also described in the examples. For an easy overview, a description is collected on this page. There are many more tools which can be used, a selection is shown in the last part of the presentations (Utilities & Summary).
 
-### Command line tools
+`````{callout} System-specific instructions
+Select instructions for the system you are using:
+ ````{tabs}
+  ```{group-tab} Tetralith
+Instructions for use on the NAISS cluster Tetralith (NSC)
+  ```
+  ```{group-tab} MeluXina
+Instructions for use on the EuroHPC cluster MeluXina 
+  ```
+ ````
+`````
 
+### Command line
+
+Basic experience with common Unix/Linux commands such as
+
+    ls, cd, cp, mv, mkdir, rm
+
+it is also very useful to handle
+
+    grep, less, cat
+
+Can quickly look into their manual in a terminal, e.g. by typing
+
+    man grep
 
 ### Text editors
 
+There are many text editors which can be used directly in a terminal, such as `vi`, `emacs` and `nano`. In a virtual desktop environment several more are available, e.g. `gedit` on Tetralith via ThinLinc. Pick the one you prefer. There are lot of guides available online.
 
+A very brief guide to vi (vim)
+
+    vi filename   # open the file "filename"
+    i             # switch to interactive mode, used for typing, close with `esc`
+    `esc`         # needed to close interactive mode
+    :w            # save
+    :wq           # save and quit
+    :q!           # quit without saving
+    r             # replace character
+    x             # delete character
+    u             # undo
+    G             # go to end of file
+    gg            # go to beginning of file
+    .             # repeat last command
+    dd            # delete one line
+    yy            # copy (yank) line
+    p             # put line which was copied
+
+a number X before a command will repeat it X times. On Tetralith/MeluXina arrow keys can be used to move around in the file.
+ 
 ### Gnuplot
 
+[gnupot](http://www.gnuplot.info/) is a common tool for plotting data and is readily available on most systems. It's also possible to directly save a plot to an image.
+
+ ````{tabs}
+  ```{group-tab} Tetralith
+      module load gnuplot/5.2.2-nsc1
+  ```
+  ```{group-tab} MeluXina
+      module load gnuplot/5.4.4-GCCcore-11.3.0 
+  ```
+ ````
+
+typing
+
+    gnuplot
+
+will give a gnuplot prompt in the terminal `gnuplot>`.
 
 ### p4vasp
 
+[p4vasp](https://github.com/orest-d/p4vasp) is an open source visualization tool for VASP, with a wide range of functions (e.g. plotting DOS, bandstructure, energy and force convergence, structure relaxation). At this time it's [official webpage](https://www.p4vasp.at/) seems to be down.
+
+ ````{tabs}
+  ```{group-tab} Tetralith
+  p4vasp is installed on Tetralith
+
+      module load p4vasp/0.3.30-nsc1
+      p4v &
+  ```
+  ```{group-tab} MeluXina
+  p4vasp is not installed on MeluXina
+  ```
+ ````
 
 ### py4vasp
 
@@ -31,10 +104,11 @@ Here below a few examples are shown. For a much more detailed description, refer
 
 Examples for plotting density of states (DOS)
 
-    mycalc.dos.plot()
-    mycalc.dos.plot("s,p,d")
-    mycalc.dos.plot()
-    mycalc.dos.plot()
+    mycalc.dos.plot()              # plot total DOS
+    mycalc.dos.plot("s,p,d")       # plot s, p and d orbitals
+    mycalc.dos.plot("3(s)"))       # plot s orbital of atom 3 in POSCAR
+    mycalc.dos.plot("s(Na, Cl")    # plot p orbital for Na and Cl  
+    mycalc.dos.plot("down(1:3)")   # plot spin-down for atoms 1 to 3 in POSCAR combined
 
 Plotting the bandstructure
 
@@ -48,14 +122,99 @@ Plotting the energy convergence
 
     mycalc.energy[:].plot()
 
+ ````{tabs}
+  ```{group-tab} Tetralith
+  You can install py4vasp in a Python virtual environment, for example
+
+      ml Python/3.10.4-env-nsc1-gcc-2022a-eb buildenv-gcc/2022a-eb 
+      virtualenv --system-site-packages mypy4venv
+      source mypy4venv/bin/activate
+      pip install py4vasp
+
+  To logout from the virtual environment, type
+
+      deactivate
+  ```
+  ```{group-tab} MeluXina
+  For instructions on how to setup py4vasp, [refer to the MeluXina starting page](../meluxina)
+
+  ```
+ ````
 
 ### ASE
 
+[The Atomic Simulation Environment (ASE)](https://wiki.fysik.dtu.dk/ase/) is a set of tools and Python modules for setting up, manipulating, running, visualizing and analyzing atomistic simulations. It can be used together with VASP and many other programs.
+
+In this workshop it's used to help compute the equation of state in some of the examples.
+
+ ````{tabs}
+  ```{group-tab} Tetralith
+  To use ASE, load its module together with a suitable Python installation e.g.
+
+      module load ASE/3.21.0-nsc1
+      module load Python/3.10.4-env-nsc1-gcc-2022a-eb
+  ```
+  ```{group-tab} MeluXina
+  ASE is directly available from the py4vasp Python virtual environment
+  ```
+ ````
 
 ### cif2cell
 
+[cif2cell](https://github.com/torbjornbjorkman/cif2cell) is a tool for generating input structures (e.g. POSCAR) for electronic structure codes (e.g. VASP) starting from a CIF file. 
+
+For example, it can be very useful if you start from an experimental structure reported in the [Crystallograpohy Open Database](https://www.crystallography.net/cod/) which uses the CIF format. If you have a different structure format which can be converted to CIF, you can use cif2cell to produce POSCAR as a second step.
+
+ ````{tabs}
+  ```{group-tab} Tetralith
+  It is availble as a module
+
+      module load cif2cell/1.2.10-nsc1
+      cif2cell --help
+  ```
+  ```{group-tab} MeluXina
+  It can be installed, follow instructions on its github page
+  ```
+ ````
 
 ### VESTA
 
+[VESTA](https://jp-minerals.org/vesta/en/) is a 3D visualization program for structural models, volumetric data such as electron/nuclear densities, and crystal morphologies.
 
-### Jupyter-notebook
+It's available for Windows, Mac and Linux. Free of charge for non-commercial users.
+
+ ````{tabs}
+  ```{group-tab} Tetralith
+  It is available as a module
+
+      module load vesta/3.4.4-nsc1
+      vesta &
+  ```
+  ```{group-tab} MeluXina
+  It is not installed on MeluXina
+  ```
+ ````
+
+### Jupyter-notebook and jupyter-lab
+
+In brief, jupyter-notebook is a web-based interactive document which can be shared. For example, it can be used to run Python. Jupyter-lab is an extensive interface which includes jupyter-notebook.
+
+The main page is in [this link](https://jupyter.org/). Also see [documentation](https://docs.jupyter.org/en/latest/index.html).
+
+ ````{tabs}
+  ```{group-tab} Tetralith
+  Jupyter-notebook is typically available within the Python env installations on Tetralith. For example
+
+      module load Python/3.10.4-env-nsc1-gcc-2022a-eb
+
+  confirm e.g. with
+
+      pip list | grep -i jupyter
+
+  A different possibility is to install it using conda or a Python virtual environment, see the [NSC Python page](https://www.nsc.liu.se/software/python/) for more details.
+
+  ```
+  ```{group-tab} MeluXina
+  For using jupyter-notebook in the hands-on exercises, [refer to the MeluXina starting page](../meluxina). In more general for MeluXina, [refer to the documentation](https://docs.lxp.lu/).
+  ```
+ ````

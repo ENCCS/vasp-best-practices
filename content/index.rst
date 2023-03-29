@@ -40,6 +40,7 @@ Intro
    fcc_Ni_rev
    bandgap_Si
    Ni100_surface
+   more
 
 .. toctree::
    :maxdepth: 1

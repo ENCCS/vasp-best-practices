@@ -1,5 +1,7 @@
 ## For using Tetralith (NAISS, NSC)
 
+Make sure to check out the [quick-guide for using Tetralith](https://www.nsc.liu.se/support/Events/VASP_workshop_2023/quick_guide/).
+
 ### User account and login
 For participants which are eligible for using [NAISS](https://www.naiss.se/) resources (academia in Sweden or affiliated), apply for the workshop project
 

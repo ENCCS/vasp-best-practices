@@ -1,8 +1,10 @@
 ## For using MeluXina (EuroHPC)
 
-Note that the hands-on part was adjusted to MeluXina from Tetralith. 
+Note that the hands-on part was adjusted to MeluXina from Tetralith, so there are some differences.
 
 ### User account and login
+
+Instructions on access for a temporary account will be sent out by LuxProvide which handles the MeluXina supercomputer.
 
 ### General information
 There is detailed [MeluXina user documentation](https://docs.lxp.lu/) available, e.g. on how to connect and use the resources.
