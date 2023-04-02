@@ -151,12 +151,12 @@ A first static calculation for Si with the lattice constant 3.9 Å. Create a new
   The job script looks like below
 
       #!/bin/bash
-      #SBATCH -A snic2022-22-17
+      #SBATCH -A naiss2023-22-205
       #SBATCH -t 0:30:00
       #SBATCH -n 4 
       #SBATCH -J vaspjob
 
-      module load VASP/6.3.0.20012022-omp-nsc1-intel-2018a-eb
+      module load VASP/6.4.0.14022023-omp-nsc1-intel-2018a-eb
       mpprun vasp_std
 
   ```
@@ -214,7 +214,7 @@ In this part we will calculate the total energies of fcc Si between 3.5 and 4.3 
  ````{tabs}
   ```{group-tab} Tetralith
       #!/bin/bash
-      #SBATCH -A snic2022-22-17
+      #SBATCH -A naiss2023-22-205
       #SBATCH -t 0:30:00
       #SBATCH -n 4
       #SBATCH -J vaspjob
@@ -272,11 +272,11 @@ In this part we will calculate the total energies of fcc Si between 3.5 and 4.3 
 
 In brief, the above script creates a new folder with the same name as the lattice constant, copying POTCAR, INCAR and KPOINTS, while creating a new POSCAR file. It also collects the total energies from all OSZICAR files into a new file "SUMMARY.fcc".
 
-Now, submit the job script "run-vol.sh" to the queue (Tetralith), or run it as an interactive job (MeluXina)
+Now, submit the job script "run-vol.sh" to the queue (Tetralith)
 
     sbatch run-vol.sh
 
-respectively
+or run it as an interactive job (MeluXina)
 
     ./run-vol.sh
 
@@ -329,8 +329,8 @@ To find a more exact value, we can use an equation of state method. For example,
   ```{group-tab} Tetralith
   First, we need to load ASE and a suitable Python3 module, 
 
-      module load ASE/3.19.0-nsc1
-      module load Python/3.6.3-anaconda-5.0.1-nsc1
+      module load ASE/3.21.0-nsc1
+      module load Python/3.10.4-env-nsc1-gcc-2022a-eb
 
   ```
   ```{group-tab} MeluXina

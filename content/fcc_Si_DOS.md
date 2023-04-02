@@ -95,11 +95,15 @@ From scratch, set up the folder "dos" with all the input files (use `*` or `INCA
     mv * dos
     cd dos
     
-submit the calculation
+submit the calculation (Tetralith)
 
     sbatch run.sh
 
-and wait for it to finish. Any interesting messages in `slurm-JOBID.out`?
+or run it interactively (MeluXina)
+
+    srun --hint=nomultithread -n 8 vasp_std
+
+and wait for it to finish. Any interesting messages in `slurm-JOBID.out` or the output?
 
     cat slurm*.out
 
@@ -130,11 +134,15 @@ such that it looks like
     ISMEAR = -5 #tetrahedron
     LORBIT = 11
 
-submit the calculation
+submit the calculation (Tetralith)
 
     sbatch run.sh
 
-and wait for it to finish. Any interesting messages in `slurm-JOBID.out`?
+or run it interactively (MeluXina)
+
+    srun --hint=nomultithread -n 8 vasp_std
+
+and wait for it to finish. Any interesting messages in `slurm-JOBID.out` or output?
 
     cat slurm*.out
 
@@ -185,7 +193,7 @@ run it with
 
     ./plotdos.sh
 
-it produces the two files "dos.dat" and "plotfile", it also automatically starts gnuplot (Tetralith) or produces an image (MeluXina).
+it produces the two files "dos.dat" and "plotfile", it also automatically starts gnuplot (Tetralith) or produces an image "optics.png" (MeluXina).
 
 For more advanced functionalities and lots of different options, one can instead use `p4vasp` (Tetralith) or `py4vasp` (MeluXina, Tetralith)
 
