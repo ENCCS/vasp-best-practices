@@ -21,7 +21,7 @@ project = "VASP Best Practices"
 copyright = "2023, Weine Olovsson and contributors"
 author = "The contributors"
 github_user = "ENCCS"
-github_repo_name = ""  # auto-detected from dirname if blank
+github_repo_name = "vasp-best-practices"  # auto-detected from dirname if blank
 github_version = "main"
 conf_py_path = "/content/"  # with leading and trailing slash
 
