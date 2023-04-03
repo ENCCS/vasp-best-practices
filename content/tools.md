@@ -69,7 +69,10 @@ typing
 
     gnuplot
 
-will give a gnuplot prompt in the terminal `gnuplot>`.
+will give a gnuplot prompt in the terminal `gnuplot>`. To directly plot to a png image e.g.
+
+    set term png
+    set output "image.png"
 
 ### p4vasp
 
@@ -83,7 +86,19 @@ will give a gnuplot prompt in the terminal `gnuplot>`.
       p4v &
   ```
   ```{group-tab} MeluXina
-  p4vasp is not installed on MeluXina
+  p4vasp is not available as a regular installation, but is possible to run from a provided singularity image on MeluXina. First, connect with
+
+      ssh -Y meluxina
+
+  to get a compute node with X11 forwarding, start interactive job, thereafter run singularity
+
+      salloc -A p200051 -p cpu --qos default -N 1 -t 1:00:00 bash -c 'ssh -Y $(scontrol show hostnames | head -n 1)'
+
+      /apps/USE/easybuild/release/2022.1/software/Singularity-CE/3.10.2-GCCcore-11.3.0/bin/singularity  run -B /project/home/p200051  /project/home/p200051/singularity/p4.simg
+
+  At the `Singularity>` prompt, start with
+
+      p4v
   ```
  ````
 
@@ -107,7 +122,7 @@ Examples for plotting density of states (DOS)
     mycalc.dos.plot()              # plot total DOS
     mycalc.dos.plot("s,p,d")       # plot s, p and d orbitals
     mycalc.dos.plot("3(s)"))       # plot s orbital of atom 3 in POSCAR
-    mycalc.dos.plot("s(Na, Cl")    # plot p orbital for Na and Cl  
+    mycalc.dos.plot("s(Na, Cl")    # plot s orbital for Na and Cl  
     mycalc.dos.plot("down(1:3)")   # plot spin-down for atoms 1 to 3 in POSCAR combined
 
 Plotting the bandstructure
@@ -120,7 +135,9 @@ Showing the POSCAR structure in 3D
 
 Plotting the energy convergence
 
-    mycalc.energy[:].plot()
+    mycalc.energy[:].plot()       # plot the full energy range
+    mycalc.energy[5].plot()       # plot at step 5
+    mycalc.energy[1:10].plot()    # plot between steps 1 and 10
 
  ````{tabs}
   ```{group-tab} Tetralith
@@ -191,7 +208,15 @@ It's available for Windows, Mac and Linux. Free of charge for non-commercial use
       vesta &
   ```
   ```{group-tab} MeluXina
-  It is not installed on MeluXina
+  VESTA is not available as a regular installation, but is possible to run from a provided singularity image on MeluXina. First, connect with
+
+      ssh -Y meluxina
+
+  to get a compute node with X11 forwarding, start interactive job, thereafter run singularity
+
+      salloc -A p200051 -p cpu --qos default -N 1 -t 1:00:00 bash -c 'ssh -Y $(scontrol show hostnames | head -n 1)'
+
+      /apps/USE/easybuild/release/2022.1/software/Singularity-CE/3.10.2-GCCcore-11.3.0/bin/singularity  run -B /project/home/p200051  /project/home/p200051/singularity/vesta.sif
   ```
  ````
 
@@ -211,10 +236,12 @@ The main page is in [this link](https://jupyter.org/). Also see [documentation](
 
       pip list | grep -i jupyter
 
-  A different possibility is to install it using conda or a Python virtual environment, see the [NSC Python page](https://www.nsc.liu.se/software/python/) for more details.
+  A different possibility is to install it using conda or a Python virtual environment, see the [NSC Python page](https://www.nsc.liu.se/software/python/) for more details. Also see the material from the latest [NSC introduction 
 
   ```
   ```{group-tab} MeluXina
   For using jupyter-notebook in the hands-on exercises, [refer to the MeluXina starting page](../meluxina). In more general for MeluXina, [refer to the documentation](https://docs.lxp.lu/).
+
+  It is also possible to start a job directly as a [jupyter-lab session on MeluXina](https://docs.lxp.lu/cloud/jlab/jlab/), though at the moment it doesn't work together with py4vasp.
   ```
  ````

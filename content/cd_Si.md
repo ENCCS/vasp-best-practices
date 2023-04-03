@@ -82,7 +82,7 @@ Here, investigate the total energy as a function of volume in a similar way as f
  ````{tabs}
   ```{group-tab} Tetralith
       #!/bin/bash
-      #SBATCH -A snic2022-22-17
+      #SBATCH -A naiss2023-22-205
       #SBATCH -t 0:30:00
       #SBATCH -n 4
       #SBATCH -J vaspjob
@@ -163,7 +163,18 @@ check it e.g. using gnuplot
     
 and at the prompt type
 
-    plot "SUMMARY.dia" using ($1):($4) w lp
+ ````{tabs}
+  ```{group-tab} Tetralith
+      plot "SUMMARY.dia" using ($1):($4) w lp
+  ```
+  ```{group-tab} MeluXina
+      set term png
+      set output "SUMMARY.dia.png"
+      plot "SUMMARY.dia" using ($1):($4) w lp
+
+  Thereafter, open the output file `SUMMARY.fcc.png` in Jupyter-notebook.
+  ```
+ ````
 
 From the plot one can see that the equilibrium lattice constant is close to a = 5.5 Å.
 

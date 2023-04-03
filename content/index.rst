@@ -44,7 +44,11 @@ Zoom link and workshop document for writing questions & answers are sent out to 
    Ni100_surface
    more
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Compiling VASP
 
+   compile
 
 .. _learner-personas:
 

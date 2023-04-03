@@ -99,9 +99,13 @@ Here we'll assume that the first self consistent, static, step is done in the [p
 
     cp ../fcc_Si/3.9/CHGCAR .
     
-and submit the job to the queue
+and submit the job to the queue (Tetralith)
 
     sbatch run.sh
+
+or run it interactively (MeluXina)
+
+    srun --hint=nomultithread -n 8 vasp_std
 
 when the job has finished, check slurm-JOBID.out
 
