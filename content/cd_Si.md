@@ -20,7 +20,7 @@ Instructions for use on the EuroHPC cluster MeluXina
 First, copy the example folder which contains some of the VASP input files and useful scripts 
  ````{tabs}
   ```{group-tab} Tetralith
-      cp -r /software/sse/manual/vasp/training/ws2023/fcc_Si_DOS .
+      cp -r /software/sse/manual/vasp/training/ws2023/cd_Si .
       cd fcc_Si_DOS
 
   also copy the latest POTCAR file for Si
@@ -29,7 +29,7 @@ First, copy the example folder which contains some of the VASP input files and u
 
   ```
   ```{group-tab} MeluXina
-      cp -r /project/home/p200051/vasp_ws2023/examples/fcc_Si_DOS .
+      cp -r /project/home/p200051/vasp_ws2023/examples/cd_Si .
       cd fcc_Si_DOS
 
   also copy the latest POTCAR file for Si
