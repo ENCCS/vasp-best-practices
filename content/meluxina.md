@@ -26,6 +26,7 @@ A Python virtual environment with py4vasp has been prepared. A few extra steps a
 In the terminal with the interactive job running (see previous section), let's prepare to use py4vasp
 
     module load Python/3.10.4-GCCcore-11.3.0
+	module load JupyterLab/3.2.8-GCCcore-11.3.0
     python3 -m ipykernel install --name py4vasp --user
 
 one also needs to fix the "kernel.json" file, at the top of your home folder (type "cd" to get there):
