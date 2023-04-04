@@ -21,7 +21,7 @@ First, copy the example folder which contains some of the VASP input files and u
  ````{tabs}
   ```{group-tab} Tetralith
       cp -r /software/sse/manual/vasp/training/ws2023/cd_Si .
-      cd fcc_Si_DOS
+      cd cd_Si
 
   also copy the latest POTCAR file for Si
 
@@ -30,7 +30,7 @@ First, copy the example folder which contains some of the VASP input files and u
   ```
   ```{group-tab} MeluXina
       cp -r /project/home/p200051/vasp_ws2023/examples/cd_Si .
-      cd fcc_Si_DOS
+      cd cd_Si
 
   also copy the latest POTCAR file for Si
 
@@ -242,6 +242,7 @@ Return to the main example folder "cd_Si" and prepare for a bandstructure calcul
     mkdir band
     cp POSCAR INCAR POTCAR run.sh band
     cd band
+    cp ../dos/CHGCAR .
 
 we can use the same KPOINTS input file as for the [fcc Si bandstructure](../fcc_Si_bandstructure) example, e.g.
 
