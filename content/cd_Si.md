@@ -244,7 +244,7 @@ Return to the main example folder "cd_Si" and prepare for a bandstructure calcul
     cd band
     cp ../dos/CHGCAR .
 
-we can use the same KPOINTS input file as for the [fcc Si bandstructure](../fcc_Si_bandstructure) example, e.g.
+note that `CHGCAR` is copied from the previous DOS calculation. We can use the same KPOINTS input file as for the [fcc Si bandstructure](../fcc_Si_bandstructure) example, e.g.
 
  ````{tabs}
   ```{group-tab} Tetralith
