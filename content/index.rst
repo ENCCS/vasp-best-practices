@@ -3,6 +3,8 @@ VASP best practices workshop
 
 In this `NSC <https://www.nsc.liu.se/>`__ `NAISS <https://www.naiss.se/>`__-`ENCCS <https://enccs.se/>`__ VASP best practices workshop, online 17-18th April 2024, we will consider how to run the `Vienna Ab-initio Simulation Package (VASP) <https://www.vasp.at/>`__ efficiently on supercomputers. The workshop is mostly suitable for beginners and intermediate users at different stages and the focus will be on best practices for running VASP calculations. The hands-on part will be done at the `Tetralith <https://www.nsc.liu.se/systems/tetralith/>`__ (NAISS) or `LEONARDO <https://leonardo-supercomputer.cineca.eu/>`__ (EuroHPC) clusters. Parts of the seminars (to be made available for download) can also be of interest for advanced users.
 
+Note that the examples are being updated to the current 2024 workshop, from previous 2023 version.
+
 For the exact schedule and further information, check the `NSC <https://www.nsc.liu.se/support/Events/VASP_workshop_2024/>`__ and `ENCCS <https://enccs.se/events/vasp-emto-best-practices-workshop/>`__ workshop pages, respectively.
 
 Zoom link and workshop document for writing questions & answers are sent out to participants by email.
