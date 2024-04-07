@@ -11,8 +11,8 @@ Select instructions for the system you are using:
 Instructions for use on the NAISS cluster Tetralith (NSC)
   ```
 
-  ```{group-tab} MeluXina
-Instructions for use on the EuroHPC cluster MeluXina
+  ```{group-tab} LEONARDO
+Instructions for use on the EuroHPC cluster LEONARDO
   ```
  ````
 `````
@@ -20,20 +20,20 @@ Instructions for use on the EuroHPC cluster MeluXina
 First, copy the example folder which contains some of the VASP input files
  ````{tabs}
   ```{group-tab} Tetralith
-      cp -r /software/sse/manual/vasp/training/ws2023/fcc_Ni .
+      cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/fcc_Ni .
       cd fcc_Ni
 
   and copy the latest POTCAR file for Ni
 
-      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Ni/POTCAR .
+      cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Ni/POTCAR .
   ```
-  ```{group-tab} MeluXina
-      cp -r /project/home/p200051/vasp_ws2023/examples/fcc_Ni .
+  ```{group-tab} LEONARDO
+      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/fcc_Ni .
       cd fcc_Ni
 
   and copy the latest POTCAR file for Ni
 
-      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Ni/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Ni/POTCAR .
   ```
  ````
 
@@ -87,23 +87,19 @@ KPOINTS
  
 ### 1. Volume relaxation
 
-Similar as for the [cd Si](../cd_Si) example, check the total energy over a range of volumes, by using the tailored job script "run-vol.sh". Submit the job (Tetralith)
+Similar as for the [cd Si](../cd_Si) example, check the total energy over a range of volumes, by using the tailored job script "run-vol.sh". Submit the job 
 
     sbatch run-vol.sh
 
-or run it interactively (MeluxIna)
-
-    ./run-vol.sh
-
-after it finishes, check the total energy vs lattice constant e.g. using gnuplot
+After it finishes, check the total energy vs lattice constant e.g. using gnuplot
 
     gnuplot 
     
-and at the prompt type (the first two lines for creating an image, needed at MeluXina) 
+and at the prompt type (the first two lines for creating an image, needed at LEONARDO) 
 
     set term png
-    set output "SUMMARY.dia.png" 
-    plot "SUMMARY.dia" using ($1):($4) w lp
+    set output "SUMMARY.fcc.png" 
+    plot "SUMMARY.fcc" using ($1):($4) w lp
 
 is the equilibrium lattice parameter close to *a* = 3.5 Å?
 
@@ -133,13 +129,9 @@ As in the previous example for [cd Si](../cd_Si) we compute DOS in a single step
 
 notice the change to [ISMEAR](https://www.vasp.at/wiki/index.php/ISMEAR)=-5, the tetrahedron method with Blöchl corrections, suitable for DOS and total energies.
 
-Finally, submit the job (Tetralith)
+Finally, submit the job
 
     sbatch run.sh
-
-or run it interactively (MeluXina)
-
-    srun --hint=nomultithread -n 8 vasp_std
 
 To check the result after finish, use `p4vasp` or `py4vasp` as in the previous examples.
 
@@ -180,13 +172,8 @@ i.e. that CHGCAR is read. Copy CHGCAR from the previous DOS calculation
 
     cp ../dos/CHGCAR .
 
-thereafter submit the job (Tetralith)
+thereafter submit the job
 
     sbatch run.sh
-
-or run it interactively (MeluXina)
-
-    srun --hint=nomultithread -n 8 vasp_std
     
 To check the results after finish, use `p4vasp` or `py4vasp`. Compare with the [result on the VASP wiki](https://www.vasp.at/wiki/index.php/Fcc_Ni).
-
