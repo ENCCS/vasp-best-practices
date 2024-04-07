@@ -6,7 +6,7 @@
 
 * An introductory example for working with VASP
 * In general, examples are chosen for fast calculation
-* Use different job scripts, submit to the Slurm job scheduler (Tetralith) or run interactively (MeluXina)
+* Use different job scripts, submit to the Slurm job scheduler on Tetralith or LEONARDO
 * Use VASP, gnuplot, python, ASE
 * bash shell scripts
 
@@ -17,8 +17,8 @@ Select instructions for the system you are using:
 Instructions for use on the NAISS cluster Tetralith (NSC)
   ```
 
-  ```{group-tab} MeluXina
-Instructions for use on the EuroHPC cluster MeluXina 
+  ```{group-tab} LEONARDO
+Instructions for use on the EuroHPC cluster LEONARDO
   ```
  ````
 `````
@@ -26,21 +26,21 @@ Instructions for use on the EuroHPC cluster MeluXina
 First, copy the example folder which contains the input files INCAR, POSCAR, KPOINTS and some useful scripts 
  ````{tabs}
   ```{group-tab} Tetralith
-      cp -r /software/sse/manual/vasp/training/ws2023/fcc_Si .
+      cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/fcc_Si .
       cd fcc_Si
 
   also copy the latest POTCAR (PBE GGA) file for Si
 
-      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+      cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Si/POTCAR .
 
   ```
-  ```{group-tab} MeluXina
-      cp -r /project/home/p200051/vasp_ws2023/examples/fcc_Si .
+  ```{group-tab} LEONARDO
+      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/fcc_Si .
       cd fcc_Si
 
   also copy the latest POTCAR (PBE GGA) file for Si
 
-      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
   ```
  ````
 
@@ -142,36 +142,46 @@ A first static calculation for Si with the lattice constant 3.9 Å. Create a new
     cp -r scf0 scf1
     cd scf0
 
+Submit the job script "run.sh" to the job queue with
+
+    sbatch run.sh
+
+The job script looks like below
+
  ````{tabs}
   ```{group-tab} Tetralith
-  Submit the job script "run.sh" to the job queue with
-
-      sbatch run.sh
-
-  The job script looks like below
-
       #!/bin/bash
-      #SBATCH -A naiss2023-22-205
+      #SBATCH -A naiss2024-22-241
       #SBATCH -t 0:30:00
       #SBATCH -n 4 
       #SBATCH -J vaspjob
 
-      module load VASP/6.4.0.14022023-omp-nsc1-intel-2018a-eb
+      module load VASP/6.4.3.19032024-omp-hpc1-intel-2023a-eb
       mpprun vasp_std
 
   ```
-  ```{group-tab} MeluXina
-  Run the job interactively in the Jupyter-notebook terminal with
+  ```{group-tab} LEONARDO
+      #!/bin/bash
+      #SBATCH -A EUHPC_D02_030
+      #SBATCH -p boost_usr_prod
+      #SBATCH --qos=boost_qos_dbg
+      #SBATCH --time 00:15:00
+      #SBATCH -n 8
+      #SBATCH --ntasks-per-node=8
+      #SBATCH --cpus-per-task=1
+      #SBATCH --job-name=vaspjob
 
-      srun --hint=nomultithread -n 8 vasp_std
+      source /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/VASP-6.4.3-cpu1.sh
+      module load intel-oneapi-compilers/2023.2.1 
+      module load intel-oneapi-mpi/2021.10.0 
+      module load intel-oneapi-mkl/2023.2.0
+      module load hdf5/1.14.3--intel-oneapi-mpi--2021.10.0--oneapi--2023.2.0
 
-  This works if the settings were applied previously, see [starting section](../meluxina)
+      export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+      export OMP_NUM_THREADS=1
 
-      source /project/home/p200051/vasp_ws2023/setup.sh
+      srun vasp_std
 
-  which set the path to VASP binaries and loads the corresponding modules it was built with, check e.g. with "cat"
-
-      cat /project/home/p200051/vasp_ws2023/setup.sh
   ```
  ````
 
@@ -190,7 +200,7 @@ in which `JOBID` is a string of numbers. Note that
 * Some warning messages will only show in the standard output of the job, `slurm-JOBID.out` if submitted to the queue.
 **Therefore, also carefully check the output when running interactively.**
 
-You can quickly check the iteration steps and convergence with "cat", in a different terminal if it's still running interactively
+You can quickly check the iteration steps and convergence with "cat"
 
     cat OSZICAR
     
@@ -214,19 +224,19 @@ In this part we will calculate the total energies of fcc Si between 3.5 and 4.3 
  ````{tabs}
   ```{group-tab} Tetralith
       #!/bin/bash
-      #SBATCH -A naiss2023-22-205
+      #SBATCH -A naiss2024-22-241
       #SBATCH -t 0:30:00
       #SBATCH -n 4
       #SBATCH -J vaspjob
 
-      module load VASP/6.3.0.20012022-omp-nsc1-intel-2018a-eb
+      module load VASP/6.4.3.19032024-omp-hpc1-intel-2023a-eb
 
       for i in  3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2 4.3 ; do
       mkdir -p $i
       cd $i
-      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
-      cp /software/sse/manual/vasp/training/ws2023/fcc_Si/INCAR .
-      cp /software/sse/manual/vasp/training/ws2023/fcc_Si/KPOINTS .
+      cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Si/POTCAR .
+      cp /software/sse2/tetralith_el9/manual/vasp/training/ws2024/fcc_Si/INCAR .
+      cp /software/sse2/tetralith_el9/manual/vasp/training/ws2024/fcc_Si/KPOINTS .
       cat >POSCAR <<EOF
       fcc:
          $i
@@ -243,16 +253,33 @@ In this part we will calculate the total energies of fcc Si between 3.5 and 4.3 
       cd ..
       done
   ```
-  ```{group-tab} MeluXina
+  ```{group-tab} LEONARDO
       #!/bin/bash
+      #SBATCH -A EUHPC_D02_030
+      #SBATCH -p boost_usr_prod
+      #SBATCH --qos=boost_qos_dbg
+      #SBATCH --time 00:15:00
+      #SBATCH -n 8
+      #SBATCH --ntasks-per-node=8
+      #SBATCH --cpus-per-task=1
+      #SBATCH --job-name=vaspjob
+
+      source /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/VASP-6.4.3-cpu1.sh
+      module load intel-oneapi-compilers/2023.2.1
+      module load intel-oneapi-mpi/2021.10.0
+      module load intel-oneapi-mkl/2023.2.0
+      module load hdf5/1.14.3--intel-oneapi-mpi--2021.10.0--oneapi--2023.2.0
+
+      export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+      export OMP_NUM_THREADS=1
 
       for i in  3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2 4.3 ; do
       mkdir -p $i
       cd $i
-      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
-      cp /project/home/p200051/vasp_ws2023/examples/fcc_Si/INCAR .
-      cp /project/home/p200051/vasp_ws2023/examples/fcc_Si/KPOINTS .
-      cat >POSCAR <<EOF
+      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/fcc_Si/INCAR .
+      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/fcc_Si/KPOINTS .
+      cat >POSCAR <<!
       fcc:
          $i
        0.5 0.5 0.0
@@ -262,8 +289,8 @@ In this part we will calculate the total energies of fcc Si between 3.5 and 4.3 
          1
       cartesian
       0 0 0
-      EOF
-      srun --hint=nomultithread -n 8 vasp_std
+      !
+      srun vasp_std
       E=`awk '/F=/ {print $0}' OSZICAR` ; echo $i $E  >>../SUMMARY.fcc
       cd ..
       done
@@ -272,13 +299,9 @@ In this part we will calculate the total energies of fcc Si between 3.5 and 4.3 
 
 In brief, the above script creates a new folder with the same name as the lattice constant, copying POTCAR, INCAR and KPOINTS, while creating a new POSCAR file. It also collects the total energies from all OSZICAR files into a new file "SUMMARY.fcc".
 
-Now, submit the job script "run-vol.sh" to the queue (Tetralith)
+Now, submit the job script "run-vol.sh" to the queue
 
     sbatch run-vol.sh
-
-or run it as an interactive job (MeluXina)
-
-    ./run-vol.sh
 
 After a successful run, there should now be folders 3.5 - 4.3 with the different calculations and a file SUMMARY.fcc which can be checked e.g. with "less" or "cat"
 
@@ -292,14 +315,14 @@ After a successful run, there should now be folders 3.5 - 4.3 with the different
     4.2 1 F= -.46937300E+01 E0= -.46922884E+01 d E =-.288335E-02
     4.3 1 F= -.45831536E+01 E0= -.45812206E+01 d E =-.386597E-02
 
-You can make a quick plot of the total energy as a function of the lattice constant, e.g. by using gnuplot. First, load the module
+You can make a quick plot of the total energy as a function of the lattice constant, e.g. by using gnuplot. First, load the module (Tetralith)
 
  ````{tabs}
   ```{group-tab} Tetralith
-      module load gnuplot/5.2.2-nsc1
+      module load gnuplot/5.4.4-hpc1-gcc-2022a-eb
   ```
-  ```{group-tab} MeluXina
-      module load gnuplot/5.4.4-GCCcore-11.3.0 
+  ```{group-tab} LEONARDO
+      gnuplot is already available in the path
   ```
  ````
 and start it with
@@ -312,12 +335,14 @@ thereafter, at the "gnuplot>" prompt type
   ```{group-tab} Tetralith
       plot "SUMMARY.fcc" using ($1):($4) w lp
   ```
-  ```{group-tab} MeluXina
+  ```{group-tab} LEONARDO
       set term png 
       set output "SUMMARY.fcc.png"
       plot "SUMMARY.fcc" using ($1):($4) w lp
 
-  Thereafter, open the output file `SUMMARY.fcc.png` in Jupyter-notebook.
+  Thereafter, copy the file `SUMMARY.fcc.png` to your local computer, open a terminal using "scp"
+
+     scp your-username@login.leonardo.cineca.it:/your/path/fcc_Si/SUMMARY.fcc.png .
   ```
  ````
 
@@ -329,22 +354,19 @@ To find a more exact value, we can use an equation of state method. For example,
   ```{group-tab} Tetralith
   First, we need to load ASE and a suitable Python3 module, 
 
-      module load ASE/3.21.0-nsc1
-      module load Python/3.10.4-env-nsc1-gcc-2022a-eb
+      module load ASE/3.22.1-hpc1-python
+      module load Python/3.10.4-env-hpc1-gcc-2022a-eb
 
   ```
-  ```{group-tab} MeluXina
-  Using py4vasp, ASE is already included as a dependency and therefore directly available. However, since the terminal was used for running VASP interactively, meaning that a different set of modules were loaded with `source /project/home/p200051/vasp_ws2023/setup.sh`), it will not work immediately in the same terminal. 
+  ```{group-tab} LEONARDO
+  Here, a Python environment including ASE has been prepared, which also includes py4vasp, numpy etc. It can be activated by sourcing a script prepared for the workshop:
+   
+      source /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/py4vasp.sh
 
-   * The fastest way to fix this is to open up a new terminal in Jupyter-notebook for just running ASE in the terminal.
+  To check all packages included with the Python environment, one can type:
 
-   * Alternatively, load the correct dependecies to use the Python 
+      pip list
 
-         module load Python/3.10.4-GCCcore-11.3.0
-
-     after finishing with ASE, to continue to run VASP interactively, again apply
-
-         source /project/home/p200051/vasp_ws2023/setup.sh
   ```
  ````
 
@@ -390,7 +412,7 @@ and produces the file "vol_etot.dat". We will use a small python script "eqos.py
     print ("B: %2.6f GPa" % (B/GPa))
     print ()   
 
-run it to calculate the equilibrium volume using an equation of state
+run it to calculate the equilibrium volume using an equation of state (first loading the modules or activating the environment, as described above)
 
     python eqos.py
 
@@ -430,13 +452,9 @@ and insert the lattice parameter **a** obtained in **2.** by editing POSCAR, e.g
 
     vi POSCAR
 
-or use your favourite text editor (`emacs`, `nano`, `gedit`, ...). Finally, submit the job (Tetralith)
+or use your favourite text editor (`emacs`, `nano`, `gedit`, ...). Finally, submit the job
 
     sbatch run.sh
-
-or run it interactively (MeluXina)
-
-    srun --hint=nomultithread -n 8 vasp_std
 
 and compare the total energy with previous results. For example, try
 
@@ -454,4 +472,3 @@ and compare the total energy with previous results. For example, try
 * Try different methods to compute the equilibrium by editing the script "eqos.py"
 
 * Compute the equilibrium volumes for a less dense k-mesh `5 5 5` in KPOINTS and with ENCUT set to ENMIN from POTCAR, and (2) for a denser k-mesh `29 29 29` and with ENCUT = ENMAX x 1.3. Suggestion: create new folders, copy and edit the "run_vol.sh" job script
-
