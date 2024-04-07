@@ -11,8 +11,8 @@ Select instructions for the system you are using:
 Instructions for use on the NAISS cluster Tetralith (NSC)
   ```
 
-  ```{group-tab} MeluXina
-Instructions for use on the EuroHPC cluster MeluXina
+  ```{group-tab} LEONARDO
+Instructions for use on the EuroHPC cluster LEONARDO
   ```
  ````
 `````
@@ -23,21 +23,21 @@ Note that bandstructure calculations **should** be done in two steps (compare wi
 First, copy the example folder which contains some of the VASP input files and useful scripts 
  ````{tabs}
   ```{group-tab} Tetralith
-      cp -r /software/sse/manual/vasp/training/ws2023/fcc_Si_band .
+      cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/fcc_Si_band .
       cd fcc_Si_band
 
   also copy the latest POTCAR file for Si
 
-      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+      cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Si/POTCAR .
 
   ```
-  ```{group-tab} MeluXina
-      cp -r /project/home/p200051/vasp_ws2023/examples/fcc_Si_band .
+  ```{group-tab} LEONARDO
+      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/fcc_Si_band .
       cd fcc_Si_band
 
   also copy the latest POTCAR file for Si
 
-      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
   ```
  ````
 
@@ -99,13 +99,9 @@ Here we'll assume that the first self consistent, static, step is done in the [p
 
     cp ../fcc_Si/3.9/CHGCAR .
     
-and submit the job to the queue (Tetralith)
+and submit the job to the queue 
 
     sbatch run.sh
-
-or run it interactively (MeluXina)
-
-    srun --hint=nomultithread -n 8 vasp_std
 
 when the job has finished, check slurm-JOBID.out
 
@@ -120,8 +116,8 @@ when the job has finished, check slurm-JOBID.out
 
   and select: Electronic > DOS+bands > Show > Bands. As in the case of DOS, it's possible to save the data by selecting Graph > Export, to e.g. raw data or an XmGrace file (.agr).
   ```
-  ```{group-tab} MeluXina
-  Plot the bandstructure using py4vasp via the Jupyter-notebook
+  ```{group-tab} LEONARDO
+  Plot the bandstructure e.g. using py4vasp via Jupyter-notebook on your local computer
 
       import py4vasp
       mycalc = py4vasp.Calculation.from_path("/path/to/your/calculation/folder/here")
