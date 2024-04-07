@@ -11,8 +11,8 @@ Select instructions for the system you are using:
 Instructions for use on the NAISS cluster Tetralith (NSC)
   ```
 
-  ```{group-tab} MeluXina
-Instructions for use on the EuroHPC cluster MeluXina
+  ```{group-tab} LEONARDO
+Instructions for use on the EuroHPC cluster LEONARDO
   ```
  ````
 `````
@@ -20,21 +20,22 @@ Instructions for use on the EuroHPC cluster MeluXina
 First, copy the example folder which contains some of the VASP input files and useful scripts 
  ````{tabs}
   ```{group-tab} Tetralith
-      cp -r /software/sse/manual/vasp/training/ws2023/cd_Si .
+      cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/cd_Si .
       cd cd_Si
 
   also copy the latest POTCAR file for Si
 
-      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+      cp /software/sse2/tetralith_el9/manual/vasp/training/ws2024/Si/POTCAR .
 
   ```
-  ```{group-tab} MeluXina
-      cp -r /project/home/p200051/vasp_ws2023/examples/cd_Si .
+  ```{group-tab} LEONARDO
+      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/cd_Si .
       cd cd_Si
 
   also copy the latest POTCAR file for Si
 
-      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
+
   ```
  ````
 
@@ -82,19 +83,19 @@ Here, investigate the total energy as a function of volume in a similar way as f
  ````{tabs}
   ```{group-tab} Tetralith
       #!/bin/bash
-      #SBATCH -A naiss2023-22-205
+      #SBATCH -A naiss2024-22-241
       #SBATCH -t 0:30:00
       #SBATCH -n 4
       #SBATCH -J vaspjob
 
-      module load VASP/6.3.0.20012022-omp-nsc1-intel-2018a-eb
+      module load VASP/6.4.3.19032024-omp-hpc1-intel-2023a-eb
 
       for i in 5.1 5.2 5.3 5.4 5.5 5.6 5.7 ; do
       mkdir -p $i
       cd $i
-      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
-      cp /software/sse/manual/vasp/training/ws2023/cd_Si/INCAR .
-      cp /software/sse/manual/vasp/training/ws2023/cd_Si/KPOINTS .
+      cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Si/POTCAR .
+      cp /software/sse2/tetralith_el9/manual/vasp/training/ws2024/cd_Si/INCAR .
+      cp /software/sse2/tetralith_el9/manual/vasp/training/ws2024/cd_Si/KPOINTS .
       cat >POSCAR <<EOF
       cubic diamond Si
          $i
@@ -111,21 +112,34 @@ Here, investigate the total energy as a function of volume in a similar way as f
       E=`awk '/F=/ {print $0}' OSZICAR` ; echo $i $E  >>../SUMMARY.dia
       cd ..
       done
-
-  submit it with
-
-      sbatch run-vol.sh
   ```
-  ```{group-tab} MeluXina
+  ```{group-tab} LEONARDO
       #!/bin/bash
+      #SBATCH -A EUHPC_D02_030
+      #SBATCH -p boost_usr_prod
+      #SBATCH --qos=boost_qos_dbg
+      #SBATCH --time 00:15:00
+      #SBATCH -n 8
+      #SBATCH --ntasks-per-node=8
+      #SBATCH --cpus-per-task=1
+      #SBATCH --job-name=vaspjob
+
+      source /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/VASP-6.4.3-cpu1.sh
+      module load intel-oneapi-compilers/2023.2.1 
+      module load intel-oneapi-mpi/2021.10.0 
+      module load intel-oneapi-mkl/2023.2.0
+      module load hdf5/1.14.3--intel-oneapi-mpi--2021.10.0--oneapi--2023.2.0
+
+      export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+      export OMP_NUM_THREADS=1
 
       for i in 5.1 5.2 5.3 5.4 5.5 5.6 5.7 ; do
       mkdir -p $i
       cd $i
-      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
-      cp /project/home/p200051/vasp_ws2023/examples/cd_Si/INCAR .
-      cp /project/home/p200051/vasp_ws2023/examples/cd_Si/KPOINTS .
-      cat >POSCAR <<EOF
+      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+      cp /software/sse/manual/vasp/training/ws2022/cd_Si/INCAR .
+      cp /software/sse/manual/vasp/training/ws2022/cd_Si/KPOINTS .
+      cat >POSCAR <<!
       cubic diamond Si
          $i 
        0.0    0.5     0.5
@@ -136,18 +150,18 @@ Here, investigate the total energy as a function of volume in a similar way as f
       Direct
        -0.125 -0.125 -0.125
         0.125  0.125  0.125
-      EOF
-      srun --hint=nomultithread -n 8 vasp_std
+      !
+      srun vasp_std
       E=`awk '/F=/ {print $0}' OSZICAR` ; echo $i $E  >>../SUMMARY.dia
       cd ..
       done
-
-  run it with
-
-      ./run-vol.sh
   ```
  ````
-after some short time, the folders 5.1 - 5.7 with the output should appear and a file "SUMMARY.dia":
+submit it with
+
+    sbatch run-vol.sh
+
+After some short time, the folders 5.1 - 5.7 with the output should appear and a file "SUMMARY.dia":
 
     5.1 1 F= -.10233838E+02 E0= -.10233747E+02 d E =-.180914E-03
     5.2 1 F= -.10528200E+02 E0= -.10528187E+02 d E =-.271766E-04
@@ -167,12 +181,12 @@ and at the prompt type
   ```{group-tab} Tetralith
       plot "SUMMARY.dia" using ($1):($4) w lp
   ```
-  ```{group-tab} MeluXina
+  ```{group-tab} LEONARDO
       set term png
       set output "SUMMARY.dia.png"
       plot "SUMMARY.dia" using ($1):($4) w lp
 
-  Thereafter, open the output file `SUMMARY.fcc.png` in Jupyter-notebook.
+  Thereafter, copy the output file `SUMMARY.dia.png` to your local computer and check.
   ```
  ````
 
@@ -223,14 +237,10 @@ For a single step calculation, edit INCAR e.g. with `vi` or your text editor of 
     #SIGMA = 0.1
     LORBIT = 11
 
-thereafter submit the job (Tetralith)
+thereafter submit the job
 
     sbatch run.sh
     
-or run interactively (MeluXina)
-
-    srun --hint=nomultithread -n 8 vasp_std
-
 After it finished, check that the output looks fine, e.g. "cat slurm*out" or check output in terminal.
 
 Now use p4vasp or py4vasp to check DOS, similar as was described for [fcc Si DOS](../fcc_Si_DOS)
@@ -248,12 +258,12 @@ note that `CHGCAR` is copied from the previous DOS calculation. We can use the s
 
  ````{tabs}
   ```{group-tab} Tetralith
-      cp /software/sse/manual/vasp/training/ws2023/fcc_Si_band/KPOINTS .
+      cp /software/sse2/tetralith_el9/manual/vasp/training/ws2024/fcc_Si_band/KPOINTS .
   ```
-  ```{group-tab} MeluXina
-      cp /project/home/p200051/vasp_ws2023/examples/fcc_Si_band/KPOINTS .
+  ```{group-tab} LEONARDO
+      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/fcc_Si_band/KPOINTS .
   ```
- ````
+
 and edit INCAR such that it looks like
 
     System = diamond Si
@@ -265,13 +275,9 @@ and edit INCAR such that it looks like
     SIGMA = 0.1
     LORBIT = 11
     
-assuring that `CHGCAR` will be read (ICHARG=11) and same as for DOS, setting LORBIT=11. Submit the job (Tetralith)
+assuring that `CHGCAR` will be read (ICHARG=11) and same as for DOS, setting LORBIT=11. Submit the job 
 
     sbatch run.sh
-
-or run interactively (MeluXina)
-
-    srun --hint=nomultithread -n 8 vasp_std
 
 and wait for it to finish. Check that the output looks fine and once again use p4vasp or py4vasp, following the previous example of [fcc Si bandstructure](../fcc_Si_bandstructure).
 
@@ -282,4 +288,3 @@ In addition, test to plot the orbital characters of the bands following the exam
 * Test with other methods for EOS by editing the "eqos.py" script
 
 * Perform the volume relaxation in **1.** with a higher ENCUT in INCAR 
-
