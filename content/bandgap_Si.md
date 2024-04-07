@@ -11,8 +11,8 @@ Select instructions for the system you are using:
 Instructions for use on the NAISS cluster Tetralith (NSC)
   ```
 
-  ```{group-tab} MeluXina
-Instructions for use on the EuroHPC cluster MeluXina
+  ```{group-tab} LEONARDO
+Instructions for use on the EuroHPC cluster LEONARDO
   ```
  ````
 `````
@@ -20,20 +20,20 @@ Instructions for use on the EuroHPC cluster MeluXina
 First, copy the example folder which contains some of the VASP input files and useful scripts
  ````{tabs}
   ```{group-tab} Tetralith
-      cp -r /software/sse/manual/vasp/training/ws2023/bandgap_Si .
+      cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/bandgap_Si .
       cd bandgap_Si
 
   and copy the latest POTCAR file for Si
 
-      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+      cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Si/POTCAR .
   ```
-  ```{group-tab} MeluXina
-      cp -r /project/home/p200051/vasp_ws2023/examples/bandgap_Si .
+  ```{group-tab} LEONARDO
+      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/bandgap_Si .
       cd bandgap_Si
 
   and copy the latest POTCAR file for Si
 
-      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
   ```
  ````
 
@@ -93,15 +93,11 @@ KPOINTS
 
 ### Calculations
 
-First, run the regular PBE calculation which will be used as a start for the DFT+HF methods by submitting the job (Tetralith)
+First, run the regular PBE calculation which will be used as a start for the DFT+HF methods by submitting the job 
 
     sbatch run.sh
 
-or run interactively (MeluXina)
-
-    srun --hint=nomultithread -n 8 vasp_std
-    
-when it's finished, cycle through the different DFT+HF methods, don't forget to copy `WAVECAR`
+When it's finished, cycle through the different DFT+HF methods, don't forget to copy `WAVECAR`
 
     mkdir B3LYP
     cp INCAR POSCAR KPOINTS POTCAR run.sh gap.sh WAVECAR B3LYP
@@ -131,4 +127,3 @@ In the same way, repeat the calculations for PBE0, HSE06 and HF.
 
 * Compare the results with PBE, how big is the difference?
 * Why didn't we explicitly set [ISTART](https://www.vasp.at/wiki/index.php/ISTART)=1 in INCAR in order to continue the calculation? Because, since a WAVECAR was present in the folder, the default is set to ISTART=1 instead of 0. Confirm with "grep ISTART OUTCAR".
-
