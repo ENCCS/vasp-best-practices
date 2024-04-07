@@ -11,8 +11,8 @@ Select instructions for the system you are using:
 Instructions for use on the NAISS cluster Tetralith (NSC)
   ```
 
-  ```{group-tab} MeluXina
-Instructions for use on the EuroHPC cluster MeluXina
+  ```{group-tab} LEONARDO
+Instructions for use on the EuroHPC cluster LEONARDO
   ```
  ````
 `````
@@ -20,21 +20,21 @@ Instructions for use on the EuroHPC cluster MeluXina
 First, copy the example folder which contains some of the VASP input files
  ````{tabs}
   ```{group-tab} Tetralith
-      cp -r /software/sse/manual/vasp/training/ws2023/Ni100_surf .
+      cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/Ni100_surf .
       cd Ni100_surf
 
   and copy the latest POTCAR file for Ni
 
-      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Ni/POTCAR .
+      cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Ni/POTCAR .
 
   ```
-  ```{group-tab} MeluXina
-      cp -r /project/home/p200051/vasp_ws2023/examples/Ni100_surf .
+  ```{group-tab} LEONARDO
+      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/Ni100_surf .
       cd Ni100_surf
 
   and copy the latest POTCAR file for Ni
 
-      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Ni/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Ni/POTCAR .
   ```
  ````
 
@@ -124,14 +124,10 @@ So, for relaxation `F=False` and `T=True`, so one sees that the two atoms at z=1
 * For surface relaxations it's typical to fix the bulk-like atoms in the bottom and let the ones close to the surface be able to relax
 * Alternatively, a symmetric supercell can be constructed with inner bulk-like layers
 
-Submit the calculation to the queue (Tetralith)
+Submit the calculation to the queue 
 
     sbatch run.sh
 
-or run interactively (MeluXina)
-
-    srun --hint=nomultithread -n 8 vasp_std
-    
 and observe the relaxation e.g. with
 
     cat OSZICAR
@@ -213,13 +209,9 @@ Also note that we use a new INCAR (from INCAR.dos) which looks like
 * [ALGO](https://www.vasp.at/wiki/index.php/ALGO)=Normal, the default electron minimization algorithm
 * [LORBIT](https://www.vasp.at/wiki/index.php/LORBIT)=11, lm and site decomposed DOS
 
-Run the calculation with (Tetralith)
+Run the calculation with
 
     sbatch run.sh
-
-or run interactively (MeluXina)
-
-    srun --hint=nomultithread -n 8 vasp_std
 
 After it finishes, at the end of OUTCAR, check the information on local charge and magnetization
 
@@ -310,15 +302,10 @@ This time KPOINTS for the bandstructure looks like
 * Reciprocal coordinates
 * Each point has weight 1
 
-Submit the job (Tetralith)
+Submit the job
 
     sbatch run.sh
 
-or run interactively (MeluXina)
-
-    srun --hint=nomultithread -n 8 vasp_std
-      
 and wait for it to finish. 
 
 Investigate the bandstructure, compare with the [VASP wiki example](https://www.vasp.at/wiki/index.php/Ni_100_surface_bandstructure).
-
