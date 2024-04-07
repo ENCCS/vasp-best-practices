@@ -11,8 +11,8 @@ Select instructions for the system you are using:
 Instructions for use on the NAISS cluster Tetralith (NSC)
   ```
 
-  ```{group-tab} MeluXina
-Instructions for use on the EuroHPC cluster MeluXina
+  ```{group-tab} LEONARDO
+Instructions for use on the EuroHPC cluster LEONARDO
   ```
  ````
 `````
@@ -20,20 +20,20 @@ Instructions for use on the EuroHPC cluster MeluXina
 First, copy the example folder which contains some of the VASP input files and useful scripts 
  ````{tabs}
   ```{group-tab} Tetralith
-      cp -r /software/sse/manual/vasp/training/ws2023/cd_Si_relax .
+      cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/cd_Si_relax .
       cd cd_Si_relax
 
   and copy the latest POTCAR file for Si
 
-      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+      cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Si/POTCAR .
   ```
-  ```{group-tab} MeluXina
-      cp -r /project/home/p200051/vasp_ws2023/examples/cd_Si_relax .
+  ```{group-tab} LEONARDO
+      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/cd_Si_relax .
       cd cd_Si_relax
 
   and copy the latest POTCAR file for Si
 
-      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
   ```
  ````
 
@@ -83,13 +83,9 @@ KPOINTS
  
 ### Calculation
 
-The input files are ready for the atom relaxation, so the job can be directly submitted (Tetralith)
+The input files are ready for the atom relaxation, so the job can be directly submitted
 
     sbatch run.sh
-
-or running interactively (MeluXina)
-
-    srun --hint=nomultithread -n 8 vasp_std
 
 Check the progress of the relaxation by e.g.
 
@@ -107,5 +103,4 @@ the calculation should be quite fast. At the end of OUTCAR, e.g. using `less`, c
 
 * The resulting structure can be found in [CONTCAR](https://www.vasp.at/wiki/index.php/CONTCAR)
 * The progress of the structure at each relaxation point is found in [XDATCAR](https://www.vasp.at/wiki/index.php/XDATCAR)
-
-
+      
