@@ -10,8 +10,8 @@ Select instructions for the system you are using:
 Instructions for use on the NAISS cluster Tetralith (NSC)
   ```
 
-  ```{group-tab} MeluXina
-Instructions for use on the EuroHPC cluster MeluXina
+  ```{group-tab} LEONARDO
+Instructions for use on the EuroHPC cluster LEONARDO
   ```
  ````
 `````
@@ -27,21 +27,21 @@ Note that
 First, copy the example folder which contains some of the VASP input files and useful scripts 
  ````{tabs}
   ```{group-tab} Tetralith
-      cp -r /software/sse/manual/vasp/training/ws2023/fcc_Si_DOS .
+      cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/fcc_Si_DOS .
       cd fcc_Si_DOS
 
   also copy the latest POTCAR file for Si
 
-      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+      cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Si/POTCAR .
 
   ```
-  ```{group-tab} MeluXina
-      cp -r /project/home/p200051/vasp_ws2023/examples/fcc_Si_DOS .
+  ```{group-tab} LEONARDO
+      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/fcc_Si_DOS .
       cd fcc_Si_DOS
 
   also copy the latest POTCAR file for Si
 
-      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
   ```
  ````
 
@@ -95,13 +95,9 @@ From scratch, set up the folder "dos" with all the input files (use `*` or `INCA
     mv * dos
     cd dos
     
-submit the calculation (Tetralith)
+submit the calculation
 
     sbatch run.sh
-
-or run it interactively (MeluXina)
-
-    srun --hint=nomultithread -n 8 vasp_std
 
 and wait for it to finish. Any interesting messages in `slurm-JOBID.out` or the output?
 
@@ -134,13 +130,9 @@ such that it looks like
     ISMEAR = -5 #tetrahedron
     LORBIT = 11
 
-submit the calculation (Tetralith)
+submit the calculation
 
     sbatch run.sh
-
-or run it interactively (MeluXina)
-
-    srun --hint=nomultithread -n 8 vasp_std
 
 and wait for it to finish. Any interesting messages in `slurm-JOBID.out` or output?
 
@@ -169,7 +161,7 @@ To quickly check the resulting DOS, you can use the small script "plotdos.sh" pr
 
       gnuplot -persist plotfile
   ```
-  ```{group-tab} MeluXina
+  ```{group-tab} LEONARDO
       #!/bin/bash
 
       awk 'BEGIN{i=1} /dos>/,\
@@ -193,9 +185,9 @@ run it with
 
     ./plotdos.sh
 
-it produces the two files "dos.dat" and "plotfile", it also automatically starts gnuplot (Tetralith) or produces an image "optics.png" (MeluXina).
+it produces the two files "dos.dat" and "plotfile", it also automatically starts gnuplot (Tetralith) or produces an image "optics.png" (LEONARDO).
 
-For more advanced functionalities and lots of different options, one can instead use `p4vasp` (Tetralith) or `py4vasp` (MeluXina, Tetralith)
+For more advanced functionalities and lots of different options, one can instead use `p4vasp` (Tetralith) or `py4vasp` (Tetralith, local computer)
 
  ````{tabs}
   ```{group-tab} Tetralith
@@ -210,8 +202,10 @@ For more advanced functionalities and lots of different options, one can instead
 
   When the DOS window is shown, you can e.g. select to export the DOS data by clicking "Graph" in the menu bar, selecting the raw data (.dat) option. It's also possible to directly export for use with `XmGrace`(.agr).
   ```
-  ```{group-tab} MeluXina
-  Here, an example is made on how to use py4vasp. Assuming that the jupyter-notebook is running, from the launcher, select `New` and under `Notebook` select `py4vasp`. At the prompt `In [ ]` you can add commands
+  ```{group-tab} LEONARDO
+  Copy the output files to your local computer using "scp" and investigate using `py4vasp`. For `p4vasp`, follow Tetralith instructions.
+
+  Here, an example is made on how to use py4vasp. Assuming that a jupyter-notebook is running, from the launcher, select `New` and under `Notebook` select `py4vasp`. At the prompt `In [ ]` you can add commands
 
       import py4vasp
       mycalc = py4vasp.Calculation.from_path("/path/to/your/calculation/folder/here")
@@ -238,5 +232,5 @@ For more advanced functionalities and lots of different options, one can instead
 * Compare total DOS for using a denser k-mesh (KPOINTS), ENCUT = 1.5 x ENMAX (`grep ENMAX POTCAR`) and PREC=Accurate (INCAR), any difference?
 * Tetralith: Test to export DOS as a file "dos.agr" and open using XmGrace
     
-      module load grace/5.1.25-nsc1-intel-2018a-eb
+      module load grace/5.1.25-hpc1-intel-2023a-eb
       xmgrace dos.agr &
