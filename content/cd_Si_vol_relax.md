@@ -18,8 +18,8 @@ Select instructions for the system you are using:
 Instructions for use on the NAISS cluster Tetralith (NSC)
   ```
 
-  ```{group-tab} MeluXina
-Instructions for use on the EuroHPC cluster MeluXina
+  ```{group-tab} LEONARDO
+Instructions for use on the EuroHPC cluster LEONARDO
   ```
  ````
 `````
@@ -27,20 +27,20 @@ Instructions for use on the EuroHPC cluster MeluXina
 First, copy the example folder which contains the VASP input files
  ````{tabs}
   ```{group-tab} Tetralith
-      cp -r /software/sse/manual/vasp/training/ws2023/cd_Si_vol_relax .
+      cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/cd_Si_vol_relax .
       cd cd_Si_vol_relax
 
   and copy the latest POTCAR file for Si
 
-      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
+      cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Si/POTCAR .
   ```
-  ```{group-tab} MeluXina
-      cp -r /project/home/p200051/vasp_ws2023/examples/cd_Si_vol_relax .
+  ```{group-tab} LEONARDO
+      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/cd_Si_vol_relax .
       cd cd_Si_vol_relax
 
   and copy the latest POTCAR file for Si
 
-      cp /project/home/p200051/vasp_ws2023/vasp/potpaw_PBE.54/Si/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
   ```
  ````
 
@@ -88,19 +88,13 @@ KPOINTS
 
 ### Calculation
 
-Start the volume relaxation calculation by submitting the job (Tetralith)
+Start the volume relaxation calculation by submitting the job 
 
     sbatch run.sh
-
-or running interactively (MeluXina)
-
-    srun --hint=nomultithread -n 8 vasp_std
 
 Monitor how the structural relaxation progresses with
 
     cat OSZICAR
-
-or observing the output on the terminal (MeluXina).
 
 Check the relaxed final structure
 
@@ -119,7 +113,7 @@ Check the relaxed final structure
   by selecting Convergence > Energy or > Forces.
 
   ```
-  ```{group-tab} MeluXina
+  ```{group-tab} LEONARDO
   Check the convergence of the total energy using py4vasp
 
       import py4vasp
@@ -134,4 +128,3 @@ Check the relaxed final structure
 * Repeat the volume relaxation calculation in a new folder, but this time start from the relaxed structure `CONTCAR`, by copying it to POSCAR. Does the structure change, if so, how much?
 
 * Repeat the volume relaxation calculation from scratch with higher accuracy, e.g. set ENCUT to 1.3 x ENMAX (grep ENMAX POTCAR) and PREC=Accurate in INCAR. Also, set a smaller value for EDIFF. Any difference in the lattice parameter a?
-
