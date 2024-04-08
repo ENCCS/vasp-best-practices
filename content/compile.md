@@ -6,7 +6,7 @@ Detailed descriptions on how to install VASP can be found at the [VASP-wiki](htt
 
 Note that the recipes here below might not be the best ways to install VASP (e.g. limitations on available tool-chains and effort levels on benchmarking and optimization), but can be of interest as some practical examples.
 
-### Tetralith
+### Tetralith (2023)
 
 Description on how VASP 6.4.0 was built on [Tetralith](https://www.nsc.liu.se/systems/tetralith/) (regular installation with access during workshop). The regular nodes contain 2x Intel Xeon Gold 6130 CPUs with a total of (2x 16) 32 cores and 96 GB RAM.
 
@@ -63,7 +63,7 @@ The changes were
     LLIBS      += -L$(HDF5_ROOT)/lib -lhdf5_fortran
     INCS       += -I$(HDF5_ROOT)/include
 
-### MeluXina
+### MeluXina (2023)
 An example on how VASP 6.4.0 was built on MeluXina (temporary workshop installation). The regular nodes used in the workshop contain 2x AMD EPYC Rome 7H12 with a total of (2x 64) 128 cores (256 with hyper-threading) and 512 GB RAM. 
 
     module load foss/2022a
@@ -111,7 +111,7 @@ An intel compiler installation was also tested on MeluXina, though some problems
 
       export MKL_CBWR=AVX2 
 
-### GPU example
+### GPU example (2023)
 
 This is an example on how VASP 6.3.2 was compiled for a benchmark and energy consumption test on [Berzelius](https://www.nsc.liu.se/systems/berzelius/) nodes equipped with Nvidia A100 GPUs (since Berzelius is prioritized for AI and machine learning, it's typically unavailable for regular VASP calculations).
 
