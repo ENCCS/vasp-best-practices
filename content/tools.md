@@ -172,6 +172,8 @@ In this workshop it's used to help compute the equation of state in some of the 
 
       module load ASE/3.21.0-nsc1
       module load Python/3.10.4-env-nsc1-gcc-2022a-eb
+
+  Also note that ASE is directly available from a py4vasp Python environment.  
   ```
   ```{group-tab} LEONARDO
   ASE is available via the py4vasp Python environment prepared for the workshop
