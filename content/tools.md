@@ -1,6 +1,10 @@
 ## Useful tools
 
-Some of the tools are also described in the examples. For an easy overview, a description is collected on this page. There are many more tools which can be used, a selection is shown in the last part of the presentations (Utilities & Summary).
+Some of the tools are also described in the examples. For an easy overview, a description is collected on this page. There are many more tools which can be used, a selection is shown in the 4th and last presentation, "Utilities & Summary".
+
+In general, Tetralith is well suitable for post-processing directly on the login node, or using work nodes for more heavy processing, via the ThinLinc virtual desktop. 
+
+On LEONARDO, we suggest to produce plots as images (gnuplot) and download, if possible use your local computer for analysis and post-processing of the output. On your local computer, for example, install py4vasp and run using Jupyter lab. For many programs it's possible to install on Linux as well as MacOS and Windows.
 
 `````{callout} System-specific instructions
 Select instructions for the system you are using:
@@ -8,8 +12,8 @@ Select instructions for the system you are using:
   ```{group-tab} Tetralith
 Instructions for use on the NAISS cluster Tetralith (NSC)
   ```
-  ```{group-tab} MeluXina
-Instructions for use on the EuroHPC cluster MeluXina 
+  ```{group-tab} LEONARDO
+Instructions for use on the EuroHPC cluster LEONARDO
   ```
  ````
 `````
@@ -50,7 +54,7 @@ A very brief guide to vi (vim)
     yy            # copy (yank) line
     p             # put line which was copied
 
-a number X before a command will repeat it X times. On Tetralith/MeluXina arrow keys can be used to move around in the file.
+a number X before a command will repeat it X times. On Tetralith/LEONARDO arrow keys can be used to move around in the file.
  
 ### Gnuplot
 
@@ -60,8 +64,8 @@ a number X before a command will repeat it X times. On Tetralith/MeluXina arrow 
   ```{group-tab} Tetralith
       module load gnuplot/5.2.2-nsc1
   ```
-  ```{group-tab} MeluXina
-      module load gnuplot/5.4.4-GCCcore-11.3.0 
+  ```{group-tab} LEONARDO
+      gnuplot is available in the path
   ```
  ````
 
@@ -74,6 +78,12 @@ will give a gnuplot prompt in the terminal `gnuplot>`. To directly plot to a png
     set term png
     set output "image.png"
 
+you can also get a quick ASCII sketch of a plot in the terminal by setting
+
+    set term dumb
+
+before a plot command.
+
 ### p4vasp
 
 [p4vasp](https://github.com/orest-d/p4vasp) is an open source visualization tool for VASP, with a wide range of functions (e.g. plotting DOS, bandstructure, energy and force convergence, structure relaxation). At this time it's [official webpage](https://www.p4vasp.at/) seems to be down.
@@ -85,20 +95,8 @@ will give a gnuplot prompt in the terminal `gnuplot>`. To directly plot to a png
       module load p4vasp/0.3.30-nsc1
       p4v &
   ```
-  ```{group-tab} MeluXina
-  p4vasp is not available as a regular installation, but is possible to run from a provided singularity image on MeluXina. First, connect with
-
-      ssh -Y meluxina
-
-  to get a compute node with X11 forwarding, start interactive job, thereafter run singularity
-
-      salloc -A p200051 -p cpu --qos default -N 1 -t 1:00:00 bash -c 'ssh -Y $(scontrol show hostnames | head -n 1)'
-
-      /apps/USE/easybuild/release/2022.1/software/Singularity-CE/3.10.2-GCCcore-11.3.0/bin/singularity  run -B /project/home/p200051  /project/home/p200051/singularity/p4.simg
-
-  At the `Singularity>` prompt, start with
-
-      p4v
+  ```{group-tab} LEONARDO
+  p4vasp is not available
   ```
  ````
 
@@ -143,7 +141,7 @@ Plotting the energy convergence
   ```{group-tab} Tetralith
   You can install py4vasp in a Python virtual environment, for example
 
-      ml Python/3.10.4-env-nsc1-gcc-2022a-eb buildenv-gcc/2022a-eb 
+      ml Python/3.10.4-env-hpc1-gcc-2022a-eb buildenv-gcc/2022a-eb 
       virtualenv --system-site-packages mypy4venv
       source mypy4venv/bin/activate
       pip install py4vasp
@@ -152,8 +150,12 @@ Plotting the energy convergence
 
       deactivate
   ```
-  ```{group-tab} MeluXina
-  For instructions on how to setup py4vasp, [refer to the MeluXina starting page](../meluxina)
+  ```{group-tab} LEONARDO
+  py4vasp is available by sourcing the following Python environment prepared for the workshop
+
+      source /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/py4vasp.sh
+
+  though note that graphics via e.g. Jupyter isn't working. 
 
   ```
  ````
@@ -171,8 +173,11 @@ In this workshop it's used to help compute the equation of state in some of the 
       module load ASE/3.21.0-nsc1
       module load Python/3.10.4-env-nsc1-gcc-2022a-eb
   ```
-  ```{group-tab} MeluXina
-  ASE is directly available from the py4vasp Python virtual environment
+  ```{group-tab} LEONARDO
+  ASE is available via the py4vasp Python environment prepared for the workshop
+
+      source /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/py4vasp.sh
+
   ```
  ````
 
@@ -186,10 +191,10 @@ For example, it can be very useful if you start from an experimental structure r
   ```{group-tab} Tetralith
   It is availble as a module
 
-      module load cif2cell/1.2.10-nsc1
+      module load cif2cell/2.1.0-hpc1
       cif2cell --help
   ```
-  ```{group-tab} MeluXina
+  ```{group-tab} LEONARDO
   It can be installed, follow instructions on its github page
   ```
  ````
@@ -207,16 +212,8 @@ It's available for Windows, Mac and Linux. Free of charge for non-commercial use
       module load vesta/3.4.4-nsc1
       vesta &
   ```
-  ```{group-tab} MeluXina
-  VESTA is not available as a regular installation, but is possible to run from a provided singularity image on MeluXina. First, connect with
-
-      ssh -Y meluxina
-
-  to get a compute node with X11 forwarding, start interactive job, thereafter run singularity
-
-      salloc -A p200051 -p cpu --qos default -N 1 -t 1:00:00 bash -c 'ssh -Y $(scontrol show hostnames | head -n 1)'
-
-      /apps/USE/easybuild/release/2022.1/software/Singularity-CE/3.10.2-GCCcore-11.3.0/bin/singularity  run -B /project/home/p200051  /project/home/p200051/singularity/vesta.sif
+  ```{group-tab} LEONARDO
+  It is not available 
   ```
  ````
 
@@ -236,12 +233,11 @@ The main page is in [this link](https://jupyter.org/). Also see [documentation](
 
       pip list | grep -i jupyter
 
-  A different possibility is to install it using conda or a Python virtual environment, see the [NSC Python page](https://www.nsc.liu.se/software/python/) for more details. Also see the material from the latest [NSC introduction 
+  A different possibility is to install it using conda or a Python virtual environment, see the [NSC Python page](https://www.nsc.liu.se/software/python/) for more details.
 
   ```
-  ```{group-tab} MeluXina
-  For using jupyter-notebook in the hands-on exercises, [refer to the MeluXina starting page](../meluxina). In more general for MeluXina, [refer to the documentation](https://docs.lxp.lu/).
-
-  It is also possible to start a job directly as a [jupyter-lab session on MeluXina](https://docs.lxp.lu/cloud/jlab/jlab/), though at the moment it doesn't work together with py4vasp.
+  ```{group-tab} LEONARDO
+  It's not available 
   ```
  ````
+    
