@@ -14,8 +14,8 @@ Note that the hands-on sessions in this workshop are **not** suitable for heavie
 
 ### Select material for study
 
-You might start from a system of your choice and perform a similar analysis as for the examples presented in this workshop and at the VASP wiki. An idea might be to search for the material at the [Crystallography Open Database](https://www.crystallography.net/cod/) and transform the .cif file to POSCAR, e.g. using cif2cell
+You might start from a system of your choice and perform a similar analysis as for the examples presented in this workshop and at the VASP wiki. An idea might be to search for the material at the [Crystallography Open Database](https://www.crystallography.net/cod/) and transform the .cif file to POSCAR, using cif2cell
 
     cif2cell filename.cif -p vasp
 
-In the produced POSCAR file, it's also useful to add the species in a new 6th line (the correct ordering is printed in line 1), such that the file can be used for visualization in e.g. VESTA.
+In the produced POSCAR file, it's useful to add the species in a new 6th line below the lattice vectors (the correct ordering is printed in the top line), so that it can readily be used for visualization with e.g. VESTA.
