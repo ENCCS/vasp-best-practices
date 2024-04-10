@@ -60,16 +60,9 @@ a number X before a command will repeat it X times. On Tetralith/LEONARDO arrow 
 
 [gnupot](http://www.gnuplot.info/) is a common tool for plotting data and is readily available on most systems. It's also possible to directly save a plot to an image.
 
- ````{tabs}
-  ```{group-tab} Tetralith
-      module load gnuplot/5.2.2-nsc1
-  ```
-  ```{group-tab} LEONARDO
-      gnuplot is available in the path
-  ```
- ````
+It is available in the path on both clusters (if a specific version is needed, it can be searched after with "module avail gnuplot").
 
-typing
+Typing
 
     gnuplot
 
@@ -176,9 +169,10 @@ In this workshop it's used to help compute the equation of state in some of the 
   Also note that ASE is directly available from a py4vasp Python environment.  
   ```
   ```{group-tab} LEONARDO
-  ASE is available via the py4vasp Python environment prepared for the workshop
+  ASE is available via the py4vasp Python module prepared for the workshop
 
-      source /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/py4vasp.sh
+      module use /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/modules 
+      module load py4vasp/0.9.0-hpc1
 
   ```
  ````
@@ -239,7 +233,7 @@ The main page is in [this link](https://jupyter.org/). Also see [documentation](
 
   ```
   ```{group-tab} LEONARDO
-  It's not available 
+  Checking... 
   ```
  ````
     
