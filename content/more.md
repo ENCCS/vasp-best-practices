@@ -1,4 +1,4 @@
-## Other examples and topics 
+## More examples and topics 
 
 If you want further examples or prefer to select ones depending on your topic of interest, have a look at 
 
@@ -8,4 +8,14 @@ If you want further examples or prefer to select ones depending on your topic of
 
 There are many more topics available, not covered by the present hands-on examples. By comparing with the adjusted examples in this workshop, it is possible to modify the above material for running on Tetralith and other clusters.
 
+For instance, if one is interested in applying machine learning force fields, there is an example for [liquid Si](https://www.vasp.at/wiki/index.php/Liquid_Si_-_MLFF).
+
 Note that the hands-on sessions in this workshop are **not** suitable for heavier computational jobs, though it's fine for testing and looking into running different types of VASP calculations. 
+
+### Select material for study
+
+You might start from a system of your choice and perform a similar analysis as for the examples presented in this workshop and at the VASP wiki. An idea might be to search for the material at the [Crystallography Open Database](https://www.crystallography.net/cod/) and transform the .cif file to POSCAR, e.g. using cif2cell
+
+    cif2cell filename.cif -p vasp
+
+In the produced POSCAR file, it's also useful to add the species in a new 6th line (the correct ordering is printed in line 1), such that the file can be used for visualization in e.g. VESTA.
