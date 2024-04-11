@@ -29,12 +29,12 @@ First, copy the example folder which contains some of the VASP input files
 
   ```
   ```{group-tab} LEONARDO
-      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/Ni100_surf .
+      cp -r /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/Ni100_surf .
       cd Ni100_surf
 
   and copy the latest POTCAR file for Ni
 
-      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Ni/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Ni/POTCAR .
   ```
  ````
 
