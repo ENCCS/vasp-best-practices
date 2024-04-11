@@ -49,4 +49,4 @@ since the examples are selected to be small and fast, only a few CPU cores (-n 8
 
 While OpenMP was included in the present build, OMP_NUM_THREADS=1 is set since hybrid MPI/OpenMP calculations are not used in the examples.
 
-A basic analysis of the output can be done dreictly on the LEONARDO cluster, e.g. with gnuplot and py4vasp, further analysis can be made on a local computer.
+A basic analysis of the output can be done directly on the LEONARDO cluster, e.g. with gnuplot and py4vasp, further analysis can be made on a local computer. For instance, visualizing the structures with VESTA and running p4vasp and py4vasp (via jupyter-lab).
