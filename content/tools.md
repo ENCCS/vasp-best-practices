@@ -106,7 +106,7 @@ before a plot command.
 
 ### py4vasp
 
-[py4vasp](https://www.vasp.at/py4vasp/latest/) is a python interface which extracts data from a VASP calculation, using the HDF5 `.h5` output file (meaning that VASP needs to be compiled with HDF5 support). It can be used e.g. to quickly plot density of states, bandstructure and energy convergence. It's optimized for use together with jupyter-lab and jupyter-notebook.
+[py4vasp](https://www.vasp.at/py4vasp/latest/) is a python interface which extracts data from a VASP calculation, using the HDF5 `.h5` output file (meaning that VASP needs to be compiled with HDF5 support). It can be used e.g. to quickly plot density of states, bandstructure and energy convergence. It's optimized for use together with jupyter-lab and jupyter-notebook, but can also output image files directly.
 
 After starting a Python kernel which includes py4vasp via jupyter, in the notebook one first loads py4vasp and thereafter sets where to find the finished VASP calculation of interest
 
@@ -226,7 +226,6 @@ For example, it can be very useful if you start from an experimental structure r
   It is availble as a module
 
       module load cif2cell/2.1.0-hpc1
-      cif2cell --help
   ```
   ```{group-tab} LEONARDO
   It can be installed, follow instructions on its github page
