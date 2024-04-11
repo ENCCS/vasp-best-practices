@@ -165,11 +165,11 @@ Plotting the energy convergence
       module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules 
       module load pythonws-env/1.0-hpc1
 
-  though note that graphics via e.g. Jupyter isn't working. 
+  See below for use by directly writing an image file. Also see the section further below on jupyter-notebook and jupyter-lab. 
 
   ```
  ````
-**Note that py4vasp can also be used directly as a python script, writing output to a image file instead of a plot via jupyter**.
+**Note that py4vasp can also be used directly in a python script, writing output to an image file instead of a plot via jupyter**.
 
 For example, a script "py4dos.py"
 
