@@ -35,12 +35,12 @@ First, copy the example folder which contains the input files INCAR, POSCAR, KPO
 
   ```
   ```{group-tab} LEONARDO
-      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/fcc_Si .
+      cp -r /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/fcc_Si .
       cd fcc_Si
 
   also copy the latest POTCAR (PBE GGA) file for Si
 
-      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
   ```
  ````
 
@@ -162,7 +162,7 @@ The job script looks like below
   ```
   ```{group-tab} LEONARDO
       #!/bin/bash
-      #SBATCH -A EUHPC_D02_030
+      #SBATCH -A EUHPC_TD02_030
       #SBATCH -p boost_usr_prod
       #SBATCH --qos=boost_qos_dbg
       #SBATCH --time 00:15:00
@@ -171,7 +171,8 @@ The job script looks like below
       #SBATCH --cpus-per-task=1
       #SBATCH --job-name=vaspjob
 
-      source /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/VASP-6.4.3-cpu1.sh
+      module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules
+      module load VASP-6.4.3-cpu1
       module load intel-oneapi-compilers/2023.2.1 
       module load intel-oneapi-mpi/2021.10.0 
       module load intel-oneapi-mkl/2023.2.0
@@ -255,7 +256,7 @@ In this part we will calculate the total energies of fcc Si between 3.5 and 4.3 
   ```
   ```{group-tab} LEONARDO
       #!/bin/bash
-      #SBATCH -A EUHPC_D02_030
+      #SBATCH -A EUHPC_TD02_030
       #SBATCH -p boost_usr_prod
       #SBATCH --qos=boost_qos_dbg
       #SBATCH --time 00:15:00
@@ -264,7 +265,8 @@ In this part we will calculate the total energies of fcc Si between 3.5 and 4.3 
       #SBATCH --cpus-per-task=1
       #SBATCH --job-name=vaspjob
 
-      source /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/VASP-6.4.3-cpu1.sh
+      module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules
+      module load VASP-6.4.3-cpu1
       module load intel-oneapi-compilers/2023.2.1
       module load intel-oneapi-mpi/2021.10.0
       module load intel-oneapi-mkl/2023.2.0
@@ -276,9 +278,9 @@ In this part we will calculate the total energies of fcc Si between 3.5 and 4.3 
       for i in  3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2 4.3 ; do
       mkdir -p $i
       cd $i
-      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
-      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/fcc_Si/INCAR .
-      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/fcc_Si/KPOINTS .
+      cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/fcc_Si/INCAR .
+      cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/fcc_Si/KPOINTS .
       cat >POSCAR <<!
       fcc:
          $i
@@ -315,17 +317,7 @@ After a successful run, there should now be folders 3.5 - 4.3 with the different
     4.2 1 F= -.46937300E+01 E0= -.46922884E+01 d E =-.288335E-02
     4.3 1 F= -.45831536E+01 E0= -.45812206E+01 d E =-.386597E-02
 
-You can make a quick plot of the total energy as a function of the lattice constant, e.g. by using gnuplot. First, load the module (Tetralith)
-
- ````{tabs}
-  ```{group-tab} Tetralith
-      module load gnuplot/5.4.4-hpc1-gcc-2022a-eb
-  ```
-  ```{group-tab} LEONARDO
-      gnuplot is already available in the path
-  ```
- ````
-and start it with
+You can make a quick plot of the total energy as a function of the lattice constant, e.g. by using gnuplot, start it with
 
     gnuplot
 
@@ -340,9 +332,7 @@ thereafter, at the "gnuplot>" prompt type
       set output "SUMMARY.fcc.png"
       plot "SUMMARY.fcc" using ($1):($4) w lp
 
-  Thereafter, copy the file `SUMMARY.fcc.png` to your local computer, open a terminal using "scp"
-
-     scp your-username@login.leonardo.cineca.it:/your/path/fcc_Si/SUMMARY.fcc.png .
+  Thereafter, copy the file `SUMMARY.fcc.png` to your local computer
   ```
  ````
 
@@ -359,13 +349,18 @@ To find a more exact value, we can use an equation of state method. For example,
 
   ```
   ```{group-tab} LEONARDO
-  Here, a Python environment including ASE has been prepared, which also includes py4vasp, numpy etc. It can be activated by sourcing a script prepared for the workshop:
+  Here, a Python environment has been prepared for the workshop, which includes ASE, py4vasp, numpy etc. It can be activated by loading the module:
    
-      source /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/py4vasp.sh
+      module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules
+      module load pythonws-env/1.0-hpc1
 
-  To check all packages included with the Python environment, one can type:
+  To check all packages included with the Python environment, one can e.g. type:
 
       pip list
+
+  To confirm use of the "correct" python, one can type:
+
+      which python
 
   ```
  ````
