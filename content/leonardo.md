@@ -16,7 +16,7 @@ In each example for the hands-on part of the workshop, there's a job script avai
 
 one can check its progress with the command
 
-    squeue -u username
+    squeue -u USERNAME
 
 ### Example job script
 Typically, the workshop job scripts prepared for running on LEONARDO looks like this
@@ -49,4 +49,4 @@ since the examples are selected to be small and fast, only a few CPU cores (-n 8
 
 While OpenMP was included in the present build, OMP_NUM_THREADS=1 is set since hybrid MPI/OpenMP calculations are not used in the examples.
 
-A basic analysis of the output can be done on the LEONARDO cluster, further analysis can also be made on a local computer.
+A basic analysis of the output can be done dreictly on the LEONARDO cluster, e.g. with gnuplot and py4vasp, further analysis can be made on a local computer.
