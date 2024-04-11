@@ -8,7 +8,7 @@ If you want further examples or prefer to select ones depending on your topic of
 
 There are many more topics available, not covered by the present hands-on examples. By comparing with the adjusted examples in this workshop, it is possible to modify the above material for running on Tetralith and other clusters.
 
-For instance, if one is interested in applying machine learning force fields, there is an example for [liquid Si](https://www.vasp.at/wiki/index.php/Liquid_Si_-_MLFF).
+For instance, if one is interested in applying **machine learning force fields**, there is an example for [liquid Si](https://www.vasp.at/wiki/index.php/Liquid_Si_-_MLFF).
 
 Note that the hands-on sessions in this workshop are **not** suitable for heavier computational jobs, though it's fine for testing and looking into running different types of VASP calculations. 
 
