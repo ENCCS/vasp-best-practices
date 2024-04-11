@@ -29,12 +29,12 @@ First, copy the example folder which contains some of the VASP input files and u
 
   ```
   ```{group-tab} LEONARDO
-      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/cd_Si .
+      cp -r /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/cd_Si .
       cd cd_Si
 
   also copy the latest POTCAR file for Si
 
-      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
 
   ```
  ````
@@ -115,7 +115,7 @@ Here, investigate the total energy as a function of volume in a similar way as f
   ```
   ```{group-tab} LEONARDO
       #!/bin/bash
-      #SBATCH -A EUHPC_D02_030
+      #SBATCH -A EUHPC_TD02_030
       #SBATCH -p boost_usr_prod
       #SBATCH --qos=boost_qos_dbg
       #SBATCH --time 00:15:00
@@ -124,7 +124,8 @@ Here, investigate the total energy as a function of volume in a similar way as f
       #SBATCH --cpus-per-task=1
       #SBATCH --job-name=vaspjob
 
-      source /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/VASP-6.4.3-cpu1.sh
+      module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules
+      module load VASP-6.4.3-cpu1
       module load intel-oneapi-compilers/2023.2.1 
       module load intel-oneapi-mpi/2021.10.0 
       module load intel-oneapi-mkl/2023.2.0
@@ -136,9 +137,9 @@ Here, investigate the total energy as a function of volume in a similar way as f
       for i in 5.1 5.2 5.3 5.4 5.5 5.6 5.7 ; do
       mkdir -p $i
       cd $i
-      cp /software/sse/manual/vasp/POTCARs/PBE/2015-09-21/Si/POTCAR .
-      cp /software/sse/manual/vasp/training/ws2022/cd_Si/INCAR .
-      cp /software/sse/manual/vasp/training/ws2022/cd_Si/KPOINTS .
+      cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/cd_Si/INCAR .
+      cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/cd_Si/KPOINTS .
       cat >POSCAR <<!
       cubic diamond Si
          $i 
@@ -261,7 +262,7 @@ note that `CHGCAR` is copied from the previous DOS calculation. We can use the s
       cp /software/sse2/tetralith_el9/manual/vasp/training/ws2024/fcc_Si_band/KPOINTS .
   ```
   ```{group-tab} LEONARDO
-      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/fcc_Si_band/KPOINTS .
+      cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/fcc_Si_band/KPOINTS .
   ```
 
 and edit INCAR such that it looks like
