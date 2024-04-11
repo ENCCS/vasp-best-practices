@@ -28,12 +28,12 @@ First, copy the example folder which contains some of the VASP input files
       cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Ni/POTCAR .
   ```
   ```{group-tab} LEONARDO
-      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/fcc_Ni_rev .
+      cp -r /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/fcc_Ni_rev .
       cd fcc_Ni_rev
 
   and copy the latest POTCAR file for Ni
 
-      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Ni/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Ni/POTCAR .
   ```
  ````
 
