@@ -6,7 +6,9 @@ Detailed descriptions on how to install VASP can be found at the [VASP-wiki](htt
 
 Note that the recipes here below might not be the best ways to install VASP (e.g. limitations on available tool-chains and effort levels on benchmarking and optimization), but can be of interest as some practical examples.
 
-### Tetralith (2023)
+### Tetralith
+
+The VASP 6.4.3 version used in the 2024 workshop was compiled in a similar way, though using different modules, as in the 2023 workshop described below.
 
 Description on how VASP 6.4.0 was built on [Tetralith](https://www.nsc.liu.se/systems/tetralith/) (regular installation with access during workshop). The regular nodes contain 2x Intel Xeon Gold 6130 CPUs with a total of (2x 16) 32 cores and 96 GB RAM.
 
@@ -62,6 +64,30 @@ The changes were
     HDF5_ROOT  ?= /software/sse/easybuild/prefix/software/HDF5/1.12.2-gompi-2022a-nsc1
     LLIBS      += -L$(HDF5_ROOT)/lib -lhdf5_fortran
     INCS       += -I$(HDF5_ROOT)/include
+
+### LEONARDO
+VASP 6.4.3 was built for the hands-on part of the workshop on LEONARDO running on CPU. The Booster partition nodes each have a single socket 32-core Intel Xeon Platinum 8358 CPU, 2.60GHz (Ice Lake), with 512 GB RAM and 4x NVIDIA A100 GPUs (64GB).
+
+    module load intel-oneapi-compilers/2023.2.1 
+    module load intel-oneapi-mpi/2021.10.0 
+    module load intel-oneapi-mkl/2023.2.0
+    module load hdf5/1.14.3--intel-oneapi-mpi--2021.10.0--oneapi--2023.2.0
+    cp arch/makefile.include.intel_omp makefile.include
+
+The changes were
+
+    ...
+               -DOpenMP -DnoSTOPCAR -DLONGCHAR
+    ...
+    VASP_TARGET_CPU ?= -xCORE-AVX2
+    ... 
+    MKLROOT    ?=
+    ...
+    CPP_OPTIONS+= -DVASP_HDF5
+    HDF5_ROOT  ?= $(HDF5_HOME)
+    LLIBS      += -L$(HDF5_ROOT)/lib -lhdf5_fortran
+    INCS       += -I$(HDF5_ROOT)/include
+
 
 ### MeluXina (2023)
 An example on how VASP 6.4.0 was built on MeluXina (temporary workshop installation). The regular nodes used in the workshop contain 2x AMD EPYC Rome 7H12 with a total of (2x 64) 128 cores (256 with hyper-threading) and 512 GB RAM. 
