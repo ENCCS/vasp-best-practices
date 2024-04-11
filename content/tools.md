@@ -55,7 +55,18 @@ A very brief guide to vi (vim)
     p             # put line which was copied
 
 a number X before a command will repeat it X times. On Tetralith/LEONARDO arrow keys can be used to move around in the file.
- 
+
+### tmux
+
+tmux can be useful for running several terminal sessions e.g. within one login if connecting via ssh. There are many guides available online. A very brief outline below:
+
+    tmux             # start
+    tmux ls          # list sessions
+    tmux attach      # reactivate
+    ctrl b c         # create new window
+    ctrl b n         # step between windows
+    ctrl b d         # deactivate
+
 ### Gnuplot
 
 [gnupot](http://www.gnuplot.info/) is a common tool for plotting data and is readily available on most systems. It's also possible to directly save a plot to an image.
@@ -106,6 +117,11 @@ alternatively, one can provide the direct path to the VASP `.h5` output file
 
     mycalc = py4vasp.Calculation.from_file("/path/to/your/file/vaspout.h5")
 
+or go to the folder in the notebook via
+
+    cd /path/to/your/calculation/folder/here
+    mycalc = py4vasp.Calculation.from_path(".")
+
 Here below a few examples are shown. For a much more detailed description, refer to the [py4vasp page](https://www.vasp.at/py4vasp/latest/) and also see some [example of tutorials using py4vasp from the VASP developers](https://www.vasp.at/tutorials/latest/).
 
 Examples for plotting density of states (DOS)
@@ -144,14 +160,36 @@ Plotting the energy convergence
       deactivate
   ```
   ```{group-tab} LEONARDO
-  py4vasp is available by sourcing the following Python environment prepared for the workshop
+  py4vasp is available via a Python module prepared for the workshop
 
-      source /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/py4vasp.sh
+      module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules 
+      module load pythonws-env/1.0-hpc1
 
   though note that graphics via e.g. Jupyter isn't working. 
 
   ```
  ````
+**Note that py4vasp can also be used directly as a python script, writing output to a image file instead of a plot via jupyter**.
+
+For example, a script "py4dos.py"
+
+    import py4vasp
+    mycalc = py4vasp.Calculation.from_path(".")
+    mycalc.dos.to_image("s,p,d")
+
+activate a Python environment including py4vasp, and run with
+
+    python py4dos.py
+
+this will output a DOS image "dos.png".
+
+Another example for a band structure plot "py4band.py"
+
+    import py4vasp
+    mycalc = py4vasp.Calculation.from_path(".")
+    mycalc.band.to_image()
+
+this will give a band-structure image "band.png".
 
 ### ASE
 
@@ -169,10 +207,10 @@ In this workshop it's used to help compute the equation of state in some of the 
   Also note that ASE is directly available from a py4vasp Python environment.  
   ```
   ```{group-tab} LEONARDO
-  ASE is available via the py4vasp Python module prepared for the workshop
+  ASE is available via a Python module prepared for the workshop
 
-      module use /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/modules 
-      module load py4vasp/0.9.0-hpc1
+      module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules 
+      module load pythonws-env/1.0-hpc1
 
   ```
  ````
@@ -194,6 +232,10 @@ For example, it can be very useful if you start from an experimental structure r
   It can be installed, follow instructions on its github page
   ```
  ````
+Its options can be found by
+
+    cif2cell --help
+
 
 ### VESTA
 
@@ -233,7 +275,21 @@ The main page is in [this link](https://jupyter.org/). Also see [documentation](
 
   ```
   ```{group-tab} LEONARDO
-  Checking... 
+  While jupyter-lab and notebook is available in the Python environment prepared for the workshop
+
+      module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules 
+      module load pythonws-env/1.0-hpc1
+
+  one needs to set up port-forwarding in order to connect a session on a LEONARDO login node to ones local computer. For example, on the login node one can start
+
+     jupyter-lab --no-browser
+
+   and it will output a link which can be used for a browser. In this information, a specific port is shown. Now, one needs to on the local computer set up a port-forwarding which may look like
+
+    ssh -N -f -L localhost:YYYY:localhost:YYYY USERNAME@loginNN-ext.leonardo.cineca.it
+
+  here, one fills in the port YYYY, USERNAME, and specific login node NN where jupyter-lab is started. If the port-forwarding is successful, then it's possible to open the session in ones browser on the local computer. Though, this recipe didn't work for my local computer.
+
   ```
  ````
     
