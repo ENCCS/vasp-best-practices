@@ -127,11 +127,11 @@ and press `G` (that is `shift` `g`) to go to the end (quit with `q`). It looks l
 
 ### 2. Non-collinear calculation
 
-In the case of a non-collinear calculation, the magnetic moment will be allowed to point in three dimensions. Now, go back to the main folder "fcc_Ni_rev", create a new folder "nonc" and copy relevant files
+In the case of a non-collinear calculation, the magnetic moment will be allowed to point in three dimensions. Now, go back to the main folder "fcc_Ni_rev", create a new folder "noncol" and copy relevant files
 
-    mkdir nonc
+    mkdir noncol
     cp INCAR POSCAR POTCAR KPOINTS run.sh nonc
-    cd nonc
+    cd noncol
     
 For non-collinear calculations, one needs to change INCAR, comment out the two lines for the collinear calculations
 
