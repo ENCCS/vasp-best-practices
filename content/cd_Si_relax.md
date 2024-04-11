@@ -28,12 +28,12 @@ First, copy the example folder which contains some of the VASP input files and u
       cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Si/POTCAR .
   ```
   ```{group-tab} LEONARDO
-      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/cd_Si_relax .
+      cp -r /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/cd_Si_relax .
       cd cd_Si_relax
 
   and copy the latest POTCAR file for Si
 
-      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
   ```
  ````
 
