@@ -148,16 +148,11 @@ Plotting the energy convergence
 
  ````{tabs}
   ```{group-tab} Tetralith
-  You can install py4vasp in a Python virtual environment, for example
+  py4vasp is available via a module
 
-      ml Python/3.10.4-env-hpc1-gcc-2022a-eb buildenv-gcc/2022a-eb 
-      virtualenv --system-site-packages mypy4venv
-      source mypy4venv/bin/activate
-      pip install py4vasp
+      module load py4vasp/0.7.4-hpc1
 
-  To logout from the virtual environment, type
-
-      deactivate
+  by loading it also python, ASE, numpy, jupyter and many other packages become available. See all with "pip list".
   ```
   ```{group-tab} LEONARDO
   py4vasp is available via a Python module prepared for the workshop
@@ -165,7 +160,7 @@ Plotting the energy convergence
       module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules 
       module load pythonws-env/1.0-hpc1
 
-  See below for use by directly writing an image file. Also see the section further below on jupyter-notebook and jupyter-lab. 
+  See below for how to directly write an image file. Also see last section for jupyter-notebook and jupyter-lab. 
 
   ```
  ````
@@ -204,7 +199,9 @@ In this workshop it's used to help compute the equation of state in some of the 
       module load ASE/3.21.0-nsc1
       module load Python/3.10.4-env-nsc1-gcc-2022a-eb
 
-  Also note that ASE is directly available from a py4vasp Python environment.  
+  Also note that ASE is directly available from the py4vasp module:
+
+      module load py4vasp/0.7.4-hpc1
   ```
   ```{group-tab} LEONARDO
   ASE is available via a Python module prepared for the workshop
@@ -262,7 +259,11 @@ The main page is in [this link](https://jupyter.org/). Also see [documentation](
 
  ````{tabs}
   ```{group-tab} Tetralith
-  Jupyter-notebook is typically available within the Python env installations on Tetralith. For example
+  The jupyter-lab and notebook are included together with the py4vasp module
+
+      module load py4vasp/0.7.4-hpc1
+
+  Jupyter is also typically available within the Python env installations on Tetralith. For example
 
       module load Python/3.10.4-env-nsc1-gcc-2022a-eb
 
@@ -270,7 +271,7 @@ The main page is in [this link](https://jupyter.org/). Also see [documentation](
 
       pip list | grep -i jupyter
 
-  A different possibility is to install it using conda or a Python virtual environment, see the [NSC Python page](https://www.nsc.liu.se/software/python/) for more details.
+  A different possibility is to install it using conda/mamba or a Python virtual environment, see the [NSC Python page](https://www.nsc.liu.se/software/python/) for more details.
 
   ```
   ```{group-tab} LEONARDO
