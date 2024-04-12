@@ -152,7 +152,7 @@ Plotting the energy convergence
 
       module load py4vasp/0.7.4-hpc1
 
-  by loading it also python, ASE, numpy, jupyter and many other packages become available. See all with "pip list".
+  by loading it also python, ASE, numpy, jupyter and many other packages become available. See all with "pip list". See below for how to directly write an image file. See the last section for starting jupyter-lab, from which py4vasp can be run in the browser. 
   ```
   ```{group-tab} LEONARDO
   py4vasp is available via a Python module prepared for the workshop
@@ -160,7 +160,7 @@ Plotting the energy convergence
       module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules 
       module load pythonws-env/1.0-hpc1
 
-  See below for how to directly write an image file. Also see last section for jupyter-notebook and jupyter-lab. 
+  by loading it also python, ASE, numpy, jupyter and many other packages become available. See all with "pip list". See below for how to directly write an image file. See the last section for starting jupyter-lab, from which py4vasp can be run in the browser.
 
   ```
  ````
@@ -208,6 +208,28 @@ In this workshop it's used to help compute the equation of state in some of the 
 
       module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules 
       module load pythonws-env/1.0-hpc1
+
+  ```
+ ````
+
+### VASPKIT
+
+[VASPKIT](https://vaspkit.com/) is a tool for both pre- and post-processing of VASP calculations for a wide range of material properties. Here, we apply the free to use version of it.
+
+ ````{tabs}
+  ```{group-tab} Tetralith
+  TBA
+  ```
+  ```{group-tab} LEONARDO
+  Before first use, copy its configuration file to your home folder
+
+      cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/vaspkit.1.5.1/.vaspkit ~/.
+
+ thereafter, it can be used by loading the module and run in the same folder as your calculation
+
+      module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/module
+      module load vaspkit/1.5.1-hpc1
+      vaspkit
 
   ```
  ````
@@ -263,15 +285,18 @@ The main page is in [this link](https://jupyter.org/). Also see [documentation](
 
       module load py4vasp/0.7.4-hpc1
 
-  Jupyter is also typically available within the Python env installations on Tetralith. For example
+  It can be started directly on the login node via ThinLinc by typing
 
-      module load Python/3.10.4-env-nsc1-gcc-2022a-eb
+     jupyter-lab
 
-  confirm e.g. with
+  and it will open in a browser. This is fine for regular plots etc. For heavier processing, instead start it in an interactive job session on a work node, e.g.
 
-      pip list | grep -i jupyter
+     interactive -A naiss2024-22-241 -t 01:00:00 -n 4
+     jupyter-lab --no-browser --ip=NODENAME
 
-  A different possibility is to install it using conda/mamba or a Python virtual environment, see the [NSC Python page](https://www.nsc.liu.se/software/python/) for more details.
+  e.g. if the session runs on node n58, --ip=n58.
+
+  Jupyter is also typically available within the Python env installations on Tetralith. A different possibility is to install it using conda/mamba or a Python virtual environment, see the [NSC Python page](https://www.nsc.liu.se/software/python/) for more details.
 
   ```
   ```{group-tab} LEONARDO
