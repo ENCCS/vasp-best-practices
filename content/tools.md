@@ -286,11 +286,11 @@ The main page is in [this link](https://jupyter.org/). Also see [documentation](
 
    and it will output a link which can be used for a browser. In this information, a specific port is shown. Now, one needs to on the local computer set up a port-forwarding which may look like   
 
-     ssh -N -f -L localhost:YYYY:localhost:YYYY USERNAME@loginNN-ext.leonardo.cineca.it
+      ssh -N -f -L localhost:YYYY:localhost:YYYY USERNAME@loginNN-ext.leonardo.cineca.it
 
   or
 
-    ssh -TN -f USERNAME@loginNN-ext.leonardo.cineca.it -L YYYY:localhost:YYYY
+      ssh -TN -f USERNAME@loginNN-ext.leonardo.cineca.it -L YYYY:localhost:YYYY
 
   here, one fills in the port YYYY, USERNAME, and specific login node NN where jupyter-lab is started. If the port-forwarding is successful, then it's possible to open the session in ones browser on the local computer.
 
