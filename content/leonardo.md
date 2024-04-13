@@ -32,7 +32,7 @@ Typically, the workshop job scripts prepared for running on LEONARDO looks like 
     #SBATCH --job-name=vaspjob
 
     module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules
-    module load VASP-6.4.3-cpu1
+    module load VASP/6.4.3-cpu1
     module load intel-oneapi-compilers/2023.2.1
     module load intel-oneapi-mpi/2021.10.0
     module load intel-oneapi-mkl/2023.2.0
