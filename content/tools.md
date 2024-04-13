@@ -92,7 +92,7 @@ before a plot command.
 
 In general, Python can be very useful both for smaller basic analysis scripts and in the form of more complex software such as e.g. ASE and py4vasp (see below).
 
-It's a good idea to keep different programs separate (unless they're meant to be used together), such that their dependencies aren't mixed in a common environment, e.g. as packages installed in a user home account under .local. A typical issue is that different software can be sensitive to exact versions of dependencies. Therefore, one can look into creating Python virtual environments and/or using conda or its drop-in replacement mamba, to keep environments separate. For Tetralith, check the following pages for handling [Python](https://www.nsc.liu.se/software/python/) and [conda/mamba](https://www.nsc.liu.se/software/anaconda/).
+It's a good idea to **keep different programs separate** (unless they're meant to be used together), such that their dependencies aren't mixed in a common environment, e.g. as packages installed in a user home account under `.local`. A typical issue is that different software can be sensitive to exact versions of dependencies. Therefore, one can look into creating Python virtual environments and/or using conda or its drop-in replacement mamba, to keep environments separate. For Tetralith, check the following pages for handling [Python](https://www.nsc.liu.se/software/python/) and [conda/mamba](https://www.nsc.liu.se/software/anaconda/).
 
 ### p4vasp
 
@@ -293,12 +293,12 @@ The main page is in [this link](https://jupyter.org/). Also see [documentation](
 
   It can be started directly on the login node via ThinLinc by typing
 
-     jupyter-lab
+      jupyter-lab
 
   and it will open in a browser. This is fine for regular plots etc. For heavier processing, instead start it in an interactive job session on a work node, e.g.
 
-     interactive -A naiss2024-22-241 -t 01:00:00 -n 4
-     jupyter-lab --no-browser --ip=NODENAME
+      interactive -A naiss2024-22-241 -t 01:00:00 -n 4
+      jupyter-lab --no-browser --ip=NODENAME
 
   e.g. if the session runs on node n58, --ip=n58.
 
