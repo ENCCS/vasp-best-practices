@@ -32,12 +32,12 @@ First, copy the example folder which contains some of the VASP input files and u
 
   ```
   ```{group-tab} LEONARDO
-      cp -r /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/examples/fcc_Si_band .
+      cp -r /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/fcc_Si_band .
       cd fcc_Si_band
 
   also copy the latest POTCAR file for Si
 
-      cp /leonardo_scratch/fast/EUHPC_D02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
+      cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
   ```
  ````
 
@@ -117,7 +117,7 @@ when the job has finished, check slurm-JOBID.out
   and select: Electronic > DOS+bands > Show > Bands. As in the case of DOS, it's possible to save the data by selecting Graph > Export, to e.g. raw data or an XmGrace file (.agr).
   ```
   ```{group-tab} LEONARDO
-  Plot the bandstructure e.g. using py4vasp via Jupyter-notebook on your local computer
+  Plot the bandstructure e.g. using py4vasp via Jupyter-notebook
 
       import py4vasp
       mycalc = py4vasp.Calculation.from_path("/path/to/your/calculation/folder/here")
