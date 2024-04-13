@@ -4,7 +4,8 @@ Some of the tools are also described in the examples. For an easy overview, a de
 
 In general, Tetralith is well suitable for post-processing directly on the login node, or using work nodes for more heavy processing, via the ThinLinc virtual desktop. 
 
-On LEONARDO, we suggest to produce plots as images (gnuplot) and download, if possible use your local computer for analysis and post-processing of the output. On your local computer, for example, install py4vasp and run using Jupyter lab. For many programs it's possible to install on Linux as well as MacOS and Windows.
+On LEONARDO, test to use py4vasp together with jupyter-lab via port forwarding to your local computer, alternatively produce static images. Gnuplot and vaspkit can also be used to produce images. It is also possible to install many of the tools on a local computer for post-processing of the output, e.g. VESTA is usually easy to install.
+
 
 `````{callout} System-specific instructions
 Select instructions for the system you are using:
