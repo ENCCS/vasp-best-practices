@@ -90,7 +90,7 @@ before a plot command.
 
 ### Python
 
-In general, Python can be very useful both for smaller basic analysis scripts and in the form of more complex software such as e.g. ASE and py4vasp (see below).
+In general, Python can be very useful both for smaller basic analysis scripts and in the form of more involved software such as e.g. ASE and py4vasp (see below).
 
 It's a good idea to **keep different programs separate** (unless they're meant to be used together), such that their dependencies aren't mixed in a common environment, e.g. as packages installed in a user home account under `.local`. A typical issue is that different software can be sensitive to exact versions of dependencies. Therefore, one can look into creating Python virtual environments and/or using conda or its drop-in replacement mamba, to keep environments separate. For Tetralith, check the following pages for handling [Python](https://www.nsc.liu.se/software/python/) and [conda/mamba](https://www.nsc.liu.se/software/anaconda/).
 
