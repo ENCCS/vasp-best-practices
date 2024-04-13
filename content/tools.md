@@ -218,9 +218,9 @@ In this workshop it's used to help compute the equation of state in some of the 
   ```
  ````
 
-### VASPKIT
+### vaspkit
 
-[VASPKIT](https://vaspkit.com/) is a tool for both pre- and post-processing of VASP calculations for a wide range of material properties. Here, we apply the free to use version of it.
+[vaspkit](https://vaspkit.com/) is a tool for both pre- and post-processing of VASP calculations for a wide range of material properties. Here, we apply the free to use version of it.
 
  ````{tabs}
   ```{group-tab} Tetralith
@@ -295,12 +295,12 @@ The main page is in [this link](https://jupyter.org/). Also see [documentation](
 
       jupyter-lab
 
-  and it will open in a browser. This is fine for regular plots etc. For heavier processing, instead start it in an interactive job session on a work node, e.g.
+  and it will open in a browser. This is fine for regular plots etc. For heavier processing, instead start it in an interactive job session on a work node, for example
 
       interactive -A naiss2024-22-241 -t 01:00:00 -n 4
       jupyter-lab --no-browser --ip=NODENAME
 
-  e.g. if the session runs on node n58, --ip=n58.
+  if the session runs on e.g. node n58, set `--ip=n58`. From the output, start Firefox and copy & paste the corresponding link.
 
   Jupyter is also typically available within the Python env installations on Tetralith. A different possibility is to install it using conda/mamba or a Python virtual environment, see the [NSC Python page](https://www.nsc.liu.se/software/python/) for more details.
 
