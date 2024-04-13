@@ -26,9 +26,9 @@ In the produced POSCAR file, it's useful to add the species in a new 6th line be
 
 There are many useful tools which are available for VASP, e.g. for post-processing or setting up structures. Depending on your interest, you can select some of the ones described in the [section on useful tools](../tools), also see the last presentation, "Utilities & Summary".
 
-### Running on GPUS at LEONARDO
+### Run on GPUS at LEONARDO
 
-There is also a VASP OpenACC GPU build for the workshop which can be used for running calculations. Below is an example job script for running on a single GPU (since each Booster node got 32 cores and 4 GPUs, we select 8 cores with each GPU)
+There is a **VASP GPU OpenACC** build for the workshop which can be used. Below is an example job script for running on a single GPU (since each Booster node got 32 cores and 4 GPUs, we select 8 cores with each GPU)
 
     #!/bin/bash
     #SBATCH -A EUHPC_TD02_030
@@ -48,3 +48,4 @@ There is also a VASP OpenACC GPU build for the workshop which can be used for ru
 
     srun -n 1 vasp_std
 
+To run on more GPUs, adjust `#SBATCH -n`, `#SBATCH --gres=gpu` and `srun -n`. A quick comparison for a GaAsBi 512 atoms supercell test, 1 GPU finishes ca. 6 jobs for the time of a 1 node CPU (32 cores) job.
