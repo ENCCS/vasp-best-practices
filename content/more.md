@@ -21,3 +21,30 @@ You might start from a system of your choice and perform a similar analysis as f
     cif2cell filename.cif -p vasp
 
 In the produced POSCAR file, it's useful to add the species in a new 6th line below the lattice vectors (the correct ordering is printed in the top line), so that it can readily be used for visualization with e.g. VESTA.
+
+### Trying different tools
+
+There are many useful tools which are available for VASP, e.g. for post-processing or setting up structures. Depending on your interest, you can select some of the ones described in the [section on useful tools](../tools), also see the last presentation, "Utilities & Summary".
+
+### Running on GPUS at LEONARDO
+
+There is also a VASP OpenACC GPU build for the workshop which can be used for running calculations. Below is an example job script for running on a single GPU (since each Booster node got 32 cores and 4 GPUs, we select 8 cores with each GPU)
+
+    #!/bin/bash
+    #SBATCH -A EUHPC_TD02_030
+    #SBATCH -p boost_usr_prod
+    #SBATCH --qos=boost_qos_dbg
+    #SBATCH --time 00:15:00
+    #SBATCH -n 8
+    #SBATCH --gres=gpu:1
+    #SBATCH --job-name=vaspjob
+
+    module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules
+    module load VASP/6.4.3-gpu1
+    module load nvhpc/23.11   
+    module load fftw/3.3.10--openmpi--4.1.6--nvhpc--23.11  
+    module load hdf5/1.14.3--openmpi--4.1.6--nvhpc--23.11
+    module load netlib-scalapack/2.2.0--openmpi--4.1.6--nvhpc--23.11
+
+    srun -n 1 vasp_std
+
