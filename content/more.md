@@ -8,7 +8,9 @@ If you want further examples or prefer to select ones depending on your topic of
 
 There are many more topics available, not covered by the present hands-on examples. By comparing with the adjusted examples in this workshop, it is possible to modify the above material for running on Tetralith and other clusters.
 
-* If one is interested in applying **machine learning force fields**, there is an example for [liquid Si](https://www.vasp.at/wiki/index.php/Liquid_Si_-_MLFF).
+* There is an example for standard [Molecular Dynamics (MD) liquid Si](https://www.vasp.at/wiki/index.php/Liquid_Si_-_Standard_MD).
+
+* If one is interested in applying **machine learning force fields**, there is also an example for [liquid Si](https://www.vasp.at/wiki/index.php/Liquid_Si_-_MLFF).
 
 * It is now possible to compute **X-ray absorption spectra** with VASP, see this example for [XANES in diamond](https://www.vasp.at/wiki/index.php/XANES_in_Diamond).
 
@@ -22,7 +24,7 @@ You might start from a system of your choice and perform a similar analysis as f
 
 In the produced POSCAR file, it's useful to add the species in a new 6th line below the lattice vectors (the correct ordering is printed in the top line), so that it can readily be used for visualization with e.g. VESTA.
 
-### Trying different tools
+### Trying out different tools
 
 There are many useful tools which are available for VASP, e.g. for post-processing or setting up structures. Depending on your interest, you can select some of the ones described in the [section on useful tools](../tools), also see the last presentation, "Utilities & Summary".
 
