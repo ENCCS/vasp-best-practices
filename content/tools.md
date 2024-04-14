@@ -282,7 +282,7 @@ It's available for Windows, Mac and Linux. Free of charge for non-commercial use
       vesta &
   ```
   ```{group-tab} LEONARDO
-  It is not available 
+  It is not available (can install on local computer to try out)
   ```
  ````
 
