@@ -249,18 +249,24 @@ For example, it can be very useful if you start from an experimental structure r
 
  ````{tabs}
   ```{group-tab} Tetralith
-  It is availble as a module
+  It is available as a module
 
       module load cif2cell/2.1.0-hpc1
   ```
   ```{group-tab} LEONARDO
-  It can be installed, follow instructions on its github page
+  A module is prepared for the workshop
+
+      module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules
+      module load cif2cell/2.1.0-hpc1 
   ```
  ````
 Its options can be found by
 
     cif2cell --help
 
+A quick example, read a name.cif structure file and output to POSCAR
+
+    cif2cell name.cif -p vasp
 
 ### VESTA
 
