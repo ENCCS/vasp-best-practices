@@ -54,12 +54,14 @@ To run on more GPUs, adjust `#SBATCH -n`, `#SBATCH --gres=gpu` and `srun -n`. A 
 
 * In particular, adjust `NSIM` for GPU calculations
 
-### Benchmarking / efficiency exercises
+### Testing / efficiency exercises
 
-For the workshop, smaller problem cases can be selected due to limited time and compute resources. The principles are still similar as when considering regular jobs.
+For the workshop, smaller problem cases can be selected due to limited time and compute resources for the hands-on part. The principles are similar considering regular jobs.
 
 * Investigate the scaling behaviour for a case, e.g. run on 32, 16, 8 and 4 cores. Check the timing of the iterative steps
 
-    grep LOOP OUTCAR
+      grep LOOP OUTCAR
 
 notice LOOP+, compare with the total wall time for a job. Any difference (if so, what's the origin)? How does bands/core look like for the different runs? Any "OOM" issues (out of memory)? What happens when there are fewer bands than cores?
+
+* LEONARDO: compare between CPU and GPU calculations
