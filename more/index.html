@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>More examples and topics &mdash; VASP Best Practices  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_lesson.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/term_role_formatting.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_rtd_theme_ext_color_contrast.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/overrides.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/minipres.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script data-domain="enccs.github.io/vasp-best-practices" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Different clusters, CPU and GPU" href="../compile/" />
+    <link rel="prev" title="Ni100 surface" href="../Ni100_surface/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            VASP Best Practices
+              <img src="../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Presentations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../presentations/">Collection of morning presentations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Start here first</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tetralith/">For using Tetralith (NAISS, NSC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../leonardo/">For using LEONARDO (EuroHPC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/">Useful tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hands-on examples</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si/">fcc Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_DOS/">fcc Si DOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_bandstructure/">fcc Si bandstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si/">cd Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_vol_relax/">cd Si volume relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_relax/">cd Si relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni/">fcc Ni</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni_rev/">fcc Ni revisited</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bandgap_Si/">Bandgap of Si using different DFT+HF methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Ni100_surface/">Ni100 surface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">More examples and topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#select-material-for-study">Select material for study</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trying-out-different-tools">Trying out different tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-on-gpus-at-leonardo">Run on GPUS at LEONARDO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing-efficiency-exercises">Testing / efficiency exercises</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiling VASP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../compile/">Different clusters, CPU and GPU</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">VASP Best Practices</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">More examples and topics</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/vasp-best-practices/blob/main/content/more.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="more-examples-and-topics">
+<h1>More examples and topics<a class="headerlink" href="#more-examples-and-topics" title="Permalink to this heading"></a></h1>
+<p>If you want further examples or prefer to select ones depending on your topic of interest, have a look at</p>
+<ul class="simple">
+<li><p>The <a class="reference external" href="https://www.vasp.at/wiki/index.php/The_VASP_Manual">VASP wiki</a> for <a class="reference external" href="https://www.vasp.at/wiki/index.php/Category:Examples">examples</a> and <a class="reference external" href="https://www.vasp.at/wiki/index.php/Category:Tutorials">tutorials</a></p></li>
+<li><p>For <a class="reference external" href="https://www.vasp.at/py4vasp/latest/">py4vasp</a> there are also <a class="reference external" href="https://www.vasp.at/tutorials/latest/">tutorials available</a></p></li>
+</ul>
+<p>There are many more topics available, not covered by the present hands-on examples. By comparing with the adjusted examples in this workshop, it is possible to modify the above material for running on Tetralith and other clusters.</p>
+<ul class="simple">
+<li><p>There is an example for standard <a class="reference external" href="https://www.vasp.at/wiki/index.php/Liquid_Si_-_Standard_MD">Molecular Dynamics (MD) liquid Si</a>.</p></li>
+<li><p>If one is interested in applying <strong>machine learning force fields</strong>, there is also an example for <a class="reference external" href="https://www.vasp.at/wiki/index.php/Liquid_Si_-_MLFF">liquid Si</a>.</p></li>
+<li><p>It is now possible to compute <strong>X-ray absorption spectra</strong> with VASP, see this example for <a class="reference external" href="https://www.vasp.at/wiki/index.php/XANES_in_Diamond">XANES in diamond</a>.</p></li>
+</ul>
+<p>Note that the hands-on sessions in this workshop are <strong>not</strong> suitable for heavier computational jobs, though it’s fine for testing and looking into running different types of VASP calculations.</p>
+<section id="select-material-for-study">
+<h2>Select material for study<a class="headerlink" href="#select-material-for-study" title="Permalink to this heading"></a></h2>
+<p>You might start from a system of your choice and perform a similar analysis as for the examples presented in this workshop and at the VASP wiki. An idea might be to search for the material at the <a class="reference external" href="https://www.crystallography.net/cod/">Crystallography Open Database</a> and transform the .cif file to POSCAR, using cif2cell</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cif2cell filename.cif -p vasp
+</pre></div>
+</div>
+<p>In the produced POSCAR file, it’s useful to add the species in a new 6th line below the lattice vectors (the correct ordering is printed in the top line), so that it can readily be used for visualization with e.g. VESTA.</p>
+</section>
+<section id="trying-out-different-tools">
+<h2>Trying out different tools<a class="headerlink" href="#trying-out-different-tools" title="Permalink to this heading"></a></h2>
+<p>There are many useful tools which are available for VASP, e.g. for post-processing or setting up structures. Depending on your interest, you can select some of the ones described in the <a class="reference internal" href="../tools/"><span class="doc std std-doc">section on useful tools</span></a>, also see the last presentation, “Utilities &amp; Summary”.</p>
+</section>
+<section id="run-on-gpus-at-leonardo">
+<h2>Run on GPUS at LEONARDO<a class="headerlink" href="#run-on-gpus-at-leonardo" title="Permalink to this heading"></a></h2>
+<p>There is a <strong>VASP GPU OpenACC</strong> build for the workshop which can be used. Below is an example job script for running on a single GPU (since each Booster node got 32 cores and 4 GPUs, we select 8 cores with each GPU)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#SBATCH -A EUHPC_TD02_030
+#SBATCH -p boost_usr_prod
+#SBATCH --qos=boost_qos_dbg
+#SBATCH --time 00:15:00
+#SBATCH -n 8
+#SBATCH --gres=gpu:1
+#SBATCH --job-name=vaspjob
+
+module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules
+module load VASP/6.4.3-gpu1
+module load nvhpc/23.11   
+module load fftw/3.3.10--openmpi--4.1.6--nvhpc--23.11  
+module load hdf5/1.14.3--openmpi--4.1.6--nvhpc--23.11
+module load netlib-scalapack/2.2.0--openmpi--4.1.6--nvhpc--23.11
+
+srun -n 1 vasp_std
+</pre></div>
+</div>
+<p>To run on more GPUs, adjust <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">-n</span></code>, <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">--gres=gpu</span></code> and <code class="docutils literal notranslate"><span class="pre">srun</span> <span class="pre">-n</span></code>. A quick comparison for a GaAsBi 512 atoms supercell test, 1 GPU finishes ca. 6 jobs for the time of a 1 node CPU (32 cores) job.</p>
+<ul class="simple">
+<li><p>In particular, adjust <code class="docutils literal notranslate"><span class="pre">NSIM</span></code> for GPU calculations</p></li>
+</ul>
+</section>
+<section id="testing-efficiency-exercises">
+<h2>Testing / efficiency exercises<a class="headerlink" href="#testing-efficiency-exercises" title="Permalink to this heading"></a></h2>
+<p>For the workshop, smaller problem cases can be selected due to limited time and compute resources for the hands-on part. The principles are similar considering regular jobs.</p>
+<ul>
+<li><p>Investigate the scaling behaviour for a case, e.g. run on 32, 16, 8 and 4 cores. Check the timing of the iterative steps</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>grep LOOP OUTCAR
+</pre></div>
+</div>
+</li>
+</ul>
+<p>notice LOOP+, compare with the total wall time for a job. Any difference (if so, what’s the origin)? How does bands/core look like for the different runs? Any “OOM” issues (out of memory)? What happens when there are fewer bands than cores?</p>
+<ul class="simple">
+<li><p>LEONARDO: compare between CPU and GPU calculations</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../Ni100_surface/" class="btn btn-neutral float-left" title="Ni100 surface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../compile/" class="btn btn-neutral float-right" title="Different clusters, CPU and GPU" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Weine Olovsson and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

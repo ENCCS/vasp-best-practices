@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fcc Ni &mdash; VASP Best Practices  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_lesson.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/term_role_formatting.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_rtd_theme_ext_color_contrast.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/overrides.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/minipres.js"></script>
+        <script src="../_static/tabs.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script data-domain="enccs.github.io/vasp-best-practices" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="fcc Ni revisited" href="../fcc_Ni_rev/" />
+    <link rel="prev" title="cd Si relaxation" href="../cd_Si_relax/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            VASP Best Practices
+              <img src="../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Presentations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../presentations/">Collection of morning presentations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Start here first</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tetralith/">For using Tetralith (NAISS, NSC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../leonardo/">For using LEONARDO (EuroHPC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/">Useful tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hands-on examples</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si/">fcc Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_DOS/">fcc Si DOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_bandstructure/">fcc Si bandstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si/">cd Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_vol_relax/">cd Si volume relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_relax/">cd Si relaxation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">fcc Ni</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input-files">Input files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#volume-relaxation">1. Volume relaxation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dos">2. DOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bandstructure">3. Bandstructure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni_rev/">fcc Ni revisited</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bandgap_Si/">Bandgap of Si using different DFT+HF methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Ni100_surface/">Ni100 surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../more/">More examples and topics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiling VASP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../compile/">Different clusters, CPU and GPU</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">VASP Best Practices</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">fcc Ni</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/vasp-best-practices/blob/main/content/fcc_Ni.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fcc-ni">
+<h1>fcc Ni<a class="headerlink" href="#fcc-ni" title="Permalink to this heading"></a></h1>
+<p><a class="reference external" href="https://www.vasp.at/wiki/index.php/Fcc_Ni">Based on the VASP wiki example in this link</a></p>
+<p><strong>Task:</strong> For spin-polarized (collinear magnetism) fcc Ni. Do a lattice parameter optimization, calculate DOS and bandstructure.</p>
+<div class="admonition-system-specific-instructions callout admonition" id="callout-0">
+<p class="admonition-title">System-specific instructions</p>
+<p>Select instructions for the system you are using:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-0-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-0-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-0-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>Instructions for use on the NAISS cluster Tetralith (NSC)</p>
+</div><div aria-labelledby="tab-0-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>Instructions for use on the EuroHPC cluster LEONARDO</p>
+</div></div>
+</div>
+<p>First, copy the example folder which contains some of the VASP input files</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-1-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-1-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-1-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/fcc_Ni .
+cd fcc_Ni
+</pre></div>
+</div>
+<p>and copy the latest POTCAR file for Ni</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Ni/POTCAR .
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp -r /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/fcc_Ni .
+cd fcc_Ni
+</pre></div>
+</div>
+<p>and copy the latest POTCAR file for Ni</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Ni/POTCAR .
+</pre></div>
+</div>
+</div></div>
+<p>Perform the calculations below in the same way as was done for the <a class="reference internal" href="../cd_Si/"><span class="doc std std-doc">cd Si example</span></a>.</p>
+<section id="input-files">
+<h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this heading"></a></h2>
+<p>POSCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fcc Ni
+ 3.53 
+ 0.5 0.5 0.0
+ 0.0 0.5 0.5
+ 0.5 0.0 0.5
+Ni
+   1
+cartesian
+0 0 0
+</pre></div>
+</div>
+<p>INCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>general:
+  SYSTEM = fcc Ni
+  ISTART = 0 ; ICHARG=2
+  ENCUT  =    270
+  ISMEAR =    1  ; SIGMA = 0.2
+  LORBIT=11
+spin:
+  ISPIN=2
+  MAGMOM = 1
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ISTART">ISTART</a>=0, static calculation (default)</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ICHARG">ICHARG</a>=2, initial charge-density from overlapping atoms (default if ISTART=0)</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ENCUT">ENCUT</a>=270, default energy cutoff 270 eV</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ISMEAR">ISMEAR</a>=1, Methfessel-Paxton smearing used for metal</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ISMEAR">SIGMA</a>=0.2, default smearing</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/LORBIT">LORBIT</a>=11, write DOSCAR and <em>lm</em>-decomposed PROCAR</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ISPIN">ISPIN</a>=2, gives a spin-polarized calculation and <a class="reference external" href="https://www.vasp.at/wiki/index.php/MAGMOM">MAGMOM</a>=1, an initial magnetic moment of 1 Bohr magnetons</p></li>
+</ul>
+<p>KPOINTS</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>k-points
+ 0
+Monkhorst Pack
+ 11 11 11
+ 0  0  0
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Equally spaced k-mesh</p></li>
+<li><p>Odd Monkhorst-Pack k-mesh &gt; Gamma centered</p></li>
+</ul>
+</section>
+<section id="volume-relaxation">
+<h2>1. Volume relaxation<a class="headerlink" href="#volume-relaxation" title="Permalink to this heading"></a></h2>
+<p>Similar as for the <a class="reference internal" href="../cd_Si/"><span class="doc std std-doc">cd Si</span></a> example, check the total energy over a range of volumes, by using the tailored job script “run-vol.sh”. Submit the job</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run-vol.sh
+</pre></div>
+</div>
+<p>After it finishes, check the total energy vs lattice constant e.g. using gnuplot</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>gnuplot 
+</pre></div>
+</div>
+<p>and at the prompt type (the first two lines for creating an image, needed at LEONARDO)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set term png
+set output &quot;SUMMARY.fcc.png&quot; 
+plot &quot;SUMMARY.fcc&quot; using ($1):($4) w lp
+</pre></div>
+</div>
+<p>is the equilibrium lattice parameter close to <em>a</em> = 3.5 Å?</p>
+<p>In the same way as was done in <a class="reference internal" href="../fcc_Si/"><span class="doc std std-doc">fcc Si</span></a> and <a class="reference internal" href="../cd_Si/"><span class="doc std std-doc">cd Si</span></a>, investigate the output from Birch-Murnaghan EOS by using the “eqos.py” script.</p>
+<ul class="simple">
+<li><p>What is the equilibrium lattice parameter in this case?</p></li>
+</ul>
+</section>
+<section id="dos">
+<h2>2. DOS<a class="headerlink" href="#dos" title="Permalink to this heading"></a></h2>
+<p>Create a new folder “dos”, copy the relevant files and go there</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir dos
+cp INCAR POSCAR KPOINTS POTCAR run.sh dos
+cd dos
+</pre></div>
+</div>
+<p>As in the previous example for <a class="reference internal" href="../cd_Si/"><span class="doc std std-doc">cd Si</span></a> we compute DOS in a single step. Edit INCAR such that it looks like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>general:
+  SYSTEM = fcc Ni
+  ISTART = 0 ; ICHARG=2
+  ENCUT  =    270
+  ISMEAR =   -5
+  LORBIT=11
+spin:
+  ISPIN=2
+  MAGMOM = 1
+</pre></div>
+</div>
+<p>notice the change to <a class="reference external" href="https://www.vasp.at/wiki/index.php/ISMEAR">ISMEAR</a>=-5, the tetrahedron method with Blöchl corrections, suitable for DOS and total energies.</p>
+<p>Finally, submit the job</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run.sh
+</pre></div>
+</div>
+<p>To check the result after finish, use <code class="docutils literal notranslate"><span class="pre">p4vasp</span></code> or <code class="docutils literal notranslate"><span class="pre">py4vasp</span></code> as in the previous examples.</p>
+<ul class="simple">
+<li><p>Does the DOS show the spin split?</p></li>
+</ul>
+</section>
+<section id="bandstructure">
+<h2>3. Bandstructure<a class="headerlink" href="#bandstructure" title="Permalink to this heading"></a></h2>
+<p>In the main “fcc_Ni” folder, create a new folder “band”, copy the relevant files and go there, note the treatment for the “KPOINTS” file</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir band
+cp INCAR POSCAR POTCAR run.sh band
+cp KPOINTS.band band/KPOINTS
+cd band
+</pre></div>
+</div>
+<p>the file KPOINTS.band, which was copied to KPOINTS, looks like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>kpoints for bandstructure L-G-X-U K-G
+ 10
+line
+reciprocal
+  0.50000  0.50000  0.50000    1
+  0.00000  0.00000  0.00000    1
+
+  0.00000  0.00000  0.00000    1
+  0.00000  0.50000  0.50000    1
+
+  0.00000  0.50000  0.50000    1
+  0.25000  0.62500  0.62500    1
+
+  0.37500  0.7500   0.37500    1
+  0.00000  0.00000  0.00000    1
+</pre></div>
+</div>
+<p>As in previous bandstructure examples, e.g. <a class="reference internal" href="../cd_Si/"><span class="doc std std-doc">cd Si</span></a>, we need a suitable <code class="docutils literal notranslate"><span class="pre">CHGCAR</span></code> file. First check that INCAR is correct, edit the file using e.g. <code class="docutils literal notranslate"><span class="pre">vi</span></code> such that</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ICHARG=11
+</pre></div>
+</div>
+<p>i.e. that CHGCAR is read. Copy CHGCAR from the previous DOS calculation</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp ../dos/CHGCAR .
+</pre></div>
+</div>
+<p>thereafter submit the job</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run.sh
+</pre></div>
+</div>
+<p>To check the results after finish, use <code class="docutils literal notranslate"><span class="pre">p4vasp</span></code> or <code class="docutils literal notranslate"><span class="pre">py4vasp</span></code>. Compare with the <a class="reference external" href="https://www.vasp.at/wiki/index.php/Fcc_Ni">result on the VASP wiki</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../cd_Si_relax/" class="btn btn-neutral float-left" title="cd Si relaxation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../fcc_Ni_rev/" class="btn btn-neutral float-right" title="fcc Ni revisited" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Weine Olovsson and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

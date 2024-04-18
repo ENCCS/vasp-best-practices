@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fcc Ni revisited &mdash; VASP Best Practices  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_lesson.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/term_role_formatting.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_rtd_theme_ext_color_contrast.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/overrides.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/minipres.js"></script>
+        <script src="../_static/tabs.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script data-domain="enccs.github.io/vasp-best-practices" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Bandgap of Si using different DFT+HF methods" href="../bandgap_Si/" />
+    <link rel="prev" title="fcc Ni" href="../fcc_Ni/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            VASP Best Practices
+              <img src="../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Presentations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../presentations/">Collection of morning presentations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Start here first</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tetralith/">For using Tetralith (NAISS, NSC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../leonardo/">For using LEONARDO (EuroHPC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/">Useful tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hands-on examples</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si/">fcc Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_DOS/">fcc Si DOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_bandstructure/">fcc Si bandstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si/">cd Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_vol_relax/">cd Si volume relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_relax/">cd Si relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni/">fcc Ni</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">fcc Ni revisited</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input-files">Input files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#collinear-calculation">1. Collinear calculation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#non-collinear-calculation">2. Non-collinear calculation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../bandgap_Si/">Bandgap of Si using different DFT+HF methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Ni100_surface/">Ni100 surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../more/">More examples and topics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiling VASP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../compile/">Different clusters, CPU and GPU</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">VASP Best Practices</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">fcc Ni revisited</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/vasp-best-practices/blob/main/content/fcc_Ni_rev.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fcc-ni-revisited">
+<h1>fcc Ni revisited<a class="headerlink" href="#fcc-ni-revisited" title="Permalink to this heading"></a></h1>
+<p><a class="reference external" href="https://www.vasp.at/wiki/index.php/Fcc_Ni_(revisited)">Based on the VASP wiki example in this link</a></p>
+<p><strong>Task:</strong> Calculate partial DOS of spin-polarized fcc ferromagnet Ni.</p>
+<div class="admonition-system-specific-instructions callout admonition" id="callout-0">
+<p class="admonition-title">System-specific instructions</p>
+<p>Select instructions for the system you are using:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-0-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-0-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-0-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>Instructions for use on the NAISS cluster Tetralith (NSC)</p>
+</div><div aria-labelledby="tab-0-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>Instructions for use on the EuroHPC cluster LEONARDO</p>
+</div></div>
+</div>
+<p>First, copy the example folder which contains some of the VASP input files</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-1-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-1-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-1-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/fcc_Ni_rev .
+cd fcc_Ni_rev
+</pre></div>
+</div>
+<p>and copy the latest POTCAR file for Ni</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Ni/POTCAR .
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp -r /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/fcc_Ni_rev .
+cd fcc_Ni_rev
+</pre></div>
+</div>
+<p>and copy the latest POTCAR file for Ni</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Ni/POTCAR .
+</pre></div>
+</div>
+</div></div>
+<section id="input-files">
+<h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this heading"></a></h2>
+<p>POSCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fcc Ni
+ -10.93 
+ 0.5 0.5 0.0
+ 0.0 0.5 0.5
+ 0.5 0.0 0.5
+Ni
+   1
+cartesian
+0 0 0
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Note the use of volume instead of lattice parameter in the 2nd line, indicated by minus “-”</p></li>
+</ul>
+<p>INCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SYSTEM  = Ni fcc bulk 
+
+ISTART  = 0
+ISPIN   = 2
+MAGMOM  = 1.0
+ISMEAR  = -5
+VOSKOWN = 1 
+LORBIT  = 11
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ISTART">ISTART</a>=0, start job from scratch (default)</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ISPIN">ISPIN</a>=2, gives a spin-polarized calculation</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/MAGMOM">MAGMOM</a>=1.0, an initial magnetic moment of 1.0 Bohr magnetons is set</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ISMEAR">ISMEAR</a>=-5, Tetrahedron method with Blöchl’s corrections used for k-mesh integration</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/VOSKOWN">VOSKOWN</a>=1, interpolation scheme of Vosko, Wilk and Nusair applied</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/LORBIT">LORBIT</a>=11, write DOSCAR and <em>lm</em>-decomposed PROCAR</p></li>
+</ul>
+<p>KPOINTS</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>k-points
+ 0
+Gamma
+ 11 11 11
+ 0  0  0
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Equally spaced k-mesh</p></li>
+<li><p>Here the Gamma (G) k-mesh is used, which always include the Gamma point</p></li>
+</ul>
+</section>
+<section id="collinear-calculation">
+<h2>1. Collinear calculation<a class="headerlink" href="#collinear-calculation" title="Permalink to this heading"></a></h2>
+<p>First create a new folder “col”, copy the files and go there</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir col
+cp INCAR POSCAR POTCAR KPOINTS run.sh col
+cd col
+</pre></div>
+</div>
+<p>since INCAR is already prepared for a collinear calculation, it’s just to submit the job</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run.sh
+</pre></div>
+</div>
+<p>and it should finish quite quickly. Check the magnetic moment, e.g. by</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat OSZICAR
+</pre></div>
+</div>
+<p>at the end it might look something like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>...
+DAV:   9    -0.545925473247E+01    0.23756E-02   -0.16066E-03  3008   0.279E-01    0.250E-01
+DAV:  10    -0.545865706078E+01    0.59767E-03   -0.57805E-04  2004   0.147E-01    0.261E-02
+DAV:  11    -0.545865295189E+01    0.41089E-05   -0.33171E-05  1412   0.519E-02
+   1 F= -.54586530E+01 E0= -.54586530E+01  d E =0.000000E+00  mag=     0.5874
+</pre></div>
+</div>
+<p>Notice the value for the magnetic moment on the right hand side. To just show last line, e.g. <code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">mag</span> <span class="pre">OSZICAR</span></code>.</p>
+<p>One can also check the <em>l</em> decomposed parts of the magnetic moment at the end of OUTCAR, e.g. open it with</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>less OUTCAR
+</pre></div>
+</div>
+<p>and press <code class="docutils literal notranslate"><span class="pre">G</span></code> (that is <code class="docutils literal notranslate"><span class="pre">shift</span></code> <code class="docutils literal notranslate"><span class="pre">g</span></code>) to go to the end (quit with <code class="docutils literal notranslate"><span class="pre">q</span></code>). It looks like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> magnetization (x)
+ 
+# of ion       s       p       d       tot
+------------------------------------------
+    1       -0.007  -0.026   0.636   0.602
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>What happens if one instead sets an initial magnetic moment of <code class="docutils literal notranslate"><span class="pre">MAGMOM</span> <span class="pre">=</span> <span class="pre">0.0</span></code> or <code class="docutils literal notranslate"><span class="pre">MAGMOM</span> <span class="pre">=</span> <span class="pre">2.0</span></code>?</p></li>
+<li><p>What can be said about the importance of setting appropriate initial magnetic moments?</p></li>
+<li><p>Check the spin-polarized DOS using p4vasp or py4vasp</p></li>
+<li><p>Any interesting messages in slurm-JOBID.out?</p></li>
+</ul>
+</section>
+<section id="non-collinear-calculation">
+<h2>2. Non-collinear calculation<a class="headerlink" href="#non-collinear-calculation" title="Permalink to this heading"></a></h2>
+<p>In the case of a non-collinear calculation, the magnetic moment will be allowed to point in three dimensions. Now, go back to the main folder “fcc_Ni_rev”, create a new folder “noncol” and copy relevant files</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir noncol
+cp INCAR POSCAR POTCAR KPOINTS run.sh nonc
+cd noncol
+</pre></div>
+</div>
+<p>For non-collinear calculations, one needs to change INCAR, comment out the two lines for the collinear calculations</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#ISPIN   = 2
+#MAGMOM  = 1.0
+</pre></div>
+</div>
+<p>and insert two lines</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>LNONCOLLINEAR = .TRUE.
+MAGMOM        = 0.0 0.0 1.0    
+</pre></div>
+</div>
+<p>The default is <a class="reference external" href="https://www.vasp.at/wiki/index.php/LNONCOLLINEAR">LNONCOLLINEAR</a>=.FALSE. To run non-collinear calculations, the VASP binary must also be changed to <code class="docutils literal notranslate"><span class="pre">vasp_ncl</span></code>, otherwise the job will crash.</p>
+<p>First, copy the example folder which contains some of the VASP input files.</p>
+<p>Edit the job script “run.sh” so that the last lines look like</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-2-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-2-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-2-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-2-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#mpprun vasp_std
+mpprun vasp_ncl
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-2-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-2-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#srun vasp_std
+srun vasp_ncl
+</pre></div>
+</div>
+</div></div>
+<p>Run the calculation</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run.sh
+</pre></div>
+</div>
+<p>and check the magnetic moment in the same way as for <strong>1.</strong> when it finishes. For OSZICAR it might look like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DAV:  10    -0.546407531955E+01    0.67997E-03   -0.80644E-05  7064   0.195E-01    0.291E-02
+DAV:  11    -0.546409507244E+01   -0.19753E-04   -0.12794E-04  7588   0.126E-01
+   1 F= -.54640951E+01 E0= -.54640951E+01  d E =0.000000E+00  mag=    -0.0000     0.0000     0.5878
+</pre></div>
+</div>
+<p>and at the end of OUTCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> magnetization (x)
+
+# of ion       s       p       d       tot
+------------------------------------------
+    1       -0.000   0.000  -0.000  -0.000
+
+
+
+ magnetization (y)
+
+# of ion       s       p       d       tot
+------------------------------------------
+    1        0.000  -0.000   0.000   0.000
+
+
+
+ magnetization (z)
+
+# of ion       s       p       d       tot
+------------------------------------------
+    1       -0.008  -0.027   0.637   0.602
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>What happens by changing the direction of the initial magnetic moment, e.g. setting <code class="docutils literal notranslate"><span class="pre">MAGMOM</span> <span class="pre">=</span> <span class="pre">1.0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code> or <code class="docutils literal notranslate"><span class="pre">MAGMOM</span> <span class="pre">=</span> <span class="pre">0.0</span> <span class="pre">1.0</span> <span class="pre">0.0</span></code>?</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../fcc_Ni/" class="btn btn-neutral float-left" title="fcc Ni" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../bandgap_Si/" class="btn btn-neutral float-right" title="Bandgap of Si using different DFT+HF methods" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Weine Olovsson and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

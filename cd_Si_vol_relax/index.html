@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cd Si volume relaxation &mdash; VASP Best Practices  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_lesson.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/term_role_formatting.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_rtd_theme_ext_color_contrast.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/overrides.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/minipres.js"></script>
+        <script src="../_static/tabs.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script data-domain="enccs.github.io/vasp-best-practices" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="cd Si relaxation" href="../cd_Si_relax/" />
+    <link rel="prev" title="cd Si" href="../cd_Si/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            VASP Best Practices
+              <img src="../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Presentations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../presentations/">Collection of morning presentations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Start here first</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tetralith/">For using Tetralith (NAISS, NSC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../leonardo/">For using LEONARDO (EuroHPC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/">Useful tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hands-on examples</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si/">fcc Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_DOS/">fcc Si DOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_bandstructure/">fcc Si bandstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si/">cd Si</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">cd Si volume relaxation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input-files">Input files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#calculation">Calculation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extra-tasks">Extra tasks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_relax/">cd Si relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni/">fcc Ni</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni_rev/">fcc Ni revisited</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bandgap_Si/">Bandgap of Si using different DFT+HF methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Ni100_surface/">Ni100 surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../more/">More examples and topics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiling VASP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../compile/">Different clusters, CPU and GPU</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">VASP Best Practices</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">cd Si volume relaxation</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/vasp-best-practices/blob/main/content/cd_Si_vol_relax.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cd-si-volume-relaxation">
+<h1>cd Si volume relaxation<a class="headerlink" href="#cd-si-volume-relaxation" title="Permalink to this heading"></a></h1>
+<p><a class="reference external" href="https://www.vasp.at/wiki/index.php/Cd_Si_volume_relaxation">Based on the VASP wiki example in this link</a></p>
+<p><strong>Task:</strong> Relaxation of the internal coordinates, volume and cell shape in cubic diamond Si. <a class="reference external" href="https://www.vasp.at/wiki/index.php/Energy_vs_volume_Volume_relaxations_and_Pulay_stress">Also see the discussion on energy vs volume, volume relaxations and Pulay stress</a></p>
+<p>There are several ways in which the equilibrium volume can be determined</p>
+<ul class="simple">
+<li><p>By fitting the total energies over a volume range e.g. using an equation of state method</p></li>
+<li><p>Relaxing the structure with VASP “on the fly”</p></li>
+</ul>
+<p>The first approach was done in the previous example <a class="reference internal" href="../cd_Si/"><span class="doc std std-doc">cd Si</span></a>. Here, the second approach will be used. While it’s fast, one needs to be careful regarding the accuracy and consider the <a class="reference external" href="https://www.vasp.at/wiki/index.php/Energy_vs_volume_Volume_relaxations_and_Pulay_stress">Pulay stress</a>.</p>
+<div class="admonition-system-specific-instructions callout admonition" id="callout-0">
+<p class="admonition-title">System-specific instructions</p>
+<p>Select instructions for the system you are using:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-0-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-0-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-0-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>Instructions for use on the NAISS cluster Tetralith (NSC)</p>
+</div><div aria-labelledby="tab-0-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>Instructions for use on the EuroHPC cluster LEONARDO</p>
+</div></div>
+</div>
+<p>First, copy the example folder which contains the VASP input files</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-1-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-1-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-1-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/cd_Si_vol_relax .
+cd cd_Si_vol_relax
+</pre></div>
+</div>
+<p>and copy the latest POTCAR file for Si</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Si/POTCAR .
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp -r /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/cd_Si_vol_relax .
+cd cd_Si_vol_relax
+</pre></div>
+</div>
+<p>and copy the latest POTCAR file for Si</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
+</pre></div>
+</div>
+</div></div>
+<section id="input-files">
+<h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this heading"></a></h2>
+<p>POSCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cubic diamond Si
+   5.5
+ 0.0    0.5     0.5
+ 0.5    0.0     0.5
+ 0.5    0.5     0.0
+Si
+  2
+Direct
+ -0.125 -0.125 -0.125
+  0.125  0.125  0.125
+</pre></div>
+</div>
+<p>INCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>System = diamond Si
+
+ISMEAR    = 0 
+SIGMA     = 0.1
+ENMAX     = 240
+IBRION    = 2 
+ISIF      = 3 
+NSW       = 15
+EDIFF     = 0.1E-04
+EDIFFG    = -0.01
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/IBRION">IBRION</a>=2, for using the conjugate-gradient algorithm</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ISIF">ISIF</a>=3, for change of internal parameters, shape and volume at the same time</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/NSW">NSW</a>=15, max number of ionic steps</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/EDIFF">EDIFF</a>=0.1E-04, the default stop value for difference in total energy between steps</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/EDIFFG">EDIFFG</a>=-0.01, if negative value, stop criterium for ionic relaxation if forces are smaller than |EDIFFG|</p></li>
+</ul>
+<p>KPOINTS</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>k-points
+ 0
+Monkhorst Pack
+ 11 11 11
+ 0  0  0
+</pre></div>
+</div>
+</section>
+<section id="calculation">
+<h2>Calculation<a class="headerlink" href="#calculation" title="Permalink to this heading"></a></h2>
+<p>Start the volume relaxation calculation by submitting the job</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run.sh
+</pre></div>
+</div>
+<p>Monitor how the structural relaxation progresses with</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat OSZICAR
+</pre></div>
+</div>
+<p>Check the relaxed final structure</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat CONTCAR
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Compare with the EOS lattice parameter obtained in the <a class="reference internal" href="../cd_Si/"><span class="doc std std-doc">previous example</span></a> and from the <a class="reference external" href="https://www.vasp.at/wiki/index.php/Cd_Si_volume_relaxation">VASP wiki</a> a= 5.4687 Å</p></li>
+<li><p>Note that one doesn’t use the total energy or DOS from a structural relaxation. For that, CONTCAR should be copied to POSCAR for a separate caclulation with no structural relaxation.</p></li>
+</ul>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-2-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-2-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-2-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-2-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>Check the convergence of the total energy and forces using p4vasp</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>p4v &amp;
+</pre></div>
+</div>
+<p>by selecting Convergence &gt; Energy or &gt; Forces.</p>
+</div><div aria-labelledby="tab-2-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-2-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>Check the convergence of the total energy using py4vasp</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import py4vasp
+mycalc = py4vasp.Calculation.from_path(&quot;/path/to/your/calculation/folder/here&quot;)
+mycalc.energy[:].plot()
+</pre></div>
+</div>
+</div></div>
+</section>
+<section id="extra-tasks">
+<h2>Extra tasks<a class="headerlink" href="#extra-tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Repeat the volume relaxation calculation in a new folder, but this time start from the relaxed structure <code class="docutils literal notranslate"><span class="pre">CONTCAR</span></code>, by copying it to POSCAR. Does the structure change, if so, how much?</p></li>
+<li><p>Repeat the volume relaxation calculation from scratch with higher accuracy, e.g. set ENCUT to 1.3 x ENMAX (grep ENMAX POTCAR) and PREC=Accurate in INCAR. Also, set a smaller value for EDIFF. Any difference in the lattice parameter a?</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../cd_Si/" class="btn btn-neutral float-left" title="cd Si" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../cd_Si_relax/" class="btn btn-neutral float-right" title="cd Si relaxation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Weine Olovsson and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fcc Si DOS &mdash; VASP Best Practices  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_lesson.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/term_role_formatting.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_rtd_theme_ext_color_contrast.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/overrides.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/minipres.js"></script>
+        <script src="../_static/tabs.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script data-domain="enccs.github.io/vasp-best-practices" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="fcc Si bandstructure" href="../fcc_Si_bandstructure/" />
+    <link rel="prev" title="fcc Si" href="../fcc_Si/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            VASP Best Practices
+              <img src="../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Presentations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../presentations/">Collection of morning presentations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Start here first</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tetralith/">For using Tetralith (NAISS, NSC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../leonardo/">For using LEONARDO (EuroHPC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/">Useful tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hands-on examples</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si/">fcc Si</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">fcc Si DOS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input-files">Input files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-calculation-from-scratch">1a. Calculation from scratch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#b-calculation-from-using-previous-example">1b. Calculation from using previous example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#check-the-result">2. Check the result</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extra-tasks">Extra tasks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_bandstructure/">fcc Si bandstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si/">cd Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_vol_relax/">cd Si volume relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_relax/">cd Si relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni/">fcc Ni</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni_rev/">fcc Ni revisited</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bandgap_Si/">Bandgap of Si using different DFT+HF methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Ni100_surface/">Ni100 surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../more/">More examples and topics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiling VASP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../compile/">Different clusters, CPU and GPU</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">VASP Best Practices</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">fcc Si DOS</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/vasp-best-practices/blob/main/content/fcc_Si_DOS.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fcc-si-dos">
+<h1>fcc Si DOS<a class="headerlink" href="#fcc-si-dos" title="Permalink to this heading"></a></h1>
+<p><a class="reference external" href="https://www.vasp.at/wiki/index.php/Fcc_Si_DOS">Based on the VASP wiki example in this link</a></p>
+<p><strong>Task:</strong> Calculation of the density of states (DOS) for fcc Si.</p>
+<div class="admonition-system-specific-instructions callout admonition" id="callout-0">
+<p class="admonition-title">System-specific instructions</p>
+<p>Select instructions for the system you are using:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-0-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-0-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-0-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>Instructions for use on the NAISS cluster Tetralith (NSC)</p>
+</div><div aria-labelledby="tab-0-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>Instructions for use on the EuroHPC cluster LEONARDO</p>
+</div></div>
+</div>
+<p>A DOS calculation is typically done in two steps: <br />
+(1) a self consistent, static, converged calculation and <br />
+(2) a non-self consistent calculation, using the charge density (CHGCAR) from the first with a denser k-mesh</p>
+<p>Note that</p>
+<ul class="simple">
+<li><p>This approach saves computational time, in particular for large systems</p></li>
+<li><p>DOS is only meaningful for static (no structural relaxation) calculations</p></li>
+</ul>
+<p>First, copy the example folder which contains some of the VASP input files and useful scripts</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-1-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-1-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-1-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/fcc_Si_DOS .
+cd fcc_Si_DOS
+</pre></div>
+</div>
+<p>also copy the latest POTCAR file for Si</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Si/POTCAR .
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp -r /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/fcc_Si_DOS .
+cd fcc_Si_DOS
+</pre></div>
+</div>
+<p>also copy the latest POTCAR file for Si</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
+</pre></div>
+</div>
+</div></div>
+<section id="input-files">
+<h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this heading"></a></h2>
+<p>POSCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fcc Si
+ 3.9
+ 0.5 0.5 0.0
+ 0.0 0.5 0.5
+ 0.5 0.0 0.5
+Si
+   1
+cartesian
+0 0 0
+</pre></div>
+</div>
+<p>INCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>System = fcc Si
+
+#ICHARG = 11   # read charge file
+ENCUT = 240
+ISMEAR = -5 
+LORBIT = 11
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ICHARG">ICHARG</a>=11, VASP will do a non-self consistent calculation for a fixed charged density read from <code class="docutils literal notranslate"><span class="pre">CHGCAR</span></code></p></li>
+<li><p>For DOS we want to use the <em>tetrahedron method + Blöchl corrections</em> for how to treat partial occupancies of bands, controlled by setting <a class="reference external" href="https://www.vasp.at/wiki/index.php/ISMEAR">ISMEAR</a>=-5</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/LORBIT">LORBIT</a> gives output to PROOUT or PROCAR files, also see <a class="reference external" href="https://www.vasp.at/wiki/index.php/RWIGS">RWIGS</a></p></li>
+<li><p>With LORBIT set, partial charge densities are found in OUTCAR</p></li>
+</ul>
+<p>KPOINTS</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>k-points
+ 0
+Monkhorst Pack
+ 21 21 21
+ 0  0  0
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>We keep an odd number of k-points in each direction for MP k-mesh -&gt; Gamma centered mesh, also needed for the tetrahedron method</p></li>
+</ul>
+</section>
+<section id="a-calculation-from-scratch">
+<h2>1a. Calculation from scratch<a class="headerlink" href="#a-calculation-from-scratch" title="Permalink to this heading"></a></h2>
+<p>We can either start completely from scratch, or use the results from the <a class="reference internal" href="../fcc_Si/"><span class="doc std std-doc">previous example “fcc Si”</span></a>. For the latter, go to the next section <strong>1b</strong> further below.</p>
+<p>Since this is a small system, calculation will be fast independent of the procedure.</p>
+<p>From scratch, set up the folder “dos” with all the input files (use <code class="docutils literal notranslate"><span class="pre">*</span></code> or <code class="docutils literal notranslate"><span class="pre">INCAR</span> <span class="pre">POSCAR</span> <span class="pre">KPOINTS</span> <span class="pre">POTCAR</span> <span class="pre">plotdos.sh</span> <span class="pre">run.sh</span></code>)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir dos
+mv * dos
+cd dos
+</pre></div>
+</div>
+<p>submit the calculation</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run.sh
+</pre></div>
+</div>
+<p>and wait for it to finish. Any interesting messages in <code class="docutils literal notranslate"><span class="pre">slurm-JOBID.out</span></code> or the output?</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat slurm*.out
+</pre></div>
+</div>
+</section>
+<section id="b-calculation-from-using-previous-example">
+<h2>1b. Calculation from using previous example<a class="headerlink" href="#b-calculation-from-using-previous-example" title="Permalink to this heading"></a></h2>
+<p>If you did the calculations from scratch in <strong>1a</strong>, you can skip this section.</p>
+<p>First, create a folder and move the input files for the static self consistent calculation</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir dos
+mv INCAR POSCAR KPOINTS POTCAR plotdos.sh run.sh dos
+cd dos
+</pre></div>
+</div>
+<p>Now, copy the charge density file CHGCAR from a calculation in the <a class="reference internal" href="../fcc_Si/"><span class="doc std std-doc">previous example</span></a>, checking that the path is correct</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp ../../fcc_Si/3.9/CHGCAR .
+</pre></div>
+</div>
+<p>Now, edit INCAR (with e.g. <code class="docutils literal notranslate"><span class="pre">vi</span></code>or use your favourite editor)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vi INCAR
+</pre></div>
+</div>
+<p>such that it looks like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>System = fcc Si
+
+ICHARG = 11
+ENCUT = 240
+ISMEAR = -5 #tetrahedron
+LORBIT = 11
+</pre></div>
+</div>
+<p>submit the calculation</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run.sh
+</pre></div>
+</div>
+<p>and wait for it to finish. Any interesting messages in <code class="docutils literal notranslate"><span class="pre">slurm-JOBID.out</span></code> or output?</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat slurm*.out
+</pre></div>
+</div>
+</section>
+<section id="check-the-result">
+<h2>2. Check the result<a class="headerlink" href="#check-the-result" title="Permalink to this heading"></a></h2>
+<p>To quickly check the resulting DOS, you can use the small script “plotdos.sh” provided with the example, it looks like</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-2-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-2-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-2-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-2-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+
+awk &#39;BEGIN{i=1} /dos&gt;/,\
+                /\/dos&gt;/ \
+                 {a[i]=$2 ; b[i]=$3 ; i=i+1} \
+     END{for (j=12;j&lt;i-5;j++) print a[j],b[j]}&#39; vasprun.xml &gt; dos.dat
+
+ef=`awk &#39;/efermi/ {print $3}&#39; vasprun.xml`
+
+cat &gt;plotfile &lt;&lt;EOF
+# set term postscript enhanced eps colour lw 2 &quot;Helvetica&quot; 20
+# set output &quot;optics.eps&quot;
+plot &quot;dos.dat&quot; using (\$1-$ef):(\$2) w lp
+EOF
+
+gnuplot -persist plotfile
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-2-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-2-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+
+awk &#39;BEGIN{i=1} /dos&gt;/,\
+                /\/dos&gt;/ \
+                 {a[i]=$2 ; b[i]=$3 ; i=i+1} \
+     END{for (j=12;j&lt;i-5;j++) print a[j],b[j]}&#39; vasprun.xml &gt; dos.dat
+
+ef=`awk &#39;/efermi/ {print $3}&#39; vasprun.xml`
+
+cat &gt;plotfile &lt;&lt;EOF
+set term png
+set output &quot;optics.png&quot;
+plot &quot;dos.dat&quot; using (\$1-$ef):(\$2) w lp
+EOF
+
+gnuplot plotfile
+</pre></div>
+</div>
+</div></div>
+<p>run it with</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./plotdos.sh
+</pre></div>
+</div>
+<p>it produces the two files “dos.dat” and “plotfile”, it also automatically starts gnuplot (Tetralith) or produces an image “optics.png” (LEONARDO).</p>
+<p>For more advanced functionalities and lots of different options, one can instead use <code class="docutils literal notranslate"><span class="pre">p4vasp</span></code> (Tetralith) or <code class="docutils literal notranslate"><span class="pre">py4vasp</span></code> (Tetralith, local computer)</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-3-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-3-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-3-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-3-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-3-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>Here, an example is made on how to use p4vasp</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module load p4vasp/0.3.30-nsc1
+p4v &amp;
+</pre></div>
+</div>
+<p>this will open the GUI of p4vasp in your ThinLinc session. If you started p4vasp outside the folder, you’ll need to load the <code class="docutils literal notranslate"><span class="pre">vasprun.xml</span></code>output file by selecting File &gt; Load system &gt; step to correct folder and select <code class="docutils literal notranslate"><span class="pre">vasprun.xml</span></code> &gt; press “Ok”.</p>
+<p>To check the DOS, in the upper menu select “Electronic” and click “DOS + bands”.</p>
+<p>When the DOS window is shown, you can e.g. select to export the DOS data by clicking “Graph” in the menu bar, selecting the raw data (.dat) option. It’s also possible to directly export for use with <code class="docutils literal notranslate"><span class="pre">XmGrace</span></code>(.agr).</p>
+</div><div aria-labelledby="tab-3-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-3-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>Copy the output files to your local computer using “scp” and investigate using <code class="docutils literal notranslate"><span class="pre">py4vasp</span></code>. For <code class="docutils literal notranslate"><span class="pre">p4vasp</span></code>, follow Tetralith instructions.</p>
+<p>Here, an example is made on how to use py4vasp. Assuming that a jupyter-notebook is running, from the launcher, select <code class="docutils literal notranslate"><span class="pre">New</span></code> and under <code class="docutils literal notranslate"><span class="pre">Notebook</span></code> select <code class="docutils literal notranslate"><span class="pre">py4vasp</span></code>. At the prompt <code class="docutils literal notranslate"><span class="pre">In</span> <span class="pre">[</span> <span class="pre">]</span></code> you can add commands</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import py4vasp
+mycalc = py4vasp.Calculation.from_path(&quot;/path/to/your/calculation/folder/here&quot;)
+mycalc.dos.plot()
+</pre></div>
+</div>
+<p>To start calculate, press the <code class="docutils literal notranslate"><span class="pre">Run</span></code> button. It might take some time for it to finish, an asterisk will be shown at the prompt <code class="docutils literal notranslate"><span class="pre">[*]</span></code> and the circle after “py4vasp” in the upper right corner will be filled. When finished, hopefully a DOS plot will be seen and a new empty prompt <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span></code> appears further below.</p>
+<p>The DOS plot figure can e.g. be zoomed, downloaded etc. see buttons in the upper right corner of the figure.</p>
+<p>The plot can be updated by changing the commands and press <code class="docutils literal notranslate"><span class="pre">Run</span></code> again.</p>
+</div></div>
+</section>
+<section id="extra-tasks">
+<h2>Extra tasks<a class="headerlink" href="#extra-tasks" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p>Compare DOS for s, p and d states using p4vasp (select “Electronic” &gt; “Local DOS + bands control”) or by using py4vasp, e.g.:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import py4vasp
+mycalc = py4vasp.Calculation.from_path(&quot;/path/to/your/calculation/folder/here&quot;)
+mycalc.dos.plot(&quot;s,p,d&quot;)
+</pre></div>
+</div>
+</li>
+<li><p>Anything interesting about the fcc Si system considering the DOS?</p></li>
+<li><p>Compare total DOS for using a denser k-mesh (KPOINTS), ENCUT = 1.5 x ENMAX (<code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">ENMAX</span> <span class="pre">POTCAR</span></code>) and PREC=Accurate (INCAR), any difference?</p></li>
+<li><p>Tetralith: Test to export DOS as a file “dos.agr” and open using XmGrace</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module load grace/5.1.25-hpc1-intel-2023a-eb
+xmgrace dos.agr &amp;
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../fcc_Si/" class="btn btn-neutral float-left" title="fcc Si" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../fcc_Si_bandstructure/" class="btn btn-neutral float-right" title="fcc Si bandstructure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Weine Olovsson and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

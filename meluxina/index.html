@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For using MeluXina (EuroHPC) &mdash; VASP Best Practices  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_lesson.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/term_role_formatting.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_rtd_theme_ext_color_contrast.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/overrides.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/minipres.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script data-domain="enccs.github.io/vasp-best-practices" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            VASP Best Practices
+              <img src="../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Presentations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../presentations/">Collection of morning presentations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Start here first</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tetralith/">For using Tetralith (NAISS, NSC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../leonardo/">For using LEONARDO (EuroHPC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/">Useful tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hands-on examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si/">fcc Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_DOS/">fcc Si DOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_bandstructure/">fcc Si bandstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si/">cd Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_vol_relax/">cd Si volume relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_relax/">cd Si relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni/">fcc Ni</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni_rev/">fcc Ni revisited</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bandgap_Si/">Bandgap of Si using different DFT+HF methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Ni100_surface/">Ni100 surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../more/">More examples and topics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiling VASP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../compile/">Different clusters, CPU and GPU</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">VASP Best Practices</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">For using MeluXina (EuroHPC)</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/vasp-best-practices/blob/main/content/meluxina.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="for-using-meluxina-eurohpc">
+<h1>For using MeluXina (EuroHPC)<a class="headerlink" href="#for-using-meluxina-eurohpc" title="Permalink to this heading"></a></h1>
+<p>Note that the hands-on part was adjusted to MeluXina from Tetralith, so there are some differences.</p>
+<section id="user-account-and-login">
+<h2>User account and login<a class="headerlink" href="#user-account-and-login" title="Permalink to this heading"></a></h2>
+<p>Instructions on access for a temporary account will be sent out by LuxProvide which handles the MeluXina supercomputer. It is useful to setup ssh so that one can login directly, see <a class="reference external" href="https://docs.lxp.lu/first-steps/connecting/">Connecting, at the MeluXina user documentation</a>.</p>
+</section>
+<section id="general-information">
+<h2>General information<a class="headerlink" href="#general-information" title="Permalink to this heading"></a></h2>
+<p>There is detailed <a class="reference external" href="https://docs.lxp.lu/">MeluXina user documentation</a> available, e.g. on how to connect and use the resources.</p>
+</section>
+<section id="start-an-interactive-job">
+<h2>(1) Start an interactive job<a class="headerlink" href="#start-an-interactive-job" title="Permalink to this heading"></a></h2>
+<p>Since it’s not allowed to load modules and run software on the shared MeluXina login nodes, the hands-on session will use interactive jobs.
+Note that text editing (vi, emacs, nano), submitting jobs (sbatch) and checking output with standard command line tools (grep, less, awk) are still possible on the login node.</p>
+<p>Let’s request an interactive job on a work node</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>salloc -A p200051 -p cpu --qos default -N 1 -t 6:00:00
+</pre></div>
+</div>
+<p>and wait for it to start before going to the next section below. The idea is to use this interactive job for setting everything up in order to run the hands-on examples.</p>
+</section>
+<section id="set-up-py4vasp">
+<h2>(2) Set up py4vasp<a class="headerlink" href="#set-up-py4vasp" title="Permalink to this heading"></a></h2>
+<p>py4vasp is a versatile tool for e.g. analysing VASP output. In the hands-on examples, it will mainly be used for plotting density of states and bandstructures.
+A Python virtual environment with py4vasp has been prepared. A few extra steps are needed for it to work together with jupyter-notebooks, used in the hands-on sessions.</p>
+<p>In the terminal with the interactive job running (see previous section), let’s prepare to use py4vasp</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module load Python/3.10.4-GCCcore-11.3.0
+module load JupyterLab/3.2.8-GCCcore-11.3.0
+python3 -m ipykernel install --name py4vasp --user
+</pre></div>
+</div>
+<p>one also needs to fix the “kernel.json” file, at the top of your home folder (type “cd” to get there):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd .local/share/jupyter/kernels/py4vasp
+cp /project/home/p200051/vasp_ws2023/kernel.json .
+</pre></div>
+</div>
+</section>
+<section id="starting-jupyter-notebook">
+<h2>(3) Starting jupyter-notebook<a class="headerlink" href="#starting-jupyter-notebook" title="Permalink to this heading"></a></h2>
+<p>In the same interactive job as above, load the prepared virtual environment “py4venv” (this assumes that we already loaded the module <code class="docutils literal notranslate"><span class="pre">Python/3.10.4-GCCcore-11.3.0</span></code> in the previous step)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>source /project/home/p200051/vasp_ws2023/py4venv/bin/activate
+</pre></div>
+</div>
+<p>you will get a prompt which might look like <code class="docutils literal notranslate"><span class="pre">(py4venv)</span> <span class="pre">[u000000&#64;mel0000</span> <span class="pre">~]$</span></code>. Now, start jupyter-notebook with</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>jupyter-notebook --no-browser
+</pre></div>
+</div>
+<p>after some time an output will be shown with a link at the end which can be used for connecting to the jupyter-notebook. <strong>Note: before connecting with your own browser on a local desktop/laptop computer, one first needs to setup port forwarding</strong>.</p>
+<p>In a new terminal from your local computer, first login to MeluXina with <strong>port forwarding</strong>, change <code class="docutils literal notranslate"><span class="pre">u00000</span></code> to your username:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ssh -L 8888:localhost:8888 u000000@login.lxp.lu -p 8822
+</pre></div>
+</div>
+<p>this connects port 8888 on the local computer to port 8888 on the login node.</p>
+<p>Now, in the terminal which was just connected to the login node, set port forwarding between the login and work node, change <code class="docutils literal notranslate"><span class="pre">mel0000</span></code> to the work node name (seen from the prompt in the interactive job):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ssh -L 8888:localhost:8888 mel0000
+</pre></div>
+</div>
+<p>Since one needs to use a unique port, 8888 might already be occupied (in such case you’ll see a warning), just try another port in the same range (e.g. 8900 etc.).</p>
+<p>When the port forwarding is done, the jupyter-notebook can be opended by using the link which contains “localhost” in its name, by pasting it in the local browser. It might look something like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>http://localhost:8888/?token=79453hgs9823gsl9sg3hsekw883qk3s3o3kjgey34kw4ijj3
+</pre></div>
+</div>
+</section>
+<section id="run-vasp">
+<h2>(4) Run VASP<a class="headerlink" href="#run-vasp" title="Permalink to this heading"></a></h2>
+<p>Here we assume that a jupyter-notebook is running on a work node and that it opened up fine in a local browser after fixing the port forwarding.
+Terminals can now be opened in its own browser window by pressing the button <code class="docutils literal notranslate"><span class="pre">New</span></code> in the upper right hand side and then <code class="docutils literal notranslate"><span class="pre">Terminal</span></code> in its menu.
+Go to the window with the new terminal and load settings for VASP</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>source /project/home/p200051/vasp_ws2023/setup.sh
+</pre></div>
+</div>
+<p>when opening up a new terminal, the same steps need to be applied again for running VASP.</p>
+<p>Now, a VASP job can be run directly</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>srun --hint=nomultithread -n 8 vasp_std
+</pre></div>
+</div>
+<p>For this workshop, the approach of running interactively using a terminal via jupyter-notebook is recommended.
+This allows to run several terminals (if needed) and py4vasp simultaneously.</p>
+<p>For the common use case of running longer production jobs, one would instead typically submit jobscripts to the queue.</p>
+</section>
+<section id="run-vasp-alternative">
+<h2>Run VASP - alternative<a class="headerlink" href="#run-vasp-alternative" title="Permalink to this heading"></a></h2>
+<p>In case it fails or is too difficult to get jupyter-notebook working, it is still possible to run the VASP examples directly in the interactive job on the work node, or by submitting jobs to the queue system. A jobscript template is provided with all the examples</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>run.sh
+</pre></div>
+</div>
+<p>check it (using e.g. vi) and change if needed, thereafter submit it to the queue</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run.sh
+</pre></div>
+</div>
+<p>By saving the output, an analysis could be made e.g. by using tools on a local computer. A basic analysis can also be done by standard command line tools.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Weine Olovsson and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ni100 surface &mdash; VASP Best Practices  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_lesson.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/term_role_formatting.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_rtd_theme_ext_color_contrast.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/overrides.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/minipres.js"></script>
+        <script src="../_static/tabs.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script data-domain="enccs.github.io/vasp-best-practices" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="More examples and topics" href="../more/" />
+    <link rel="prev" title="Bandgap of Si using different DFT+HF methods" href="../bandgap_Si/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            VASP Best Practices
+              <img src="../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Presentations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../presentations/">Collection of morning presentations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Start here first</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tetralith/">For using Tetralith (NAISS, NSC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../leonardo/">For using LEONARDO (EuroHPC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/">Useful tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hands-on examples</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si/">fcc Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_DOS/">fcc Si DOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_bandstructure/">fcc Si bandstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si/">cd Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_vol_relax/">cd Si volume relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_relax/">cd Si relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni/">fcc Ni</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni_rev/">fcc Ni revisited</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bandgap_Si/">Bandgap of Si using different DFT+HF methods</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Ni100 surface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input-files">Input files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#surface-relaxation">1. Surface relaxation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#surface-dos">2. Surface DOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#surface-bandstructure">3. Surface bandstructure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../more/">More examples and topics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiling VASP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../compile/">Different clusters, CPU and GPU</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">VASP Best Practices</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Ni100 surface</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/vasp-best-practices/blob/main/content/Ni100_surface.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ni100-surface">
+<h1>Ni100 surface<a class="headerlink" href="#ni100-surface" title="Permalink to this heading"></a></h1>
+<p>Based on the three VASP wiki examples in the links <a class="reference external" href="https://www.vasp.at/wiki/index.php/Ni_100_surface_relaxation">1</a>, <a class="reference external" href="https://www.vasp.at/wiki/index.php/Ni_100_surface_DOS">2</a> and <a class="reference external" href="https://www.vasp.at/wiki/index.php/Ni_100_surface_bandstructure">3</a></p>
+<p><strong>Task:</strong> Perform a relaxation of the first two layers of a Ni (100) surface, thereafter calculate its DOS and bandstructure.</p>
+<div class="admonition-system-specific-instructions callout admonition" id="callout-0">
+<p class="admonition-title">System-specific instructions</p>
+<p>Select instructions for the system you are using:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-0-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-0-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-0-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>Instructions for use on the NAISS cluster Tetralith (NSC)</p>
+</div><div aria-labelledby="tab-0-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>Instructions for use on the EuroHPC cluster LEONARDO</p>
+</div></div>
+</div>
+<p>First, copy the example folder which contains some of the VASP input files</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-1-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-1-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-1-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/Ni100_surf .
+cd Ni100_surf
+</pre></div>
+</div>
+<p>and copy the latest POTCAR file for Ni</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Ni/POTCAR .
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp -r /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/Ni100_surf .
+cd Ni100_surf
+</pre></div>
+</div>
+<p>and copy the latest POTCAR file for Ni</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Ni/POTCAR .
+</pre></div>
+</div>
+</div></div>
+<section id="input-files">
+<h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this heading"></a></h2>
+<p>POSCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fcc (100) surface
+ 3.53
+   .50000   .50000   .00000
+  -.50000   .50000   .00000
+   .00000   .00000  5.00000
+Ni
+  5
+Selective Dynamics
+Cartesian
+   .00000   .00000   .00000 F F F
+   .00000   .50000   .50000 F F F
+   .00000   .00000  1.00000 F F F
+   .00000   .50000  1.50000 T T T
+   .00000   .00000  2.00000 T T T
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Ni lattice constant a = 3.53Å</p></li>
+<li><p>1 atom per layer</p></li>
+<li><p>5 layers in total</p></li>
+<li><p>Note “S” or “Selective dynamics” chosen in the line under number of atoms</p></li>
+</ul>
+<p>INCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  ISTART = 0; ICHARG = 2
+
+general:
+  SYSTEM = clean Ni(100) surface
+  ENCUT = 270 
+  ISMEAR = 2 ; SIGMA = 0.2
+  ALGO = Fast
+  EDIFF = 1E-6
+
+spin:
+  ISPIN=2
+  MAGMOM = 5*1
+
+dynamic:
+  NSW = 100
+  POTIM = 0.8
+  IBRION = 1
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ISTART">ISTART</a>=0, static calculation (default)</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ICHARG">ICHARG</a>=2, initial charge-density from overlapping atoms (default if ISTART=0)</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ENCUT">ENCUT</a>=270, default energy cutoff 270 eV</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ISMEAR">ISMEAR</a>=2, Methfessel-Paxton smearing used for metal</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/SIGMA">SIGMA</a>=0.2, default smearing</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ALGO">ALGO</a>=Fast, (default is Normal) first steps according to Davidson, thereafter RMM-DIIS, algorithms for electron minimization</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/EDIFF">EDIFF</a>=1E-6,</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ISPIN">ISPIN</a>=2, gives a spin-polarized calculation</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/MAGMOM">MAGMOM</a>=5*1, for the 5 atoms in POSCAR an initial magnetic moment of 1 Bohr magnetons</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/NSW">NSW</a>=100,</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/POTIM">POTIM</a>=0.8,</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/IBRION">IBRION</a>=1, ionic relaxation (RMM-DIIS)</p></li>
+</ul>
+<p>KPOINTS</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>k-points
+0
+Monkhorst-Pack
+9 9 1
+0 0 0
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Equally spaced k-mesh</p></li>
+<li><p>Odd Monkhorst-Pack k-mesh &gt; Gamma centered</p></li>
+<li><p>Note, only one k-point in the z-direction for the surface</p></li>
+</ul>
+</section>
+<section id="surface-relaxation">
+<h2>1. Surface relaxation<a class="headerlink" href="#surface-relaxation" title="Permalink to this heading"></a></h2>
+<p>First, note how selective dynamics (S) works in the <a class="reference external" href="https://www.vasp.at/wiki/index.php/POSCAR">POSCAR</a> file</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Selective Dynamics
+Cartesian
+   .00000   .00000   .00000 F F F
+   .00000   .50000   .50000 F F F
+   .00000   .00000  1.00000 F F F
+   .00000   .50000  1.50000 T T T
+   .00000   .00000  2.00000 T T T
+</pre></div>
+</div>
+<p>So, for relaxation <code class="docutils literal notranslate"><span class="pre">F=False</span></code> and <code class="docutils literal notranslate"><span class="pre">T=True</span></code>, so one sees that the two atoms at z=1.5 and 2.0 are able to move in all directions, while the three lower atoms (layers) are fixed.</p>
+<ul class="simple">
+<li><p>For surface relaxations it’s typical to fix the bulk-like atoms in the bottom and let the ones close to the surface be able to relax</p></li>
+<li><p>Alternatively, a symmetric supercell can be constructed with inner bulk-like layers</p></li>
+</ul>
+<p>Submit the calculation to the queue</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run.sh
+</pre></div>
+</div>
+<p>and observe the relaxation e.g. with</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat OSZICAR
+</pre></div>
+</div>
+<p>After the calculation is finished, compare the forces in OUTCAR between the first and the last step (e.g. using <code class="docutils literal notranslate"><span class="pre">less</span></code>).</p>
+<p>First step:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> POSITION                                       TOTAL-FORCE (eV/Angst)
+ -----------------------------------------------------------------------------------
+      0.00000      0.00000      0.00000         0.000000      0.000000      0.419201
+      0.00000      1.76500      1.76500         0.000000      0.000000     -0.401608
+      0.00000      0.00000      3.53000         0.000000      0.000000     -0.002589
+      0.00000      1.76500      5.29500         0.000000      0.000000      0.392849
+      0.00000      0.00000      7.06000        -0.000000     -0.000000     -0.407852
+ -----------------------------------------------------------------------------------
+    total drift:                               -0.000000     -0.000000     -0.008050
+</pre></div>
+</div>
+<p>Last step:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> POSITION                                       TOTAL-FORCE (eV/Angst)
+ -----------------------------------------------------------------------------------
+      0.00000      0.00000      0.00000        -0.000000      0.000000      0.425910
+      0.00000      1.76500      1.76500         0.000000     -0.000000     -0.402950
+      0.00000      0.00000      3.53000        -0.000000      0.000000     -0.023012
+      0.00000      1.76500      5.29871        -0.000000      0.000000     -0.001056
+     -0.00000     -0.00000      6.98070        -0.000000     -0.000000      0.001107
+ -----------------------------------------------------------------------------------
+    total drift:                                0.000000     -0.000000     -0.019988    
+</pre></div>
+</div>
+<p>Check the obtained relaxed structure in <code class="docutils literal notranslate"><span class="pre">CONTCAR</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fcc (100) surface                       
+   3.53000000000000     
+     0.5000000000000000    0.5000000000000000    0.0000000000000000
+    -0.5000000000000000    0.5000000000000000    0.0000000000000000
+     0.0000000000000000    0.0000000000000000    5.0000000000000000
+   Ni
+     5
+Selective dynamics
+Direct
+  0.0000000000000000  0.0000000000000000  0.0000000000000000   F   F   F
+  0.5000000000000000  0.5000000000000000  0.1000000000000014   F   F   F
+  0.0000000000000000  0.0000000000000000  0.2000000000000028   F   F   F
+  0.5000000000000000  0.5000000000000000  0.3002099841022341   T   T   T
+ -0.0000000000000000  0.0000000000000000  0.3955072458335201   T   T   T
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Check the convergence using p4vasp or py4vasp</p></li>
+<li><p>Compare surface energies following the example in the <a class="reference external" href="https://www.vasp.at/wiki/index.php/Ni_100_surface_relaxation">VASP wiki</a></p></li>
+<li><p>What is the inward relaxation of the surface layers (compare VASP wiki)</p></li>
+<li><p>Visualize the relaxation of the structure using p4vasp or py4vasp (follow VASP wiki figures)</p></li>
+</ul>
+</section>
+<section id="surface-dos">
+<h2>2. Surface DOS<a class="headerlink" href="#surface-dos" title="Permalink to this heading"></a></h2>
+<p>Now, in a new folder “dos”, calculate the local DOS for the relaxed Ni(100) surface using CONTCAR from the previous step</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir dos
+cp CONTCAR dos/POSCAR
+cp INCAR.dos dos/INCAR
+cp POTCAR KPOINTS run.sh dos
+cd dos
+</pre></div>
+</div>
+<p>Also note that we use a new INCAR (from INCAR.dos) which looks like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>general:
+  SYSTEM = clean (100) Ni surface
+  ENMAX = 270
+  ISMEAR =   -5
+  ALGO = Normal 
+
+spin:
+  ISPIN = 2
+  MAGMOM = 5*1   
+
+  LORBIT = 11  # lm and site decomposed DOS inside PAW spheres
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ISMEAR">ISMEAR</a>=-5, the tetrahedron method with Blöchl corrections, suitable for DOS</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ALGO">ALGO</a>=Normal, the default electron minimization algorithm</p></li>
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/LORBIT">LORBIT</a>=11, lm and site decomposed DOS</p></li>
+</ul>
+<p>Run the calculation with</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run.sh
+</pre></div>
+</div>
+<p>After it finishes, at the end of OUTCAR, check the information on local charge and magnetization</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> total charge     
+
+# of ion       s       p       d       tot
+------------------------------------------
+    1        0.464   0.328   8.294   9.086
+    2        0.488   0.483   8.309   9.280
+    3        0.491   0.485   8.317   9.294
+    4        0.498   0.505   8.334   9.338
+    5        0.477   0.350   8.332   9.158
+--------------------------------------------------
+tot          2.418   2.151  41.586  46.156
+
+
+
+ magnetization (x)
+
+# of ion       s       p       d       tot
+------------------------------------------
+    1       -0.003  -0.021   0.751   0.727
+    2       -0.008  -0.026   0.645   0.611
+    3       -0.008  -0.026   0.636   0.602
+    4       -0.008  -0.026   0.630   0.596
+    5       -0.004  -0.021   0.725   0.700
+--------------------------------------------------
+tot         -0.032  -0.120   3.388   3.236
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>By setting <a class="reference external" href="https://www.vasp.at/wiki/index.php/LORBIT">LORBIT</a>=1 and changing <a class="reference external" href="https://www.vasp.at/wiki/index.php/RWIGS">RWIGS</a>, it’s possible to control the total number of electrons within the sphere</p></li>
+<li><p>What can be said about the magnetic moments for the different layers?</p></li>
+<li><p>Test to plot DOS using p4vasp/py4vasp, see figures at the end of the <a class="reference external" href="https://www.vasp.at/wiki/index.php/Ni_100_surface_DOS">VASP wiki example</a></p></li>
+</ul>
+</section>
+<section id="surface-bandstructure">
+<h2>3. Surface bandstructure<a class="headerlink" href="#surface-bandstructure" title="Permalink to this heading"></a></h2>
+<p>Now, calculate the corresponding bandstructure for the relaxed Ni(100) surface structure. Go to the main folder “Ni100_surf” and there create the folder “band” and copy the needed files</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir band
+cp CONTCAR band/POSCAR
+cp INCAR.band band/INCAR
+cp KPOINTS.band band/KPOINTS
+cp POTCAR run.sh band
+cd band
+</pre></div>
+</div>
+<p>Also note that we use a new INCAR (from INCAR.band) which looks like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  ICHARG = 11
+general:
+  SYSTEM = clean (100) nickel surface
+  ENMAX  = 270
+  ISMEAR = 2 ; SIGMA = 0.2
+  ALGO = Normal
+
+spin:
+  ISPIN = 2
+  MAGMOM = 5*1
+
+  LORBIT = 11
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ICHARG">ICHARG</a>=11, for a non-self consistent run using previously obtained CHGCAR</p></li>
+</ul>
+<p>Copy CHGCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp ../dos/CHGCAR .
+</pre></div>
+</div>
+<p>This time KPOINTS for the bandstructure looks like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>kpoints for band-structure G-X-M-G
+  13
+reziprok
+   .00000   .00000   .00000    1
+   .12500   .00000   .00000    1
+   .25000   .00000   .00000    1
+   .37500   .00000   .00000    1
+   .50000   .00000   .00000    1
+
+   .50000   .12500   .00000    1
+   .50000   .25000   .00000    1
+   .50000   .37500   .00000    1
+   .50000   .50000   .00000    1
+
+   .37500   .37500   .00000    1
+   .25000   .25000   .00000    1
+   .12500   .12500   .00000    1
+   .00000   .00000   .00000    1  
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>13 k-points along the line Gamma - X - M - Gamma</p></li>
+<li><p>Reciprocal coordinates</p></li>
+<li><p>Each point has weight 1</p></li>
+</ul>
+<p>Submit the job</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run.sh
+</pre></div>
+</div>
+<p>and wait for it to finish.</p>
+<p>Investigate the bandstructure, compare with the <a class="reference external" href="https://www.vasp.at/wiki/index.php/Ni_100_surface_bandstructure">VASP wiki example</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../bandgap_Si/" class="btn btn-neutral float-left" title="Bandgap of Si using different DFT+HF methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../more/" class="btn btn-neutral float-right" title="More examples and topics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Weine Olovsson and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

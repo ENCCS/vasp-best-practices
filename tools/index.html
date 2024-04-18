@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Useful tools &mdash; VASP Best Practices  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_lesson.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/term_role_formatting.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_rtd_theme_ext_color_contrast.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/overrides.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/minipres.js"></script>
+        <script src="../_static/tabs.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script data-domain="enccs.github.io/vasp-best-practices" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="fcc Si" href="../fcc_Si/" />
+    <link rel="prev" title="For using LEONARDO (EuroHPC)" href="../leonardo/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            VASP Best Practices
+              <img src="../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Presentations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../presentations/">Collection of morning presentations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Start here first</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tetralith/">For using Tetralith (NAISS, NSC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../leonardo/">For using LEONARDO (EuroHPC)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Useful tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#command-line">Command line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#text-editors">Text editors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tmux">tmux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gnuplot">Gnuplot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python">Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#p4vasp">p4vasp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py4vasp">py4vasp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ase">ASE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vaspkit">vaspkit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cif2cell">cif2cell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vesta">VESTA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jupyter-notebook-and-jupyter-lab">Jupyter-notebook and jupyter-lab</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hands-on examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si/">fcc Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_DOS/">fcc Si DOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_bandstructure/">fcc Si bandstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si/">cd Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_vol_relax/">cd Si volume relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_relax/">cd Si relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni/">fcc Ni</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni_rev/">fcc Ni revisited</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bandgap_Si/">Bandgap of Si using different DFT+HF methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Ni100_surface/">Ni100 surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../more/">More examples and topics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiling VASP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../compile/">Different clusters, CPU and GPU</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">VASP Best Practices</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Useful tools</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/vasp-best-practices/blob/main/content/tools.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="useful-tools">
+<h1>Useful tools<a class="headerlink" href="#useful-tools" title="Permalink to this heading"></a></h1>
+<p>Some of the tools are also described in the examples. For an easy overview, a description is collected on this page. There are many more tools which can be used, a selection is shown in the 4th and last presentation, “Utilities &amp; Summary”.</p>
+<p>In general, Tetralith is well suitable for post-processing directly on the login node, or using work nodes for more heavy processing, via the ThinLinc virtual desktop.</p>
+<p>On LEONARDO, test to use py4vasp together with jupyter-lab via port forwarding to your local computer, alternatively produce static images. Gnuplot and vaspkit can also be used to produce images. It is also possible to install many of the tools on a local computer for post-processing of the output, e.g. VESTA is usually easy to install.</p>
+<div class="admonition-system-specific-instructions callout admonition" id="callout-0">
+<p class="admonition-title">System-specific instructions</p>
+<p>Select instructions for the system you are using:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-0-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-0-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-0-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>Instructions for use on the NAISS cluster Tetralith (NSC)</p>
+</div><div aria-labelledby="tab-0-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>Instructions for use on the EuroHPC cluster LEONARDO</p>
+</div></div>
+</div>
+<section id="command-line">
+<h2>Command line<a class="headerlink" href="#command-line" title="Permalink to this heading"></a></h2>
+<p>Basic experience with common Unix/Linux commands such as</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ls, cd, cp, mv, mkdir, rm
+</pre></div>
+</div>
+<p>it is also very useful to handle</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>grep, less, cat
+</pre></div>
+</div>
+<p>Can quickly look into their manual in a terminal, e.g. by typing</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>man grep
+</pre></div>
+</div>
+</section>
+<section id="text-editors">
+<h2>Text editors<a class="headerlink" href="#text-editors" title="Permalink to this heading"></a></h2>
+<p>There are many text editors which can be used directly in a terminal, such as <code class="docutils literal notranslate"><span class="pre">vi</span></code>, <code class="docutils literal notranslate"><span class="pre">emacs</span></code> and <code class="docutils literal notranslate"><span class="pre">nano</span></code>. In a virtual desktop environment several more are available, e.g. <code class="docutils literal notranslate"><span class="pre">gedit</span></code> on Tetralith via ThinLinc. Pick the one you prefer. There are lot of guides available online.</p>
+<p>A very brief guide to vi (vim)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vi filename   # open the file &quot;filename&quot;
+i             # switch to interactive mode, used for typing, close with `esc`
+`esc`         # needed to close interactive mode
+:w            # save
+:wq           # save and quit
+:q!           # quit without saving
+r             # replace character
+x             # delete character
+u             # undo
+G             # go to end of file
+gg            # go to beginning of file
+.             # repeat last command
+dd            # delete one line
+yy            # copy (yank) line
+p             # put line which was copied
+</pre></div>
+</div>
+<p>a number X before a command will repeat it X times. On Tetralith/LEONARDO arrow keys can be used to move around in the file.</p>
+</section>
+<section id="tmux">
+<h2>tmux<a class="headerlink" href="#tmux" title="Permalink to this heading"></a></h2>
+<p>tmux can be useful for running several terminal sessions e.g. within one login if connecting via ssh. There are many guides available online. A very brief outline below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tmux             # start
+tmux ls          # list sessions
+tmux attach      # reactivate
+ctrl b c         # create new window
+ctrl b n         # step between windows
+ctrl b d         # deactivate
+</pre></div>
+</div>
+</section>
+<section id="gnuplot">
+<h2>Gnuplot<a class="headerlink" href="#gnuplot" title="Permalink to this heading"></a></h2>
+<p><a class="reference external" href="http://www.gnuplot.info/">gnupot</a> is a common tool for plotting data and is readily available on most systems. It’s also possible to directly save a plot to an image.</p>
+<p>It is available in the path on both clusters (if a specific version is needed, it can be searched after with “module avail gnuplot”).</p>
+<p>Typing</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>gnuplot
+</pre></div>
+</div>
+<p>will give a gnuplot prompt in the terminal <code class="docutils literal notranslate"><span class="pre">gnuplot&gt;</span></code>. To directly plot to a png image e.g.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set term png
+set output &quot;image.png&quot;
+</pre></div>
+</div>
+<p>you can also get a quick ASCII sketch of a plot in the terminal by setting</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set term dumb
+</pre></div>
+</div>
+<p>before a plot command.</p>
+</section>
+<section id="python">
+<h2>Python<a class="headerlink" href="#python" title="Permalink to this heading"></a></h2>
+<p>In general, Python can be very useful both for smaller basic analysis scripts and in the form of more involved software such as e.g. ASE and py4vasp (see below).</p>
+<p>It’s a good idea to <strong>keep different programs separate</strong> (unless they’re meant to be used together), such that their dependencies aren’t mixed in a common environment, e.g. as packages installed in a user home account under <code class="docutils literal notranslate"><span class="pre">.local</span></code>. A typical issue is that different software can be sensitive to exact versions of dependencies. Therefore, one can look into creating Python virtual environments and/or using conda or its drop-in replacement mamba, to keep environments separate. For Tetralith, check the following pages for handling <a class="reference external" href="https://www.nsc.liu.se/software/python/">Python</a> and <a class="reference external" href="https://www.nsc.liu.se/software/anaconda/">conda/mamba</a>.</p>
+</section>
+<section id="p4vasp">
+<h2>p4vasp<a class="headerlink" href="#p4vasp" title="Permalink to this heading"></a></h2>
+<p><a class="reference external" href="https://github.com/orest-d/p4vasp">p4vasp</a> is an open source visualization tool for VASP, with a wide range of functions (e.g. plotting DOS, bandstructure, energy and force convergence, structure relaxation). At this time it’s <a class="reference external" href="https://www.p4vasp.at/">official webpage</a> seems to be down.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-1-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-1-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-1-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>p4vasp is installed on Tetralith</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module load p4vasp/0.3.30-nsc1
+p4v &amp;
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>p4vasp is not available</p>
+</div></div>
+</section>
+<section id="py4vasp">
+<h2>py4vasp<a class="headerlink" href="#py4vasp" title="Permalink to this heading"></a></h2>
+<p><a class="reference external" href="https://www.vasp.at/py4vasp/latest/">py4vasp</a> is a python interface which extracts data from a VASP calculation, using the HDF5 <code class="docutils literal notranslate"><span class="pre">.h5</span></code> output file (meaning that VASP needs to be compiled with HDF5 support). It can be used e.g. to quickly plot density of states, bandstructure and energy convergence. It’s optimized for use together with jupyter-lab and jupyter-notebook, but can also output image files directly.</p>
+<p>After starting a Python kernel which includes py4vasp via jupyter, in the notebook one first loads py4vasp and thereafter sets where to find the finished VASP calculation of interest</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import py4vasp
+mycalc = py4vasp.Calculation.from_path(&quot;/path/to/your/calculation/folder/here&quot;)
+</pre></div>
+</div>
+<p>alternatively, one can provide the direct path to the VASP <code class="docutils literal notranslate"><span class="pre">.h5</span></code> output file</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mycalc = py4vasp.Calculation.from_file(&quot;/path/to/your/file/vaspout.h5&quot;)
+</pre></div>
+</div>
+<p>or go to the folder in the notebook via</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd /path/to/your/calculation/folder/here
+mycalc = py4vasp.Calculation.from_path(&quot;.&quot;)
+</pre></div>
+</div>
+<p>Here below a few examples are shown. For a much more detailed description, refer to the <a class="reference external" href="https://www.vasp.at/py4vasp/latest/">py4vasp page</a> and also see some <a class="reference external" href="https://www.vasp.at/tutorials/latest/">example of tutorials using py4vasp from the VASP developers</a>.</p>
+<p>Examples for plotting density of states (DOS)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mycalc.dos.plot()              # plot total DOS
+mycalc.dos.plot(&quot;s,p,d&quot;)       # plot s, p and d orbitals
+mycalc.dos.plot(&quot;3(s)&quot;))       # plot s orbital of atom 3 in POSCAR
+mycalc.dos.plot(&quot;s(Na, Cl&quot;)    # plot s orbital for Na and Cl  
+mycalc.dos.plot(&quot;down(1:3)&quot;)   # plot spin-down for atoms 1 to 3 in POSCAR combined
+</pre></div>
+</div>
+<p>Plotting the bandstructure</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mycalc.band.plot()
+</pre></div>
+</div>
+<p>Showing the POSCAR structure in 3D</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mycalc.structure.plot()
+</pre></div>
+</div>
+<p>Plotting the energy convergence</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mycalc.energy[:].plot()       # plot the full energy range
+mycalc.energy[5].plot()       # plot at step 5
+mycalc.energy[1:10].plot()    # plot between steps 1 and 10
+</pre></div>
+</div>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-2-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-2-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-2-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-2-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>py4vasp is available via a module</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module load py4vasp/0.7.4-hpc1
+</pre></div>
+</div>
+<p>by loading it also python, ASE, numpy, jupyter and many other packages become available. See all with “pip list”. See below for how to directly write an image file. See the last section for starting jupyter-lab, from which py4vasp can be run in the browser.</p>
+</div><div aria-labelledby="tab-2-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-2-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>py4vasp is available via a Python module prepared for the workshop</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules 
+module load pythonws-env/1.0-hpc1
+</pre></div>
+</div>
+<p>by loading it also python, ASE, numpy, jupyter and many other packages become available. See all with “pip list”. See below for how to directly write an image file. See the last section for starting jupyter-lab, from which py4vasp can be run in the browser.</p>
+</div></div>
+<p><strong>Note that py4vasp can also be used directly in a python script, writing output to an image file instead of a plot via jupyter</strong>.</p>
+<p>For example, a script “py4dos.py”</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import py4vasp
+mycalc = py4vasp.Calculation.from_path(&quot;.&quot;)
+mycalc.dos.to_image(&quot;s,p,d&quot;)
+</pre></div>
+</div>
+<p>activate a Python environment including py4vasp, and run with</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python py4dos.py
+</pre></div>
+</div>
+<p>this will output a DOS image “dos.png”.</p>
+<p>Another example for a band structure plot “py4band.py”</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import py4vasp
+mycalc = py4vasp.Calculation.from_path(&quot;.&quot;)
+mycalc.band.to_image()
+</pre></div>
+</div>
+<p>this will give a band-structure image “band.png”.</p>
+</section>
+<section id="ase">
+<h2>ASE<a class="headerlink" href="#ase" title="Permalink to this heading"></a></h2>
+<p><a class="reference external" href="https://wiki.fysik.dtu.dk/ase/">The Atomic Simulation Environment (ASE)</a> is a set of tools and Python modules for setting up, manipulating, running, visualizing and analyzing atomistic simulations. It can be used together with VASP and many other programs.</p>
+<p>In this workshop it’s used to help compute the equation of state in some of the examples.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-3-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-3-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-3-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-3-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-3-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>To use ASE, load its module together with a suitable Python installation e.g.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module load ASE/3.21.0-nsc1
+module load Python/3.10.4-env-nsc1-gcc-2022a-eb
+</pre></div>
+</div>
+<p>Also note that ASE is directly available from the py4vasp module:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module load py4vasp/0.7.4-hpc1
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-3-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-3-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>ASE is available via a Python module prepared for the workshop</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules 
+module load pythonws-env/1.0-hpc1
+</pre></div>
+</div>
+</div></div>
+</section>
+<section id="vaspkit">
+<h2>vaspkit<a class="headerlink" href="#vaspkit" title="Permalink to this heading"></a></h2>
+<p><a class="reference external" href="https://vaspkit.com/">vaspkit</a> is a tool for both pre- and post-processing of VASP calculations for a wide range of material properties. Here, we apply the free to use version of it.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-4-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-4-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-4-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-4-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-4-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-4-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>TBA</p>
+</div><div aria-labelledby="tab-4-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-4-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>Before first use, copy its configuration file to your home folder</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/vaspkit.1.5.1/.vaspkit ~/.
+</pre></div>
+</div>
+<p>thereafter, it can be used by loading the module and run in the same folder as your calculation</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/module
+module load vaspkit/1.5.1-hpc1
+vaspkit
+</pre></div>
+</div>
+</div></div>
+</section>
+<section id="cif2cell">
+<h2>cif2cell<a class="headerlink" href="#cif2cell" title="Permalink to this heading"></a></h2>
+<p><a class="reference external" href="https://github.com/torbjornbjorkman/cif2cell">cif2cell</a> is a tool for generating input structures (e.g. POSCAR) for electronic structure codes (e.g. VASP) starting from a CIF file.</p>
+<p>For example, it can be very useful if you start from an experimental structure reported in the <a class="reference external" href="https://www.crystallography.net/cod/">Crystallograpohy Open Database</a> which uses the CIF format. If you have a different structure format which can be converted to CIF, you can use cif2cell to produce POSCAR as a second step.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-5-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-5-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-5-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-5-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-5-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-5-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>It is available as a module</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module load cif2cell/2.1.0-hpc1
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-5-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-5-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>A module is prepared for the workshop</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules
+module load cif2cell/2.1.0-hpc1 
+</pre></div>
+</div>
+</div></div>
+<p>Its options can be found by</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cif2cell --help
+</pre></div>
+</div>
+<p>A quick example, read a name.cif structure file and output to POSCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cif2cell name.cif -p vasp
+</pre></div>
+</div>
+</section>
+<section id="vesta">
+<h2>VESTA<a class="headerlink" href="#vesta" title="Permalink to this heading"></a></h2>
+<p><a class="reference external" href="https://jp-minerals.org/vesta/en/">VESTA</a> is a 3D visualization program for structural models, volumetric data such as electron/nuclear densities, and crystal morphologies.</p>
+<p>It’s available for Windows, Mac and Linux. Free of charge for non-commercial users.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-6-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-6-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-6-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-6-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-6-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-6-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>It is available as a module</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module load vesta/3.4.4-nsc1
+vesta &amp;
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-6-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-6-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>It is not available (can install on local computer to try out)</p>
+</div></div>
+</section>
+<section id="jupyter-notebook-and-jupyter-lab">
+<h2>Jupyter-notebook and jupyter-lab<a class="headerlink" href="#jupyter-notebook-and-jupyter-lab" title="Permalink to this heading"></a></h2>
+<p>In brief, jupyter-notebook is a web-based interactive document which can be shared. For example, it can be used to run Python. Jupyter-lab is an extensive interface which includes jupyter-notebook.</p>
+<p>The main page is in <a class="reference external" href="https://jupyter.org/">this link</a>. Also see <a class="reference external" href="https://docs.jupyter.org/en/latest/index.html">documentation</a>.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-7-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-7-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-7-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-7-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-7-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-7-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>The jupyter-lab and notebook are included together with the py4vasp module</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module load py4vasp/0.7.4-hpc1
+</pre></div>
+</div>
+<p>It can be started directly on the login node via ThinLinc by typing</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>jupyter-lab
+</pre></div>
+</div>
+<p>and it will open in a browser. This is fine for regular plots etc. For heavier processing, instead start it in an interactive job session on a work node, for example</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>interactive -A naiss2024-22-241 -t 01:00:00 -n 4
+jupyter-lab --no-browser --ip=NODENAME
+</pre></div>
+</div>
+<p>if the session runs on e.g. node n58, set <code class="docutils literal notranslate"><span class="pre">--ip=n58</span></code>. From the output, start Firefox and copy &amp; paste the corresponding link.</p>
+<p>Jupyter is also typically available within the Python env installations on Tetralith. A different possibility is to install it using conda/mamba or a Python virtual environment, see the <a class="reference external" href="https://www.nsc.liu.se/software/python/">NSC Python page</a> for more details.</p>
+</div><div aria-labelledby="tab-7-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-7-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>While jupyter-lab and notebook is available in the Python environment prepared for the workshop</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules 
+module load pythonws-env/1.0-hpc1
+</pre></div>
+</div>
+<p>one needs to set up port-forwarding in order to connect a session on a LEONARDO login node to ones local computer. For example, on the login node one can start</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>jupyter-lab --no-browser
+</pre></div>
+</div>
+<p>and it will output a link which can be used for a browser. In this information, a specific port is shown. Now, one needs to on the local computer set up a port-forwarding which may look like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ssh -N -f -L localhost:YYYY:localhost:YYYY USERNAME@loginNN-ext.leonardo.cineca.it
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ssh -TN -f USERNAME@loginNN-ext.leonardo.cineca.it -L YYYY:localhost:YYYY
+</pre></div>
+</div>
+<p>here, one fills in the port YYYY, USERNAME, and specific login node NN where jupyter-lab is started. If the port-forwarding is successful, then it’s possible to open the session in ones browser on the local computer.</p>
+</div></div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../leonardo/" class="btn btn-neutral float-left" title="For using LEONARDO (EuroHPC)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../fcc_Si/" class="btn btn-neutral float-right" title="fcc Si" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Weine Olovsson and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

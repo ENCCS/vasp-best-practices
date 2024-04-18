@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fcc Si &mdash; VASP Best Practices  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_lesson.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/term_role_formatting.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_rtd_theme_ext_color_contrast.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/overrides.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/minipres.js"></script>
+        <script src="../_static/tabs.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script data-domain="enccs.github.io/vasp-best-practices" defer="defer" src="https://plausible.io/js/script.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="fcc Si DOS" href="../fcc_Si_DOS/" />
+    <link rel="prev" title="Useful tools" href="../tools/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            VASP Best Practices
+              <img src="../_static/ENCCS.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Presentations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../presentations/">Collection of morning presentations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Start here first</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tetralith/">For using Tetralith (NAISS, NSC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../leonardo/">For using LEONARDO (EuroHPC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/">Useful tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hands-on examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">fcc Si</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input-files">Input files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#calculation">1. Calculation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#total-energy-vs-volume-calculation">2. Total energy vs volume calculation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">3. Calculation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extra-tasks">Extra tasks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_DOS/">fcc Si DOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Si_bandstructure/">fcc Si bandstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si/">cd Si</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_vol_relax/">cd Si volume relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cd_Si_relax/">cd Si relaxation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni/">fcc Ni</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fcc_Ni_rev/">fcc Ni revisited</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bandgap_Si/">Bandgap of Si using different DFT+HF methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Ni100_surface/">Ni100 surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../more/">More examples and topics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiling VASP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../compile/">Different clusters, CPU and GPU</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">VASP Best Practices</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">fcc Si</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ENCCS/vasp-best-practices/blob/main/content/fcc_Si.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fcc-si">
+<h1>fcc Si<a class="headerlink" href="#fcc-si" title="Permalink to this heading"></a></h1>
+<p><a class="reference external" href="https://www.vasp.at/wiki/index.php/Fcc_Si">Based on the VASP wiki example in this link</a></p>
+<p><strong>Task:</strong> Run a self-consistent calculation for fcc Si. Thereafter, optimize the lattice constant. Use some basic tools and scripts.</p>
+<ul class="simple">
+<li><p>An introductory example for working with VASP</p></li>
+<li><p>In general, examples are chosen for fast calculation</p></li>
+<li><p>Use different job scripts, submit to the Slurm job scheduler on Tetralith or LEONARDO</p></li>
+<li><p>Use VASP, gnuplot, python, ASE</p></li>
+<li><p>bash shell scripts</p></li>
+</ul>
+<div class="admonition-system-specific-instructions callout admonition" id="callout-0">
+<p class="admonition-title">System-specific instructions</p>
+<p>Select instructions for the system you are using:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-0-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-0-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-0-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>Instructions for use on the NAISS cluster Tetralith (NSC)</p>
+</div><div aria-labelledby="tab-0-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>Instructions for use on the EuroHPC cluster LEONARDO</p>
+</div></div>
+</div>
+<p>First, copy the example folder which contains the input files INCAR, POSCAR, KPOINTS and some useful scripts</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-1-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-1-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-1-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp -r /software/sse2/tetralith_el9/manual/vasp/training/ws2024/fcc_Si .
+cd fcc_Si
+</pre></div>
+</div>
+<p>also copy the latest POTCAR (PBE GGA) file for Si</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Si/POTCAR .
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp -r /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/fcc_Si .
+cd fcc_Si
+</pre></div>
+</div>
+<p>also copy the latest POTCAR (PBE GGA) file for Si</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
+</pre></div>
+</div>
+</div></div>
+<section id="input-files">
+<h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this heading"></a></h2>
+<p>POSCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fcc Si
+ 3.9
+ 0.5 0.5 0.0
+ 0.0 0.5 0.5
+ 0.5 0.0 0.5
+Si
+   1
+cartesian
+0 0 0
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Fcc Si lattice constant a=3.9 Å</p></li>
+<li><p>“Si” on line 6 isn’t needed for the run, but for viewing e.g. using VESTA and practical as a reminder if you have several elements. Note that POTCAR decides the actual order of the elements in POSCAR, check with <code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">PAW</span> <span class="pre">POTCAR</span></code></p></li>
+<li><p>1 atom in the cell</p></li>
+</ul>
+<p>INCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>System = fcc Si
+
+ISTART = 0       
+ICHARG = 2       
+ENCUT  = 240     
+ISMEAR = 0       
+SIGMA  = 0.1     
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.vasp.at/wiki/index.php/ISMEAR">ISMEAR</a> determines the partial occupancies of each orbital. For band gap systems -5 (tetrahedron method with Blöchl corrections) or 0 (Gaussian smearing) are suitable.</p></li>
+<li><p>For very accurate total energy calculations or DOS, use ISMEAR = -5</p></li>
+</ul>
+<p>KPOINTS</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>k-points
+ 0
+Monkhorst Pack
+ 11 11 11
+ 0  0  0
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Face-centered-cubic structure, so use an equally spaced k-mesh</p></li>
+<li><p>Odd number of k-points in each direction -&gt; Gamma centered mesh</p></li>
+<li><p>Alternatively, use the Gamma centered k-mesh, replacing the line “Monkhorst Pack” (M) with “Gamma” (G)</p></li>
+</ul>
+<p>POTCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  PAW_PBE Si 05Jan2001                   
+   4.00000000000000     
+ parameters from PSCTR are:
+   VRHFIN =Si: s2p2
+   LEXCH  = PE
+   EATOM  =   103.0669 eV,    7.5752 Ry
+
+   TITEL  = PAW_PBE Si 05Jan2001
+   LULTRA =        F    use ultrasoft PP ?
+   IUNSCR =        1    unscreen: 0-lin 1-nonlin 2-no
+   RPACOR =    1.500    partial core radius
+   POMASS =   28.085; ZVAL   =    4.000    mass and valenz
+   RCORE  =    1.900    outmost cutoff radius
+   RWIGS  =    2.480; RWIGS  =    1.312    wigner-seitz radius (au A)
+   ENMAX  =  245.345; ENMIN  =  184.009 eV
+   ICORE  =        2    local potential
+   LCOR   =        T    correct aug charges
+   LPAW   =        T    paw PP
+   EAUG   =  322.069
+   DEXC   =    0.000
+   RMAX   =    1.950    core radius for proj-oper
+   RAUG   =    1.300    factor for augmentation sphere
+   RDEP   =    1.993    radius for radial grids
+   RDEPT  =    1.837    core radius for aug-charge
+
+   Atomic configuration
+    6 entries
+     n  l   j            E        occ.
+     1  0  0.50     -1785.8828   2.0000
+     2  0  0.50      -139.4969   2.0000
+     2  1  1.50       -95.5546   6.0000
+     3  0  0.50       -10.8127   2.0000
+     3  1  0.50        -4.0811   2.0000
+     3  2  1.50        -4.0817   0.0000
+...
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The top lines of the POTCAR file</p></li>
+<li><p>Never (almost) edit</p></li>
+</ul>
+<p>Check that correct POTCARs are used and the ENMAX values for setting ENCUT in INCAR</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>grep PAW POTCAR
+grep ENMAX POTCAR
+</pre></div>
+</div>
+</section>
+<section id="calculation">
+<h2>1. Calculation<a class="headerlink" href="#calculation" title="Permalink to this heading"></a></h2>
+<p>A first static calculation for Si with the lattice constant 3.9 Å. Create a new folder “scf0”, move the input files + job script, copy the folder to “scf1” (we will use it later) and go to “scf0”</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir scf0
+mv INCAR POSCAR KPOINTS POTCAR run.sh scf0
+cp -r scf0 scf1
+cd scf0
+</pre></div>
+</div>
+<p>Submit the job script “run.sh” to the job queue with</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run.sh
+</pre></div>
+</div>
+<p>The job script looks like below</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-2-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-2-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-2-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-2-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#SBATCH -A naiss2024-22-241
+#SBATCH -t 0:30:00
+#SBATCH -n 4 
+#SBATCH -J vaspjob
+
+module load VASP/6.4.3.19032024-omp-hpc1-intel-2023a-eb
+mpprun vasp_std
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-2-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-2-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#SBATCH -A EUHPC_TD02_030
+#SBATCH -p boost_usr_prod
+#SBATCH --qos=boost_qos_dbg
+#SBATCH --time 00:15:00
+#SBATCH -n 8
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=1
+#SBATCH --job-name=vaspjob
+
+module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules
+module load VASP/6.4.3-cpu1
+module load intel-oneapi-compilers/2023.2.1 
+module load intel-oneapi-mpi/2021.10.0 
+module load intel-oneapi-mkl/2023.2.0
+module load hdf5/1.14.3--intel-oneapi-mpi--2021.10.0--oneapi--2023.2.0
+
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+export OMP_NUM_THREADS=1
+
+srun vasp_std
+</pre></div>
+</div>
+</div></div>
+<p>The job should finish quite quickly. Check the status of the job (if submitted to the queue) with</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>squeue -u USERNAME
+</pre></div>
+</div>
+<p>it might already have finished, in that case it’ll not be shown. Among the output files in particular note</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OUTCAR
+OSZICAR
+slurm-JOBID.out
+</pre></div>
+</div>
+<p>in which <code class="docutils literal notranslate"><span class="pre">JOBID</span></code> is a string of numbers. Note that</p>
+<ul class="simple">
+<li><p>Some warning messages will only show in the standard output of the job, <code class="docutils literal notranslate"><span class="pre">slurm-JOBID.out</span></code> if submitted to the queue.
+<strong>Therefore, also carefully check the output when running interactively.</strong></p></li>
+</ul>
+<p>You can quickly check the iteration steps and convergence with “cat”</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat OSZICAR
+</pre></div>
+</div>
+<p>For checking into the main output file OUTCAR and other large files, it’s convenient to use the fast and safe (no writing) text viewer “less”</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>less OUTCAR
+</pre></div>
+</div>
+<p>“less” can be quit with pressing <code class="docutils literal notranslate"><span class="pre">q</span></code>.</p>
+</section>
+<section id="total-energy-vs-volume-calculation">
+<h2>2. Total energy vs volume calculation<a class="headerlink" href="#total-energy-vs-volume-calculation" title="Permalink to this heading"></a></h2>
+<p>Go back to the main folder “fcc_Si” with</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd ..
+pwd
+</pre></div>
+</div>
+<p>“pwd” shows the present folder, confirm that you’re back in “fcc_Si”, otherwise use “cd” to go there.</p>
+<p>In this part we will calculate the total energies of fcc Si between 3.5 and 4.3 Å. To do this a bit quicker, a special job script “run-vol.sh” is prepared (bash shell script):</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-3-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-3-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-3-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-3-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-3-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#SBATCH -A naiss2024-22-241
+#SBATCH -t 0:30:00
+#SBATCH -n 4
+#SBATCH -J vaspjob
+
+module load VASP/6.4.3.19032024-omp-hpc1-intel-2023a-eb
+
+for i in  3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2 4.3 ; do
+mkdir -p $i
+cd $i
+cp /software/sse2/tetralith_el9/manual/vasp/POTCARs/PBE/2024-03-19/Si/POTCAR .
+cp /software/sse2/tetralith_el9/manual/vasp/training/ws2024/fcc_Si/INCAR .
+cp /software/sse2/tetralith_el9/manual/vasp/training/ws2024/fcc_Si/KPOINTS .
+cat &gt;POSCAR &lt;&lt;EOF
+fcc:
+   $i
+ 0.5 0.5 0.0
+ 0.0 0.5 0.5
+ 0.5 0.0 0.5
+Si
+   1
+cartesian
+0 0 0
+EOF
+mpprun vasp_std
+E=`awk &#39;/F=/ {print $0}&#39; OSZICAR` ; echo $i $E  &gt;&gt;../SUMMARY.fcc
+cd ..
+done
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-3-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-3-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#SBATCH -A EUHPC_TD02_030
+#SBATCH -p boost_usr_prod
+#SBATCH --qos=boost_qos_dbg
+#SBATCH --time 00:15:00
+#SBATCH -n 8
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=1
+#SBATCH --job-name=vaspjob
+
+module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules
+module load VASP/6.4.3-cpu1
+module load intel-oneapi-compilers/2023.2.1
+module load intel-oneapi-mpi/2021.10.0
+module load intel-oneapi-mkl/2023.2.0
+module load hdf5/1.14.3--intel-oneapi-mpi--2021.10.0--oneapi--2023.2.0
+
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+export OMP_NUM_THREADS=1
+
+for i in  3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2 4.3 ; do
+mkdir -p $i
+cd $i
+cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/potpaw_PBE.64/Si/POTCAR .
+cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/fcc_Si/INCAR .
+cp /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/examples/fcc_Si/KPOINTS .
+cat &gt;POSCAR &lt;&lt;!
+fcc:
+   $i
+ 0.5 0.5 0.0
+ 0.0 0.5 0.5
+ 0.5 0.0 0.5
+Si
+   1
+cartesian
+0 0 0
+!
+srun vasp_std
+E=`awk &#39;/F=/ {print $0}&#39; OSZICAR` ; echo $i $E  &gt;&gt;../SUMMARY.fcc
+cd ..
+done
+</pre></div>
+</div>
+</div></div>
+<p>In brief, the above script creates a new folder with the same name as the lattice constant, copying POTCAR, INCAR and KPOINTS, while creating a new POSCAR file. It also collects the total energies from all OSZICAR files into a new file “SUMMARY.fcc”.</p>
+<p>Now, submit the job script “run-vol.sh” to the queue</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run-vol.sh
+</pre></div>
+</div>
+<p>After a successful run, there should now be folders 3.5 - 4.3 with the different calculations and a file SUMMARY.fcc which can be checked e.g. with “less” or “cat”</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>3.5 1 F= -.44256909E+01 E0= -.44234194E+01 d E =-.454310E-02
+3.6 1 F= -.46614931E+01 E0= -.46600638E+01 d E =-.285864E-02
+3.7 1 F= -.47980122E+01 E0= -.47959555E+01 d E =-.411323E-02
+3.8 1 F= -.48645323E+01 E0= -.48630343E+01 d E =-.299612E-02
+3.9 1 F= -.48774144E+01 E0= -.48758835E+01 d E =-.306173E-02
+4.0 1 F= -.48487753E+01 E0= -.48481407E+01 d E =-.126921E-02
+4.1 1 F= -.47852971E+01 E0= -.47845193E+01 d E =-.155573E-02
+4.2 1 F= -.46937300E+01 E0= -.46922884E+01 d E =-.288335E-02
+4.3 1 F= -.45831536E+01 E0= -.45812206E+01 d E =-.386597E-02
+</pre></div>
+</div>
+<p>You can make a quick plot of the total energy as a function of the lattice constant, e.g. by using gnuplot, start it with</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>gnuplot
+</pre></div>
+</div>
+<p>thereafter, at the “gnuplot&gt;” prompt type</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-4-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-4-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-4-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-4-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-4-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-4-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>plot &quot;SUMMARY.fcc&quot; using ($1):($4) w lp
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-4-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-4-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set term png 
+set output &quot;SUMMARY.fcc.png&quot;
+plot &quot;SUMMARY.fcc&quot; using ($1):($4) w lp
+</pre></div>
+</div>
+<p>Thereafter, copy the file <code class="docutils literal notranslate"><span class="pre">SUMMARY.fcc.png</span></code> to your local computer</p>
+</div></div>
+<p>From the plot we can see that the equilibrium lattice constant is around 3.9 Å.</p>
+<p>To find a more exact value, we can use an equation of state method. For example, a popular method is Birch-Murnaghan. To quickly check, you can try a python script which uses functions from the Atomic Simulation Environment (ASE) collection of tools based on Python3.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-5-VGV0cmFsaXRo" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-5-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tab" tabindex="0">Tetralith</button><button aria-controls="panel-5-TEVPTkFSRE8=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-5-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tab" tabindex="-1">LEONARDO</button></div><div aria-labelledby="tab-5-VGV0cmFsaXRo" class="sphinx-tabs-panel group-tab" id="panel-5-VGV0cmFsaXRo" name="VGV0cmFsaXRo" role="tabpanel" tabindex="0"><p>First, we need to load ASE and a suitable Python3 module,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module load ASE/3.22.1-hpc1-python
+module load Python/3.10.4-env-hpc1-gcc-2022a-eb
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-5-TEVPTkFSRE8=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-5-TEVPTkFSRE8=" name="TEVPTkFSRE8=" role="tabpanel" tabindex="0"><p>Here, a Python environment has been prepared for the workshop, which includes ASE, py4vasp, numpy etc. It can be activated by loading the module:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>module use /leonardo_scratch/fast/EUHPC_TD02_030/vasp_ws2024/modules
+module load pythonws-env/1.0-hpc1
+</pre></div>
+</div>
+<p>To check all packages included with the Python environment, one can e.g. type:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip list
+</pre></div>
+</div>
+<p>To confirm use of the “correct” python, one can type:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>which python
+</pre></div>
+</div>
+</div></div>
+<p>As input a file with volume (Å^3) and total energy (eV) is needed. To save some time, there is a script which can be used, so run:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./get-vol-etot.sh
+</pre></div>
+</div>
+<p>The bash script “get-vol-etot.sh” looks like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+for i in  3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2 4.3 ; do
+#V = `grep volume $i/vasprun.xml | head -1 | awk &#39;{print $3}&#39;`
+cd $i
+V=`awk &#39;/volume/ {print $3; exit}&#39; vasprun.xml`
+E=`awk &#39;/F=/ {print $3}&#39; OSZICAR`  
+echo $V $E  &gt;&gt;../vol_etot.dat
+cd ..
+done    
+</pre></div>
+</div>
+<p>and produces the file “vol_etot.dat”. We will use a small python script “eqos.py” which uses ASE and looks like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import numpy
+from ase.units import GPa
+from ase.eos import EquationOfState
+
+# Read data
+volumes,energies = numpy.loadtxt(&#39;vol_etot.dat&#39;, unpack=True)
+
+# Fit EOS
+eos = EquationOfState(volumes,energies, eos=&#39;birchmurnaghan&#39;)
+
+# There are several other choices for eos, see doc at:
+# https://wiki.fysik.dtu.dk/ase/ase/eos.html
+# set eos to e.g. birchmurnaghan, sjeos (ASE default), p3
+
+v0,e0,B = eos.fit()
+
+print ()
+print (&quot;Equation of state:&quot;)
+print (&quot;-------------------&quot;)
+print (&quot;E0: %2.6f eV&quot; % (e0))
+print (&quot;V0: %2.6f A^3&quot; % (v0))
+print (&quot;B: %2.6f GPa&quot; % (B/GPa))
+print ()   
+</pre></div>
+</div>
+<p>run it to calculate the equilibrium volume using an equation of state (first loading the modules or activating the environment, as described above)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python eqos.py
+</pre></div>
+</div>
+<p>the output might look like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Equation of state:
+-------------------
+E0: -4.880229 eV
+V0: 14.546730 A^3
+B: 84.365350 GPa
+</pre></div>
+</div>
+<p>The EOS methods are expected to work better closer to the equilibrium. The chosen method can be changed by editing <code class="docutils literal notranslate"><span class="pre">eos='birchmurnaghan'</span></code> in the line</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>eos = EquationOfState(volumes,energies, eos=&#39;birchmurnaghan&#39;)
+</pre></div>
+</div>
+<p>Note that the volume <em>V0</em> is for a single atom, so to obtain the lattice constant <em>a</em>, one needs to calculate (since there are 4 atoms per fcc cell)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a = (4 x V0)^1/3
+</pre></div>
+</div>
+<p>To quickly compute <em>a</em>, you might e.g. use python directly in the terminal</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python
+</pre></div>
+</div>
+<p>and input at the “&gt;&gt;&gt;” prompt</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(4*14.546730) ** (1./3.)
+</pre></div>
+</div>
+<p>and exit with <code class="docutils literal notranslate"><span class="pre">ctrl</span> <span class="pre">d</span></code> (what happens adding 0.7 + 0.6 using python?).</p>
+</section>
+<section id="id1">
+<h2>3. Calculation<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p>A second static calculation, now using the obtained equilibrium volume. Go to the folder “scf1” which was created previously</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd scf1
+</pre></div>
+</div>
+<p>and insert the lattice parameter <strong>a</strong> obtained in <strong>2.</strong> by editing POSCAR, e.g. with</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vi POSCAR
+</pre></div>
+</div>
+<p>or use your favourite text editor (<code class="docutils literal notranslate"><span class="pre">emacs</span></code>, <code class="docutils literal notranslate"><span class="pre">nano</span></code>, <code class="docutils literal notranslate"><span class="pre">gedit</span></code>, …). Finally, submit the job</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sbatch run.sh
+</pre></div>
+</div>
+<p>and compare the total energy with previous results. For example, try</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>grep &quot;free  energy&quot; OUTCAR
+grep &quot;free energy&quot; OUTCAR
+grep F= OSZICAR
+cat OSZICAR
+grep F= slurm-JOBID.out
+cat slurm-JOBID.out
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Comparing with the EOS result, does it look reasonable?</p></li>
+</ul>
+</section>
+<section id="extra-tasks">
+<h2>Extra tasks<a class="headerlink" href="#extra-tasks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Try different methods to compute the equilibrium by editing the script “eqos.py”</p></li>
+<li><p>Compute the equilibrium volumes for a less dense k-mesh <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">5</span> <span class="pre">5</span></code> in KPOINTS and with ENCUT set to ENMIN from POTCAR, and (2) for a denser k-mesh <code class="docutils literal notranslate"><span class="pre">29</span> <span class="pre">29</span> <span class="pre">29</span></code> and with ENCUT = ENMAX x 1.3. Suggestion: create new folders, copy and edit the “run_vol.sh” job script</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../tools/" class="btn btn-neutral float-left" title="Useful tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../fcc_Si_DOS/" class="btn btn-neutral float-right" title="fcc Si DOS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Weine Olovsson and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
