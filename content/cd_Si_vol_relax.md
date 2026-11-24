@@ -1,4 +1,4 @@
-## cd Si volume relaxation
+# cd Si volume relaxation
 
 [Based on the VASP wiki example in this link](https://www.vasp.at/wiki/index.php/Cd_Si_volume_relaxation)
 
@@ -44,7 +44,7 @@ First, copy the example folder which contains the VASP input files
   ```
  ````
 
-### Input files
+## Input files
 
 POSCAR
 
@@ -86,7 +86,7 @@ KPOINTS
      11 11 11
      0  0  0
 
-### Calculation
+## Calculation
 
 Start the volume relaxation calculation by submitting the job 
 
@@ -123,7 +123,7 @@ Check the relaxed final structure
   ```
  ````
 
-### Extra tasks
+## Extra tasks
 
 * Repeat the volume relaxation calculation in a new folder, but this time start from the relaxed structure `CONTCAR`, by copying it to POSCAR. Does the structure change, if so, how much?
 

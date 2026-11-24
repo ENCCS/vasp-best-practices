@@ -1,4 +1,4 @@
-## fcc Si bandstructure
+# fcc Si bandstructure
 
 [Based on the VASP wiki example in this link](https://www.vasp.at/wiki/index.php/Fcc_Si_bandstructure)
 
@@ -41,7 +41,7 @@ First, copy the example folder which contains some of the VASP input files and u
   ```
  ````
 
-### Input files
+## Input files
 
 POSCAR
 
@@ -93,7 +93,7 @@ KPOINTS
 * All points with weight 1
 
  
-### Calculation
+## Calculation
 
 Here we'll assume that the first self consistent, static, step is done in the [previous fcc Si example](../fcc_Si). Now perform a non-self consistent calculation, to do that copy `CHGCAR` from the previous example, e.g.
 
@@ -126,7 +126,7 @@ when the job has finished, check slurm-JOBID.out
  ````
 Compare with the figure shown in the [VASP wiki example](https://www.vasp.at/wiki/index.php/Fcc_Si_bandstructure).
 
-### Extra tasks
+## Extra tasks
 
 * Have a look at the paths in the Brillouin zone for fcc by using the [Bilbao crystallographic server](https://www.cryst.ehu.es/), select: Space-group symmetry > KVEC > enter "225" for space group > Brillouin zone
 * Tetralith: test to plot bandstructure also using py4vasp

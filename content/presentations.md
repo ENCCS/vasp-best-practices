@@ -1,4 +1,4 @@
-## Collection of morning presentations
+# Collection of morning presentations
 
 {download}`1. Introduction & Basic Theory <slides/s1-ws2024.pdf>`
 
@@ -9,7 +9,7 @@
 {download}`4. Utilities & Summary <slides/s4-ws2024.pdf>`
 
 
-### Old presentations 2023
+## Old presentations 2023
 
 {download}`1. Introduction & Basic Theory <slides/seminar1.pdf>`
 

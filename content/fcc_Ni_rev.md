@@ -1,4 +1,4 @@
-## fcc Ni revisited
+# fcc Ni revisited
 
 [Based on the VASP wiki example in this link](https://www.vasp.at/wiki/index.php/Fcc_Ni_(revisited))
 
@@ -37,7 +37,7 @@ First, copy the example folder which contains some of the VASP input files
   ```
  ````
 
-### Input files
+## Input files
 
 POSCAR
 
@@ -82,7 +82,7 @@ KPOINTS
 * Equally spaced k-mesh
 * Here the Gamma (G) k-mesh is used, which always include the Gamma point
 
-### 1. Collinear calculation
+## 1. Collinear calculation
 
 First create a new folder "col", copy the files and go there
 
@@ -125,7 +125,7 @@ and press `G` (that is `shift` `g`) to go to the end (quit with `q`). It looks l
 * Check the spin-polarized DOS using p4vasp or py4vasp
 * Any interesting messages in slurm-JOBID.out?
 
-### 2. Non-collinear calculation
+## 2. Non-collinear calculation
 
 In the case of a non-collinear calculation, the magnetic moment will be allowed to point in three dimensions. Now, go back to the main folder "fcc_Ni_rev", create a new folder "noncol" and copy relevant files
 

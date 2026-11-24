@@ -1,4 +1,4 @@
-## cd Si
+# cd Si
 
 [Based on the VASP wiki example in this link](https://www.vasp.at/wiki/index.php/Cd_Si)
 
@@ -39,7 +39,7 @@ First, copy the example folder which contains some of the VASP input files and u
   ```
  ````
 
-### Input files
+## Input files
 
 POSCAR
 
@@ -76,7 +76,7 @@ KPOINTS
      11 11 11
      0  0  0
 
-### 1. Volume relaxation
+## 1. Volume relaxation
 
 Here, investigate the total energy as a function of volume in a similar way as for the [fcc Si example](../fcc_Si). There's a job script which can be used "run-vol.sh"
 
@@ -219,7 +219,7 @@ and input at the ">>>" prompt
 
 * If a cubic diamond unit cell contains 8 atoms, why multiply by 4 when computing the lattice constant above (compare with [fcc Si](../fcc_Si))? Hint: "grep volume OUTCAR"
 
-### 2. Density of states (DOS)
+## 2. Density of states (DOS)
 
 Calculate DOS in a new folder "dos"
 
@@ -246,7 +246,7 @@ After it finished, check that the output looks fine, e.g. "cat slurm*out" or che
 
 Now use p4vasp or py4vasp to check DOS, similar as was described for [fcc Si DOS](../fcc_Si_DOS)
 
-### 3. Bandstructure
+## 3. Bandstructure
 
 Return to the main example folder "cd_Si" and prepare for a bandstructure calculation
 

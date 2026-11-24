@@ -1,4 +1,4 @@
-## fcc Si 
+# fcc Si
 
 [Based on the VASP wiki example in this link](https://www.vasp.at/wiki/index.php/Fcc_Si)
 
@@ -44,7 +44,7 @@ First, copy the example folder which contains the input files INCAR, POSCAR, KPO
   ```
  ````
 
-### Input files
+## Input files
 
 POSCAR
 
@@ -133,7 +133,7 @@ Check that correct POTCARs are used and the ENMAX values for setting ENCUT in IN
     grep PAW POTCAR
     grep ENMAX POTCAR
     
-### 1. Calculation 
+## 1. Calculation
 
 A first static calculation for Si with the lattice constant 3.9 Å. Create a new folder "scf0", move the input files + job script, copy the folder to "scf1" (we will use it later) and go to "scf0"
 
@@ -211,7 +211,7 @@ For checking into the main output file OUTCAR and other large files, it's conven
 
 "less" can be quit with pressing `q`.
 
-### 2. Total energy vs volume calculation
+## 2. Total energy vs volume calculation
 
 Go back to the main folder "fcc_Si" with
 
@@ -437,7 +437,7 @@ and input at the ">>>" prompt
 
 and exit with `ctrl d` (what happens adding 0.7 + 0.6 using python?).
 
-### 3. Calculation
+## 3. Calculation
 
 A second static calculation, now using the obtained equilibrium volume. Go to the folder "scf1" which was created previously 
 
@@ -462,7 +462,7 @@ and compare the total energy with previous results. For example, try
     
 * Comparing with the EOS result, does it look reasonable?
 
-### Extra tasks
+## Extra tasks
 
 * Try different methods to compute the equilibrium by editing the script "eqos.py"
 

@@ -1,4 +1,4 @@
-## cd Si relaxation
+# cd Si relaxation
 
 [Based on the VASP wiki example in this link](https://www.vasp.at/wiki/index.php/Cd_Si_relaxation)
 
@@ -37,7 +37,7 @@ First, copy the example folder which contains some of the VASP input files and u
   ```
  ````
 
-### Input files
+## Input files
 
 POSCAR
 
@@ -81,7 +81,7 @@ KPOINTS
      0  0  0
 
  
-### Calculation
+## Calculation
 
 The input files are ready for the atom relaxation, so the job can be directly submitted
 

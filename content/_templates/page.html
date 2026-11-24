@@ -1,0 +1,24 @@
+{% extends "!page.html" %}
+{% block footer %}
+<div id="cc3-logos" class="cc3-logos">
+  <a class="cc3-logo-eurohpc" href="https://www.eurohpc-ju.europa.eu/index_en"><img class="cc3-logo-light" src="{{ pathto('_static/logos/cc3/eurohpc.svg', 1) }}" alt="EuroHPC Joint Undertaking"><img class="cc3-logo-dark" src="{{ pathto('_static/logos/cc3/eurohpc-dark.svg', 1) }}" alt="EuroHPC Joint Undertaking"></a>
+  <a class="cc3-logo-hpc-in-europe cc3-logo-inset" href="https://hpc-portal.eu/"><img class="cc3-logo-light" src="{{ pathto('_static/logos/cc3/hpc-in-europe.svg', 1) }}" alt="HPC in Europe"><img class="cc3-logo-dark" src="{{ pathto('_static/logos/cc3/hpc-in-europe-dark-preview.svg', 1) }}" alt="HPC in Europe"></a>
+  <a class="cc3-logo-eurocc3 cc3-logo-inset" href="https://hpc-portal.eu/projects/eurocc-3-national-competence-centres-in-the-framework-eurohpc"><img class="cc3-logo-light" src="{{ pathto('_static/logos/cc3/eurocc3.svg', 1) }}" alt="EuroCC 3"><img class="cc3-logo-dark" src="{{ pathto('_static/logos/cc3/eurocc3-dark-preview.svg', 1) }}" alt="EuroCC 3"></a>
+  <a class="cc3-logo-liu" href="https://liu.se/en"><img class="cc3-logo-light" src="{{ pathto('_static/logos/partners/liu.svg', 1) }}" alt="Linköping University"><img class="cc3-logo-dark" src="{{ pathto('_static/logos/partners/liu-dark.svg', 1) }}" alt="Linköping University"></a>
+  <a class="cc3-logo-rise" href="https://www.ri.se/en"><img class="cc3-logo-light" src="{{ pathto('_static/logos/partners/rise.svg', 1) }}" alt="RISE Research Institutes of Sweden"><img class="cc3-logo-dark" src="{{ pathto('_static/logos/partners/rise-dark.svg', 1) }}" alt="RISE Research Institutes of Sweden"></a>
+  <a class="cc3-logo-vr" href="https://www.vr.se/english.html"><img class="cc3-logo-light" src="{{ pathto('_static/logos/national/vr.png', 1) }}" alt="Swedish Research Council"><img class="cc3-logo-dark" src="{{ pathto('_static/logos/national/vr-dark.png', 1) }}" alt="Swedish Research Council"></a>
+  <a class="cc3-logo-vinnova" href="https://www.vinnova.se/en/"><img class="cc3-logo-light" src="{{ pathto('_static/logos/national/vinnova.svg', 1) }}" alt="Vinnova"><img class="cc3-logo-dark" src="{{ pathto('_static/logos/national/vinnova-dark.svg', 1) }}" alt="Vinnova"></a>
+</div>
+{{ super() }}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var c = document.querySelector(".copyright");
+    if (!c) return;
+    var a = document.createElement("a");
+    a.href = "https://european-union.europa.eu/index_en";
+    a.className = "eu-emblem-link";
+    a.setAttribute("aria-label", "European Union");
+    c.prepend(a);
+  });
+</script>
+{% endblock footer %}

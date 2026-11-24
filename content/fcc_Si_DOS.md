@@ -1,4 +1,4 @@
-## fcc Si DOS 
+# fcc Si DOS
 
 [Based on the VASP wiki example in this link](https://www.vasp.at/wiki/index.php/Fcc_Si_DOS)
 
@@ -45,7 +45,7 @@ First, copy the example folder which contains some of the VASP input files and u
   ```
  ````
 
-### Input files
+## Input files
 
 POSCAR
 
@@ -83,7 +83,7 @@ KPOINTS
 
 * We keep an odd number of k-points in each direction for MP k-mesh -> Gamma centered mesh, also needed for the tetrahedron method
  
-### 1a. Calculation from scratch
+## 1a. Calculation from scratch
 
 We can either start completely from scratch, or use the results from the [previous example "fcc Si"](../fcc_Si). For the latter, go to the next section **1b** further below.
 
@@ -103,7 +103,7 @@ and wait for it to finish. Any interesting messages in `slurm-JOBID.out` or the 
 
     cat slurm*.out
 
-### 1b. Calculation from using previous example
+## 1b. Calculation from using previous example
 
 If you did the calculations from scratch in **1a**, you can skip this section.
 
@@ -138,7 +138,7 @@ and wait for it to finish. Any interesting messages in `slurm-JOBID.out` or outp
 
     cat slurm*.out
 
-### 2. Check the result
+## 2. Check the result
 
 To quickly check the resulting DOS, you can use the small script "plotdos.sh" provided with the example, it looks like
 
@@ -220,7 +220,7 @@ For more advanced functionalities and lots of different options, one can instead
   ```
  ````
 
-### Extra tasks
+## Extra tasks
 
 * Compare DOS for s, p and d states using p4vasp (select "Electronic" > "Local DOS + bands control") or by using py4vasp, e.g.:
 

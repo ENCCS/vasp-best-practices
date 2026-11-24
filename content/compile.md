@@ -1,4 +1,4 @@
-## Different clusters, CPU and GPU
+# Different clusters, CPU and GPU
 
 Here is a brief description on how VASP was installed on different clusters. While NSC and many other HPC centers have a center license for providing VASP installations to users with a confirmed license, this is not always the case, e.g. for MeluXina and LUMI. Therefore, it can be of interest to install and test VASP by oneself. The main license holder (or contact person) can download the source code from the [VASP portal](https://www.vasp.at/). 
 
@@ -6,7 +6,7 @@ Detailed descriptions on how to install VASP can be found at the [VASP-wiki](htt
 
 Note that the recipes here below might not be the best ways to install VASP (e.g. limitations on available tool-chains and effort levels on benchmarking and optimization), but can be of interest as some practical examples.
 
-### Tetralith
+## Tetralith
 
 The VASP 6.4.3 version used in the 2024 workshop was compiled in a similar way, though using different modules, as in the 2023 workshop described below.
 
@@ -65,7 +65,7 @@ The changes were
     LLIBS      += -L$(HDF5_ROOT)/lib -lhdf5_fortran
     INCS       += -I$(HDF5_ROOT)/include
 
-### LEONARDO
+## LEONARDO
 VASP 6.4.3 was built for the hands-on part of the workshop on LEONARDO running on CPU. The Booster partition nodes each have a single socket 32-core Intel Xeon Platinum 8358 CPU, 2.60GHz (Ice Lake), with 512 GB RAM and 4x NVIDIA A100 GPUs (64GB).
 
     module load intel-oneapi-compilers/2023.2.1 
@@ -89,7 +89,7 @@ The changes were
     INCS       += -I$(HDF5_ROOT)/include
 
 
-### MeluXina (2023)
+## MeluXina (2023)
 An example on how VASP 6.4.0 was built on MeluXina (temporary workshop installation). The regular nodes used in the workshop contain 2x AMD EPYC Rome 7H12 with a total of (2x 64) 128 cores (256 with hyper-threading) and 512 GB RAM. 
 
     module load foss/2022a
@@ -118,7 +118,7 @@ Since hyper-threading is switched on by default on MeluXina, we try to run witho
 
 An intel compiler installation was also tested on MeluXina, though some problems were noted.
 
-### General points
+## General points
 
 * For heavy computations, look into adjusting `NB`, the blocking factor for distribution of matrices in src/scala.F, to higher value e.g.
 
@@ -137,7 +137,7 @@ An intel compiler installation was also tested on MeluXina, though some problems
 
       export MKL_CBWR=AVX2 
 
-### GPU example (2023)
+## GPU example (2023)
 
 This is an example on how VASP 6.3.2 was compiled for a benchmark and energy consumption test on [Berzelius](https://www.nsc.liu.se/systems/berzelius/) nodes equipped with Nvidia A100 GPUs (since Berzelius is prioritized for AI and machine learning, it's typically unavailable for regular VASP calculations).
 

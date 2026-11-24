@@ -1,4 +1,4 @@
-## fcc Ni
+# fcc Ni
 
 [Based on the VASP wiki example in this link](https://www.vasp.at/wiki/index.php/Fcc_Ni)
 
@@ -39,7 +39,7 @@ First, copy the example folder which contains some of the VASP input files
 
 Perform the calculations below in the same way as was done for the [cd Si example](../cd_Si).
 
-### Input files
+## Input files
 
 POSCAR
 
@@ -85,7 +85,7 @@ KPOINTS
 * Odd Monkhorst-Pack k-mesh > Gamma centered
 
  
-### 1. Volume relaxation
+## 1. Volume relaxation
 
 Similar as for the [cd Si](../cd_Si) example, check the total energy over a range of volumes, by using the tailored job script "run-vol.sh". Submit the job 
 
@@ -107,7 +107,7 @@ In the same way as was done in [fcc Si](../fcc_Si) and [cd Si](../cd_Si), invest
 
 * What is the equilibrium lattice parameter in this case?
 
-### 2. DOS
+## 2. DOS
 
 Create a new folder "dos", copy the relevant files and go there
 
@@ -137,7 +137,7 @@ To check the result after finish, use `p4vasp` or `py4vasp` as in the previous e
 
 * Does the DOS show the spin split?
 
-### 3. Bandstructure
+## 3. Bandstructure
 
 In the main "fcc_Ni" folder, create a new folder "band", copy the relevant files and go there, note the treatment for the "KPOINTS" file
 

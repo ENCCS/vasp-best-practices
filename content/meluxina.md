@@ -1,15 +1,15 @@
-## For using MeluXina (EuroHPC)
+# For using MeluXina (EuroHPC)
 
 Note that the hands-on part was adjusted to MeluXina from Tetralith, so there are some differences.
 
-### User account and login
+## User account and login
 
 Instructions on access for a temporary account will be sent out by LuxProvide which handles the MeluXina supercomputer. It is useful to setup ssh so that one can login directly, see [Connecting, at the MeluXina user documentation](https://docs.lxp.lu/first-steps/connecting/).
 
-### General information
+## General information
 There is detailed [MeluXina user documentation](https://docs.lxp.lu/) available, e.g. on how to connect and use the resources.
 
-### (1) Start an interactive job
+## (1) Start an interactive job
 Since it's not allowed to load modules and run software on the shared MeluXina login nodes, the hands-on session will use interactive jobs.
 Note that text editing (vi, emacs, nano), submitting jobs (sbatch) and checking output with standard command line tools (grep, less, awk) are still possible on the login node.
 
@@ -19,7 +19,7 @@ Let's request an interactive job on a work node
 
 and wait for it to start before going to the next section below. The idea is to use this interactive job for setting everything up in order to run the hands-on examples.
 
-### (2) Set up py4vasp 
+## (2) Set up py4vasp
 py4vasp is a versatile tool for e.g. analysing VASP output. In the hands-on examples, it will mainly be used for plotting density of states and bandstructures.
 A Python virtual environment with py4vasp has been prepared. A few extra steps are needed for it to work together with jupyter-notebooks, used in the hands-on sessions.
 
@@ -34,7 +34,7 @@ one also needs to fix the "kernel.json" file, at the top of your home folder (ty
     cd .local/share/jupyter/kernels/py4vasp
     cp /project/home/p200051/vasp_ws2023/kernel.json .
 
-### (3) Starting jupyter-notebook
+## (3) Starting jupyter-notebook
 In the same interactive job as above, load the prepared virtual environment "py4venv" (this assumes that we already loaded the module `Python/3.10.4-GCCcore-11.3.0` in the previous step)
 
     source /project/home/p200051/vasp_ws2023/py4venv/bin/activate
@@ -61,7 +61,7 @@ When the port forwarding is done, the jupyter-notebook can be opended by using t
 
     http://localhost:8888/?token=79453hgs9823gsl9sg3hsekw883qk3s3o3kjgey34kw4ijj3
 
-### (4) Run VASP 
+## (4) Run VASP
 Here we assume that a jupyter-notebook is running on a work node and that it opened up fine in a local browser after fixing the port forwarding.
 Terminals can now be opened in its own browser window by pressing the button `New` in the upper right hand side and then `Terminal` in its menu.
 Go to the window with the new terminal and load settings for VASP
@@ -79,7 +79,7 @@ This allows to run several terminals (if needed) and py4vasp simultaneously.
 
 For the common use case of running longer production jobs, one would instead typically submit jobscripts to the queue. 
 
-### Run VASP - alternative
+## Run VASP - alternative
 In case it fails or is too difficult to get jupyter-notebook working, it is still possible to run the VASP examples directly in the interactive job on the work node, or by submitting jobs to the queue system. A jobscript template is provided with all the examples
 
     run.sh

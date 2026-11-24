@@ -1,4 +1,4 @@
-## More examples and topics 
+# More examples and topics
 
 If you want further examples or prefer to select ones depending on your topic of interest, have a look at 
 
@@ -16,7 +16,7 @@ There are many more topics available, not covered by the present hands-on exampl
 
 Note that the hands-on sessions in this workshop are **not** suitable for heavier computational jobs, though it's fine for testing and looking into running different types of VASP calculations. 
 
-### Select material for study
+## Select material for study
 
 You might start from a system of your choice and perform a similar analysis as for the examples presented in this workshop and at the VASP wiki. An idea might be to search for the material at the [Crystallography Open Database](https://www.crystallography.net/cod/) and transform the .cif file to POSCAR, using cif2cell
 
@@ -24,11 +24,11 @@ You might start from a system of your choice and perform a similar analysis as f
 
 In the produced POSCAR file, it's useful to add the species in a new 6th line below the lattice vectors (the correct ordering is printed in the top line), so that it can readily be used for visualization with e.g. VESTA.
 
-### Trying out different tools
+## Trying out different tools
 
 There are many useful tools which are available for VASP, e.g. for post-processing or setting up structures. Depending on your interest, you can select some of the ones described in the [section on useful tools](../tools), also see the last presentation, "Utilities & Summary".
 
-### Run on GPUS at LEONARDO
+## Run on GPUS at LEONARDO
 
 There is a **VASP GPU OpenACC** build for the workshop which can be used. Below is an example job script for running on a single GPU (since each Booster node got 32 cores and 4 GPUs, we select 8 cores with each GPU)
 
@@ -54,7 +54,7 @@ To run on more GPUs, adjust `#SBATCH -n`, `#SBATCH --gres=gpu` and `srun -n`. A 
 
 * In particular, adjust `NSIM` for GPU calculations
 
-### Testing / efficiency exercises
+## Testing / efficiency exercises
 
 For the workshop, smaller problem cases can be selected due to limited time and compute resources for the hands-on part. The principles are similar considering regular jobs.
 

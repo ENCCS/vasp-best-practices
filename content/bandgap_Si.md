@@ -1,4 +1,4 @@
-## Bandgap of Si using different DFT+HF methods
+# Bandgap of Si using different DFT+HF methods
 
 [Based on the VASP wiki example in this link](https://www.vasp.at/wiki/index.php/Bandgap_of_Si_using_different_DFT%2BHF_methods)
 
@@ -37,7 +37,7 @@ First, copy the example folder which contains some of the VASP input files and u
   ```
  ````
 
-### Input files
+## Input files
 
 POSCAR
 
@@ -91,7 +91,7 @@ KPOINTS
 
 * Gamma (G) k-mesh -> gamma point included by default
 
-### Calculations
+## Calculations
 
 First, run the regular PBE calculation which will be used as a start for the DFT+HF methods by submitting the job 
 

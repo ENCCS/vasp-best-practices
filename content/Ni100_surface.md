@@ -1,4 +1,4 @@
-## Ni100 surface
+# Ni100 surface
 
 Based on the three VASP wiki examples in the links [1](https://www.vasp.at/wiki/index.php/Ni_100_surface_relaxation), [2](https://www.vasp.at/wiki/index.php/Ni_100_surface_DOS) and [3](https://www.vasp.at/wiki/index.php/Ni_100_surface_bandstructure) 
 
@@ -38,7 +38,7 @@ First, copy the example folder which contains some of the VASP input files
   ```
  ````
 
-### Input files
+## Input files
 
 POSCAR
 
@@ -107,7 +107,7 @@ KPOINTS
 * Odd Monkhorst-Pack k-mesh > Gamma centered
 * Note, only one k-point in the z-direction for the surface
 
-### 1. Surface relaxation
+## 1. Surface relaxation
 
 First, note how selective dynamics (S) works in the [POSCAR](https://www.vasp.at/wiki/index.php/POSCAR) file
 
@@ -181,7 +181,7 @@ Check the obtained relaxed structure in `CONTCAR`:
 * What is the inward relaxation of the surface layers (compare VASP wiki)
 * Visualize the relaxation of the structure using p4vasp or py4vasp (follow VASP wiki figures)
 
-### 2. Surface DOS
+## 2. Surface DOS
 
 Now, in a new folder "dos", calculate the local DOS for the relaxed Ni(100) surface using CONTCAR from the previous step
 
@@ -245,7 +245,7 @@ After it finishes, at the end of OUTCAR, check the information on local charge a
 * What can be said about the magnetic moments for the different layers?
 * Test to plot DOS using p4vasp/py4vasp, see figures at the end of the [VASP wiki example](https://www.vasp.at/wiki/index.php/Ni_100_surface_DOS)
 
-### 3. Surface bandstructure
+## 3. Surface bandstructure
 
 Now, calculate the corresponding bandstructure for the relaxed Ni(100) surface structure. Go to the main folder "Ni100_surf" and there create the folder "band" and copy the needed files
 

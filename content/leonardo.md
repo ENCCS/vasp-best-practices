@@ -1,15 +1,15 @@
-## For using LEONARDO (EuroHPC)
+# For using LEONARDO (EuroHPC)
 
 Note that the hands-on part was adjusted to LEONARDO from Tetralith (and previous workshops), so there are some differences.
 
-### User account and login
+## User account and login
 
 See links sent out to the workshop participants for all information.
 
-### General information
+## General information
 There is some detailed [LEONARDO user documentation available here](https://wiki.u-gov.it/confluence/display/SCAIUS/HPC+User+Guide).
 
-### Running jobs
+## Running jobs
 In each example for the hands-on part of the workshop, there's a job script available called "run.sh". The job script is submitted to the slurm job queue with
 
     sbatch run.sh
@@ -18,7 +18,7 @@ one can check its progress with the command
 
     squeue -u USERNAME
 
-### Example job script
+## Example job script
 Typically, the workshop job scripts prepared for running on LEONARDO looks like this
 
     #!/bin/bash

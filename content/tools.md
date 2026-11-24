@@ -1,4 +1,4 @@
-## Useful tools
+# Useful tools
 
 Some of the tools are also described in the examples. For an easy overview, a description is collected on this page. There are many more tools which can be used, a selection is shown in the 4th and last presentation, "Utilities & Summary".
 
@@ -19,7 +19,7 @@ Instructions for use on the EuroHPC cluster LEONARDO
  ````
 `````
 
-### Command line
+## Command line
 
 Basic experience with common Unix/Linux commands such as
 
@@ -33,7 +33,7 @@ Can quickly look into their manual in a terminal, e.g. by typing
 
     man grep
 
-### Text editors
+## Text editors
 
 There are many text editors which can be used directly in a terminal, such as `vi`, `emacs` and `nano`. In a virtual desktop environment several more are available, e.g. `gedit` on Tetralith via ThinLinc. Pick the one you prefer. There are lot of guides available online.
 
@@ -57,7 +57,7 @@ A very brief guide to vi (vim)
 
 a number X before a command will repeat it X times. On Tetralith/LEONARDO arrow keys can be used to move around in the file.
 
-### tmux
+## tmux
 
 tmux can be useful for running several terminal sessions e.g. within one login if connecting via ssh. There are many guides available online. A very brief outline below:
 
@@ -68,7 +68,7 @@ tmux can be useful for running several terminal sessions e.g. within one login i
     ctrl b n         # step between windows
     ctrl b d         # deactivate
 
-### Gnuplot
+## Gnuplot
 
 [gnupot](http://www.gnuplot.info/) is a common tool for plotting data and is readily available on most systems. It's also possible to directly save a plot to an image.
 
@@ -89,13 +89,13 @@ you can also get a quick ASCII sketch of a plot in the terminal by setting
 
 before a plot command.
 
-### Python
+## Python
 
 In general, Python can be very useful both for smaller basic analysis scripts and in the form of more involved software such as e.g. ASE and py4vasp (see below).
 
 It's a good idea to **keep different programs separate** (unless they're meant to be used together), such that their dependencies aren't mixed in a common environment, e.g. as packages installed in a user home account under `.local`. A typical issue is that different software can be sensitive to exact versions of dependencies. Therefore, one can look into creating Python virtual environments and/or using conda or its drop-in replacement mamba, to keep environments separate. For Tetralith, check the following pages for handling [Python](https://www.nsc.liu.se/software/python/) and [conda/mamba](https://www.nsc.liu.se/software/anaconda/).
 
-### p4vasp
+## p4vasp
 
 [p4vasp](https://github.com/orest-d/p4vasp) is an open source visualization tool for VASP, with a wide range of functions (e.g. plotting DOS, bandstructure, energy and force convergence, structure relaxation). At this time it's [official webpage](https://www.p4vasp.at/) seems to be down.
 
@@ -111,7 +111,7 @@ It's a good idea to **keep different programs separate** (unless they're meant t
   ```
  ````
 
-### py4vasp
+## py4vasp
 
 [py4vasp](https://www.vasp.at/py4vasp/latest/) is a python interface which extracts data from a VASP calculation, using the HDF5 `.h5` output file (meaning that VASP needs to be compiled with HDF5 support). It can be used e.g. to quickly plot density of states, bandstructure and energy convergence. It's optimized for use together with jupyter-lab and jupyter-notebook, but can also output image files directly.
 
@@ -193,7 +193,7 @@ Another example for a band structure plot "py4band.py"
 
 this will give a band-structure image "band.png".
 
-### ASE
+## ASE
 
 [The Atomic Simulation Environment (ASE)](https://wiki.fysik.dtu.dk/ase/) is a set of tools and Python modules for setting up, manipulating, running, visualizing and analyzing atomistic simulations. It can be used together with VASP and many other programs.
 
@@ -219,7 +219,7 @@ In this workshop it's used to help compute the equation of state in some of the 
   ```
  ````
 
-### vaspkit
+## vaspkit
 
 [vaspkit](https://vaspkit.com/) is a tool for both pre- and post-processing of VASP calculations for a wide range of material properties. Here, we apply the free to use version of it.
 
@@ -241,7 +241,7 @@ In this workshop it's used to help compute the equation of state in some of the 
   ```
  ````
 
-### cif2cell
+## cif2cell
 
 [cif2cell](https://github.com/torbjornbjorkman/cif2cell) is a tool for generating input structures (e.g. POSCAR) for electronic structure codes (e.g. VASP) starting from a CIF file. 
 
@@ -268,7 +268,7 @@ A quick example, read a name.cif structure file and output to POSCAR
 
     cif2cell name.cif -p vasp
 
-### VESTA
+## VESTA
 
 [VESTA](https://jp-minerals.org/vesta/en/) is a 3D visualization program for structural models, volumetric data such as electron/nuclear densities, and crystal morphologies.
 
@@ -286,7 +286,7 @@ It's available for Windows, Mac and Linux. Free of charge for non-commercial use
   ```
  ````
 
-### Jupyter-notebook and jupyter-lab
+## Jupyter-notebook and jupyter-lab
 
 In brief, jupyter-notebook is a web-based interactive document which can be shared. For example, it can be used to run Python. Jupyter-lab is an extensive interface which includes jupyter-notebook.
 
