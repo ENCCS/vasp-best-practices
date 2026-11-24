@@ -21,7 +21,9 @@ Generated files and environments are ignored. Notebook execution is disabled dur
 
 ## Publication
 
-CI builds documentation without publishing. Deployment is absent during this migration; event details, historical accounts/paths and all intended publication artifacts need review before enabling deployment. The `2024` source branch is preserved exactly; it does not by itself create an archive website.
+Pushes to `main` build both HTML formats and deploy the directory HTML site to GitHub Pages, with the single-page version under `singlehtml/`. Pull requests build without deploying. GitHub Pages uses GitHub Actions as its publishing source.
+
+The `2024` branch retains the historical teaching content and builds separately without deployment. The original archive source is commit `c90a58d09b22d1ca386235a999a6d096f1d03239`; the branch includes a later workflow-only maintenance commit. Historical event instructions still require review for 2027.
 
 Project briefs, review lists, validation evidence and handovers are maintained in the surrounding workspace, outside this teaching repository.
 
